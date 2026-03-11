@@ -109,4 +109,46 @@ class NewStudentsController extends Controller
             ], 500);
         }
     }
+
+    public function register(Request $request)
+    {
+        $validated = $request->validate([
+            'email'    => 'required|email|unique:recruting_student,email',
+            'password' => 'required|min:6',
+        ]);
+
+        $data = [
+            'email'            => $request->email,
+            'password'         => bcrypt($request->password),
+            'name'             => $request->name ?? '',
+            'surname'          => $request->surname ?? '',
+            'lastname'         => $request->lastname ?? '',
+            'parent_name'      => $request->parent_name ?? '',
+            'parent_surname'   => $request->parent_surname ?? '',
+            'parent_phone'     => $request->parent_phone ?? '',
+            'parent_passport'  => $request->parent_passport ?? '',
+            'dob'              => $request->dob ?? null,
+            'country'          => $request->country ?? '',
+            'city'             => $request->city ?? '',
+            'address'          => $request->address ?? '',
+            'zip'              => $request->zip ?? '',
+            'apartment'        => $request->apartment ?? '',
+            'photo_consent'    => $request->photo_consent ?? 0,
+            'terms_accepted'   => $request->terms_accepted ?? 0,
+            'privacy_accepted' => $request->privacy_accepted ?? 0,
+            'reg_comment'      => $request->reg_comment ?? '',
+            'enabled'          => 0,
+            'blocked'          => 0,
+            'deleted'          => 0,
+            'created_at'       => now(),
+            'updated_at'       => now(),
+        ];
+
+        DB::table('recruting_student')->insert($data);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Регистрация успешна'
+        ], 201);
+    }
 }

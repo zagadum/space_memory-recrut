@@ -26,6 +26,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', '\App\Http\Controllers\LoginController@Login');
 Route::get('/login', '\App\Http\Controllers\LoginController@Login');
 
+Route::get('/register', function () {
+    return view('registration.index');
+});
+
 
 Route::any('/payments/imoje/test', 'App\Http\Controllers\ImojeController@payTest')->name('imoje.pay-test');
 
