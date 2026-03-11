@@ -20,6 +20,8 @@ use App\Http\Controllers\Api\FallbackController;
 use App\Http\Controllers\Api\NewStudentsController;
 use App\Http\Controllers\Api\LeadsController;
 
+Route::post('/v1/register', [NewStudentsController::class, 'register']);
+
 Route::prefix('v1')->group(function () {
     Route::get('/recruitment/new-students', [NewStudentsController::class, 'index']);
     Route::post('/recruitment/new-students', [NewStudentsController::class, 'store']);
