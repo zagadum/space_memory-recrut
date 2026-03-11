@@ -15,8 +15,14 @@ class NewStudentsController extends Controller
         try {
             $students = DB::table('recruting_student')
                 ->where('deleted', 0)
-                ->where('enabled', 1)
-                ->select('id', 'name', 'surname', 'lastname', 'email', 'group_id', 'teacher_id', 'created_at')
+                ->where('enabled', 0)
+                ->select(
+                    'id', 'name', 'surname', 'lastname', 'email',
+                    'group_id', 'teacher_id', 'created_at',
+                    'parent_name', 'parent_surname', 'parent_phone', 'parent_passport',
+                    'dob', 'country', 'city', 'address', 'zip', 'apartment',
+                    'photo_consent', 'terms_accepted', 'privacy_accepted', 'reg_comment'
+                )
                 ->get();
             
             return response()->json([
@@ -29,6 +35,27 @@ class NewStudentsController extends Controller
                 'message' => $e->getMessage()
             ], 500);
         }
+    }
+
+    public function show($id)
+    {
+        $student = DB::table('recruting_student')
+            ->where('id', $id)
+            ->where('deleted', 0)
+            ->select(
+                'id', 'name', 'surname', 'lastname', 'email',
+                'group_id', 'teacher_id', 'created_at',
+                'parent_name', 'parent_surname', 'parent_phone', 'parent_passport',
+                'dob', 'country', 'city', 'address', 'zip', 'apartment',
+                'photo_consent', 'terms_accepted', 'privacy_accepted', 'reg_comment'
+            )
+            ->first();
+
+        if (!$student) {
+            return response()->json(['success' => false, 'message' => 'Not found'], 404);
+        }
+
+        return response()->json(['success' => true, 'data' => $student]);
     }
 
     public function store(Request $request)
