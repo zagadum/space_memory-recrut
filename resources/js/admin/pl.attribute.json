@@ -1,0 +1,78 @@
+{
+    "name": "Imię",
+    "first_name": "Imię",
+    "surname": "Nazwisko",
+    "parent1_surname": "Nazwisko rodzica",
+    "parent1_lastname": "Imię rodzica",
+    "lastname": "Imię",
+    "email": "E-mail",
+    "phone": "Telefon",
+    "fin_royalty": "Tantiema",
+    "fin_pr": "Odliczenie PR",
+    "fin_legal": "Numer umowy",
+    "fin_vid": "Rodzaj działalności prawnej",
+    "fin_address": "Adres siedziby prawnej",
+    "fin_regno": "Numer rejestracyjny",
+    "fin_price_aboniment": "Cena abonamentu",
+    "dob": "Data urodzenia",
+    "address": "Adres grupy",
+    "language": "Język",
+    "country": "Kraj",
+    "region": "Region",
+    "city": "Miasto",
+    "currency": "Waluta",
+    "The form contains invalid fields.": "Formularz zawiera nieprawidłowe pola.",
+    "test22": "aaaaaaaaaa",
+    "warning": "Uwaga!",
+    "max_num": "Maksymalna ilość:",
+
+
+
+    "duplicateDialog": {
+        "title": "Ostrzeżenie!",
+        "text": "Czy na pewno chcesz zduplikować ten element?",
+        "yes": "Tak, zduplikować.",
+        "no": "Nie, anulować.",
+        "success_title": "Sukces!",
+        "success": "Element został pomyślnie zduplikowany.",
+        "error_title": "Błąd!",
+        "error": "Wystąpił błąd."
+    },
+    "deleteDialog": {
+        "title": "Ostrzeżenie!",
+        "text": "Czy na pewno chcesz usunąć ten element?",
+        "yes": "Tak, usunąć.",
+        "no": "Nie, anulować.",
+        "success_title": "Sukces!",
+        "success": "Element został pomyślnie usunięty.",
+        "error_title": "Błąd!",
+        "error": "Wystąpił błąd."
+    },
+    "deleteItemsDialog": {
+        "title": "Ostrzeżenie!",
+        "text": "Czy na pewno chcesz usunąć?",
+        "yes": "Dobrze",
+        "no": "Anulować",
+        "success_title": "Sukces!",
+        "success": "Element został pomyślnie usunięty.",
+        "error_title": "Błąd!",
+        "error": "Wystąpił błąd."
+    },
+    "UnBlokingItem": {
+        "text": "Odblokować?",
+        "yes": "Dobrze",
+        "no": "Anulować"
+    },
+    "BlokingItem": {
+        "text": "Czy na pewno chcesz zablokować?",
+        "reason": "Powód blokowania",
+        "yes": "Zablokować",
+        "no": "Anulować"
+    },
+    "BlokingItemSm": {
+        "text": "Czy na pewno chcesz zablokować?",
+        "reason": "Powód blokowania",
+        "yes": "Zablokować",
+        "no": "Anulować"
+    }
+}

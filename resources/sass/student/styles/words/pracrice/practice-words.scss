@@ -1,0 +1,757 @@
+/* Adaptive font */
+
+$maxWidth: 1440;
+
+@mixin adaptive-font($pcSize, $mobSize) {
+    $addSize: $pcSize - $mobSize;
+    $maxWidth: $maxWidth - 320;
+    font-size: calc(#{$mobSize + px} + #{$addSize} * ((100vw - 320px) / #{$maxWidth}));
+}
+
+$maxheight: 900;
+
+@mixin adaptive-top($pcSize, $mobSize) {
+    $addSize: $pcSize + $mobSize;
+    $maxWidth: $maxheight - 600;
+    top: calc(#{$mobSize + px} + #{$addSize} * ((100vh - 600px) / #{$maxheight}));
+}
+
+//--------------------------------------------------------------------------------------------------//
+/* Adaptive */
+
+    $maxWidth: 1440;
+    $maxWidthContainer: 1439;
+
+    @mixin adaptive-value($property, $startSize, $minSize, $type) {
+        $addSize: $startSize - $minSize;
+
+        @if $type==1 {
+            //Только если меньше контейнера
+            #{$property}: $startSize + px;
+            @media (max-width: #{$maxWidthContainer + px}) {
+                #{$property}: calc(#{$minSize + px} + #{$addSize} * ((100vw - 320px) / #{$maxWidthContainer - 320}));
+            }
+
+        } @else if $type==2 {
+            //Только если больше контейнера
+            #{$property}: $startSize + px;
+            @media (min-width: #{$maxWidthContainer + px}) {
+                #{$property}: calc(#{$minSize + px} + #{$addSize} * ((100vw - 320px) / #{$maxWidth - 320}));
+            }
+
+        } @else {
+            //Всегда
+            #{$property}: calc(#{$minSize + px} + #{$addSize} * ((100vw - 320px) / #{$maxWidth - 320}));
+        }
+    }
+
+//--------------------------------------------------------------------------------------------------//
+//form-show
+
+    .words-card-sub {
+        width: 90%;
+        height: 100%;
+
+            .words-card-subtitle {
+
+                height: 100%;
+                opacity: 0.4;
+            }
+
+            .left-sub {
+                justify-content: end;
+            }
+
+            .right-sub {
+                justify-content: normal;
+            }
+
+            .words-card-line {
+                width: 4%;
+                height: 100%;
+                opacity: 0.8;
+            }
+
+            .words-card-line:before {
+                content: "";
+                width: 2px;
+                height: 100%;
+                background: #00B0CB;
+                border-radius: 3px;
+            }
+    }
+
+    .card__words-practice {
+        width: 100%;
+        height: 100%;
+        flex-direction: column;
+
+            .card__presentation {
+                width: 90%;
+                height: 50%;
+                background: #FFFFFF;
+                border: 2px solid rgba(0, 176, 203, 0.4);
+                border-radius: 37px;
+                padding: 40px;
+
+                    .card__presentation-box {
+                        width: 100%;
+                        height: 100%;
+                        background: rgba(255, 255, 255, 0.2);
+                        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25), inset 0px 0px 4px rgba(0, 176, 203, 1);
+                        border-radius: 13px;
+                        font-family: 'Days One', sans-serif;
+                        font-style: normal;
+                        font-weight: 400;
+                        font-size: 40px;
+                        line-height: 32px;
+                        text-align: center;
+                        font-variant: small-caps;
+                        color: #EB8B12;
+                    }
+            }
+
+            .card__presentation-chain {
+                width: 68% !important;
+            }
+
+            .card__account {
+                width: 100%;
+                height: 25%;
+                position: relative;
+                justify-content: start;
+
+                    .card__account-num {
+                        width: 15%;
+                        height: 30%;
+                        font-family: 'Days One', sans-serif;
+                        font-style: normal;
+                        font-weight: 400;
+                        font-size: 32px;
+                        line-height: 32px;
+                        text-align: center;
+                        font-variant: small-caps;
+                        color: #00B0CB;
+                    }
+            }
+    }
+
+//--------------------------------------------------------------------------------------------------//
+//form-edit
+
+    .card__selection {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+
+            .card__selection-box {
+                width: 100%;
+                height: 80%;
+                display: flex;
+                flex-direction: column;
+
+
+                    .card__selection-box-second {
+                        width: 100%;
+                        height: 90%;
+                        display: flex;
+
+                        .card__selection-container {
+                            width: 50%;
+                            height: 100%;
+
+                            .card__selection-border {
+                                height: 100%;
+                                border: 2px solid rgba(0, 176, 203, 0.4);
+                                border-radius: 16px;
+                                padding-top: 22px;
+                                padding-bottom: 22px;
+                                @include adaptive-value("padding-left", 24, -22 ,1);
+                                @include adaptive-value("padding-right", 24, -22 ,1);
+
+                                .card__selection-content {
+                                    width: 100%;
+                                    height: 100%;
+                                    flex-direction: column;
+
+                                    .selection__box {
+                                        width: 100%;
+                                        height: 24%;
+                                        display: flex;
+                                        position: relative;
+                                        margin: 13px 0px;
+
+                                        .selection__cell {
+                                            @include adaptive-value("width", 200, 74 ,1);
+                                            height: 85%;
+                                            position: relative;
+
+                                                .selection-words-number {
+                                                    width: 32px;
+                                                    height: 24px;
+                                                    position: absolute;
+                                                    left: -5px;
+                                                    top: -18px;
+                                                    font-family: 'Days One', sans-serif;
+                                                    font-style: normal;
+                                                    font-weight: 400;
+                                                    line-height: 32px;
+                                                    text-align: center;
+                                                    font-variant: small-caps;
+                                                    color: rgba(6, 34, 48, 0.8);
+                                                }
+
+                                                .selection__question-content {
+                                                    @include adaptive-value("width", 191, 59 ,1);
+                                                    height: 95%;
+                                                    background: rgba(254, 255, 255, 0.2);
+                                                    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25), inset 0px 0px 4px #00B0CB;
+                                                    border-radius: 8px;
+                                                    font-family: 'Days One', sans-serif;
+                                                    font-style: normal;
+                                                    font-weight: 400;
+                                                    padding: 5px;
+                                                    line-height: 32px;
+                                                    text-align: center;
+                                                    font-variant: small-caps;
+                                                    @include adaptive-value("font-size", 18, 14 ,1);
+                                                    color: rgba(6, 34, 48, 0.8);
+                                                    overflow: hidden;
+                                                    overflow-wrap: normal;
+                                                    word-wrap: normal;
+                                                    word-break: normal;
+                                                    line-break: auto;
+                                                    hyphens: none;
+                                                }
+
+                                                .selection__cell-content {
+                                                    @include adaptive-value("width", 191, 59 ,1);
+                                                    height: 95%;
+                                                    border-radius: 47px;
+                                                    position: relative;
+
+                                                        .drag__item {
+                                                            position: absolute;
+                                                            top: 0;
+                                                            left: 0;
+                                                        }
+                                                }
+                                        }
+
+                                        .selection__line {
+                                            @include adaptive-value("width", 26, 20 ,1);
+                                            height: 100%;
+                                            opacity: 0.8;
+                                        }
+
+                                        .selection__line:before {
+                                            content: "";
+                                            @include adaptive-value("width", 24, 18 ,1);
+                                            height: 2px;
+                                            background: #00B0CB;
+                                            border-radius: 3px;
+                                        }
+
+                                        .selection__answer {
+                                            width: 50%;
+                                            height: 100%;
+
+                                                .selection__answer-background {
+                                                    width: 90%;
+                                                    height: 80%;
+                                                    border-radius: 47px;
+                                                    box-shadow: none;
+
+                                                        .selection__answer-cell {
+                                                        width: 100%;
+                                                        height: 100%;
+                                                        background: rgba(254, 255, 255, 0.2);
+                                                        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25), inset 0px 0px 4px #EB8B12;
+                                                        border-radius: 47px;
+                                                        position: relative;
+                                                        font-size: 17pt;
+                                                        overflow: hidden;
+                                                        overflow-wrap: normal;
+                                                        word-wrap: normal;
+                                                        word-break: normal;
+                                                        line-break: auto;
+                                                        hyphens: none;
+
+                                                            .selection__answer-text {
+                                                                position: absolute;
+                                                                top: 50%;
+                                                                left: 50%;
+                                                                margin-right: -50%;
+                                                                transform: translate(-50%, -50%);
+                                                                font-family: 'Days One', sans-serif;
+                                                                font-style: normal;
+                                                                font-weight: 400;
+                                                                line-height: 32px;
+                                                                text-align: center;
+                                                                font-variant: small-caps;
+                                                                color: rgba(6, 34, 48, 0.8);
+                                                                padding: 10px;
+                                                                @include adaptive-font(18, 14);
+                                                            }
+                                                    }
+                                                }
+                                        }
+                                    }
+                                }
+
+                                .card__selection-content-right {
+                                    width: 100%;
+                                    height: 100%;
+                                    display: flex;
+                                    flex-direction: column;
+                                    justify-content: space-around;
+
+                                        .drag__item-box {
+                                            width: 100%;
+                                            height: 24%;
+                                            display: flex;
+                                            justify-content: space-around;
+                                            position: relative;
+
+                                                .drag__cell {
+                                                    @include adaptive-value("width", 191, 59 ,1);
+                                                    height: 85%;
+                                                    display: flex;
+                                                    align-items: center;
+                                                }
+                                        }
+                                }
+                            }
+
+                            .card__selection-border-left {
+                                width: 90%;
+                            }
+
+                            .card__selection-border-right {
+                                width: 85%;
+                                padding-top: 22px;
+                                padding-bottom: 22px;
+                                @include adaptive-value("padding-right", 14, -3 ,1);
+                                @include adaptive-value("padding-left", 14, -3 ,1);
+                            }
+                        }
+                    }
+
+                    .box-shadow-js {
+                        box-shadow: 0px 2px 4px rgb(0 0 0 / 25%), inset 0px 0px 4px #00b0cb;
+                    }
+
+
+                    //form-edit-results
+
+                    .card__practice-results {
+                        width: 65%;
+                        height: 90%;
+                        border: 2px solid rgba(0, 176, 203, 0.4);
+                        border-radius: 37px;
+                        padding: 28px 30px 5px 30px;
+
+                            .card__results {
+                                width: 100%;
+                                height: 100%;
+                                overflow-y: auto;
+                                overflow-x: hidden;
+
+                                    .card__results-row {
+                                        width: 100%;
+                                        height: 23%;
+                                        display: flex;
+                                        margin-top: 9px;
+
+                                            .card__results-box {
+                                                width: 47%;
+                                                height: 100%;
+                                                position: relative;
+                                                font-family: 'Days One', sans-serif;
+                                                font-style: normal;
+                                                font-weight: 400;
+                                                line-height: 32px;
+                                                text-align: center;
+                                                font-variant: small-caps;
+                                                color: rgba(6, 34, 48, 0.8);
+
+                                                    .card__results-number {
+                                                        width: 32px;
+                                                        height: 24px;
+                                                        position: absolute;
+                                                        left: 0px;
+                                                        top: -4px;
+                                                        //@include adaptive-font(18, 15);
+                                                    }
+
+                                                    .card__results-container {
+                                                        width: 90%;
+                                                        height: 70%;
+                                                        background: #FEFFFF;
+                                                        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25), inset 0px 0px 4px #00B0CB;
+                                                        border-radius: 41px;
+
+                                                            .card__results-container-text {
+                                                                width: 86%;
+                                                                height: 100%;
+                                                                @include adaptive-value("font-size", 17, 15 ,1);
+                                                                overflow: hidden;
+                                                                overflow-wrap: normal;
+                                                                word-wrap: normal;
+                                                                word-break: normal;
+                                                                line-break: auto;
+                                                                hyphens: none;
+                                                            }
+                                                    }
+
+                                                    .card__results-correct-answer {
+                                                        position: absolute;
+                                                        top: -17px;
+                                                        color: #00B0CB;
+                                                        @include adaptive-value("font-size", 17, 16 ,1);
+                                                    }
+                                            }
+
+                                            .card__results-line {
+                                                width: 6%;
+                                                height: 100%;
+                                                opacity: 0.8;
+                                            }
+
+                                            .card__results-line:before {
+                                                content: "";
+                                                width: 24px;
+                                                height: 2px;
+                                                background: #00B0CB;
+                                                border-radius: 3px;
+                                            }
+                                    }
+                            }
+                    }
+
+                    //--------------------------------------------------------------------------------------------------//
+
+            }
+    }
+
+    .card__selection-content::-webkit-scrollbar {
+        background: rgba(0, 176, 203, 0.4);
+        border-radius: 5px;
+        width: 4px;
+        height: 332px;
+    }
+
+    .card__selection-content::-webkit-scrollbar-thumb {
+        width: 8px;
+        height: 101px;
+        background: #EB8B12;
+        border-radius: 5px;
+    }
+
+    .card__results::-webkit-scrollbar {
+        background: rgba(0, 176, 203, 0.4);
+        border-radius: 5px;
+        width: 4px;
+        height: 332px;
+    }
+
+    .card__results::-webkit-scrollbar-thumb {
+        width: 8px;
+        height: 101px;
+        background: #EB8B12;
+        border-radius: 5px;
+    }
+
+    .warning-for-draggable {
+        width: 100%;
+
+            .warning__text {
+                width: 100%;
+                height: 100%;
+                font-family: 'Days One', sans-serif;
+                font-style: normal;
+                font-weight: 400;
+                @include adaptive-font(18, 15);
+                line-height: 32px;
+                text-align: center;
+                font-variant: small-caps;
+                color: rgba(6, 34, 48, 0.8);
+                opacity: 0.4;
+
+                    img {
+                        opacity: 0.4;
+                        height: 67%;
+                        margin-right: 12px;
+                    }
+            }
+    }
+
+    .warning-for-draggable-first {
+        height: 10%;
+    }
+
+    .warning-for-draggable-second {
+        height: 30%;
+    }
+
+    .hide {
+        display: none;
+    }
+
+    .hovered {
+        background-color: #919191;
+    }
+//--------------------------------------------------------------------------------------------------//
+//form-edit-
+
+    .card__diction {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+
+            .card__diction-box {
+                width: 100%;
+                height: 80%;
+                display: flex;
+                flex-direction: column;
+
+                    //form-edit- -results
+
+                    .diction__results {
+                        width: 95%;
+                        height: 100%;
+                        border: 2px solid rgba(0, 176, 203, 0.4);
+                        border-radius: 16px;
+                        padding: 10px;
+
+                            .diction__results-box {
+                                width: 100%;
+                                height: 100%;
+                                overflow-y: auto;
+                                overflow-x: hidden;
+
+                                    .diction__results-container {
+                                        width: 100%;
+                                        height: 33.3333333333%;
+                                        display: flex;
+
+                                            .diction__results-cell {
+                                                width: 20%;
+                                                height: 100%;
+                                                position: relative;
+                                                font-family: 'Days One', sans-serif;
+                                                font-style: normal;
+                                                font-weight: 400;
+                                                line-height: 32px;
+                                                text-align: center;
+                                                font-variant: small-caps;
+                                                color: rgba(6, 34, 48, 0.8);
+
+                                                    .diction__results-number {
+                                                        width: 32px;
+                                                        height: 24px;
+                                                        @include adaptive-font(18, 15);
+                                                        position: absolute;
+                                                        left: -9px;
+                                                    }
+
+                                                    .diction__results-results {
+                                                        width: 81%;
+                                                        height: 45%;
+                                                        position: relative;
+
+                                                            .diction__results-results-border {
+                                                                width: 100%;
+                                                                height: 100%;
+                                                                box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25), inset 0px 0px 4px #EB8B12;
+                                                                border-radius: 8px;
+                                                                padding: 10px;
+                                                                @include adaptive-value("font-size", 17, 15 ,1);
+                                                                max-height: 50pt;
+                                                                line-height: 1em;
+                                                                overflow: hidden;
+                                                                overflow-wrap: normal;
+                                                                word-wrap: normal;
+                                                                word-break: normal;
+                                                                line-break: auto;
+                                                                hyphens: none;
+                                                            }
+
+                                                            .diction__results-correct-answer {
+                                                                position: absolute;
+                                                                top: -26px;
+                                                                color: #00B0CB;
+                                                                @include adaptive-font(18, 14);
+                                                            }
+                                                    }
+                                            }
+                                    }
+                            }
+                    }
+
+                    //--------------------------------------------------------------------------------------------------//
+
+                    .diction__box {
+                        width: 100%;
+
+                            .diction__container {
+                                border: 2px solid rgba(0, 176, 203, 0.4);
+                                border-radius: 16px;
+
+                                    .diction__container-row {
+                                        width: 95%;
+                                        display: flex;
+
+                                            .diction__cell {
+                                                width: 20%;
+                                                height: 70%;
+                                                position: relative;
+                                                font-family: 'Days One', sans-serif;
+                                                font-style: normal;
+                                                font-weight: 400;
+                                                line-height: 32px;
+                                                text-align: center;
+                                                font-variant: small-caps;
+                                                color: rgba(6, 34, 48, 0.8);
+
+                                                    .diction__cell-number {
+                                                        position: absolute;
+                                                        left: -5px;
+                                                        @include adaptive-font(18, 14);
+                                                    }
+
+                                                    .diction__cell-border-top {
+                                                        width: 80%;
+                                                        height: 60%;
+                                                        border-radius: 8px;
+                                                        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25), inset 0px 0px 4px #00B0CB;
+                                                        position: relative;
+
+                                                            .diction__cell-border-bottom {
+                                                                position: absolute;
+                                                                top: 0;
+                                                                left: 0;
+                                                            }
+                                                    }
+
+                                                    .diction__cell-cell {
+                                                        width: 80%;
+                                                        height: 82%;
+                                                        border-radius: 8px;
+                                                    }
+                                            }
+                                    }
+
+                                    .diction__container-row-top {
+                                        height: 90%;
+                                    }
+
+                                    .diction__container-row-bottom {
+                                        height: 35%;
+                                    }
+                            }
+
+                            .diction__container-top {
+                                width: 100%;
+                                height: 90%;
+                            }
+
+                            .diction__container-bottom {
+                                width: 100%;
+                                height: 90%;
+                                flex-direction: column;
+                                background: rgba(23, 183, 208, 0.04);
+                            }
+                    }
+
+                    .diction__top {
+                        height: 35%;
+                    }
+
+                    .diction__bottom {
+                        height: 65%;
+                    }
+            }
+    }
+
+    .diction__results-box::-webkit-scrollbar {
+        background: rgba(0, 176, 203, 0.4);
+        border-radius: 5px;
+        width: 4px;
+        height: 332px;
+    }
+
+    .diction__results-box::-webkit-scrollbar-thumb {
+        width: 8px;
+        height: 101px;
+        background: #EB8B12;
+        border-radius: 5px;
+    }
+
+    .drag__item {
+        width: 100%;
+        height: 100%;
+        cursor: move;
+        background: rgba(254, 255, 255, 1);
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25), inset 0px 0px 4px #EB8B12;
+        border-radius: 47px;
+        font-family: 'Days One', sans-serif;
+        font-style: normal;
+        font-weight: 400;
+        @include adaptive-value("font-size", 18, 14 ,1);
+        line-height: 32px;
+        font-variant: small-caps;
+        color: rgba(6, 34, 48, 0.8);
+    }
+
+.diction__cell-border {
+    width: 100%;
+    border-radius: 8px;
+}
+
+.diction__cell-border-bottom {
+    height: 100%;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25), inset 0px 0px 4px #EB8B12;
+    background: #FFFFFF;
+    cursor: pointer;
+
+    .diction__cell-border-text {
+        width: 100%;
+        height: 100%;
+        padding: 10px;
+        font-family: 'Days One', sans-serif;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 32px;
+        text-align: center;
+        font-variant: small-caps;
+        color: rgba(6, 34, 48, 0.8);
+        @include adaptive-value("font-size", 15, 15 ,1);
+        overflow: hidden;
+        overflow-wrap: normal;
+        word-wrap: normal;
+        word-break: normal;
+        line-break: auto;
+        hyphens: none;
+    }
+}
+
+    .gu-transit {
+        opacity: 0 !important;
+    }
+/*
+    .gu-mirror {
+        opacity: 1 !important;
+    }
+
+ */
+
+    .not-drop {
+        background: yellow;
+        color: red;
+        transition: all 0.5s;
+    }
+
+//--------------------------------------------------------------------------------------------------//

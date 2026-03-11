@@ -1,0 +1,56 @@
+// Bootstrap Layout Styles for Admin
+
+html,
+body {
+    height: 100%;
+}
+
+/* Desktop Sidebar */
+.sidebar-desktop {
+    height: 100vh;
+    position: sticky;
+    top: 0;
+    overflow-y: auto;
+}
+
+/* Logo Box */
+.logo-box {
+    border: 2px solid #007bff;
+    color: #007bff;
+}
+
+/* Content Box Placeholder */
+.content-box {
+    min-height: 300px;
+    color: #6c757d;
+}
+
+/* Mobile Menu Overlay */
+#mobile-menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2000;
+    background-color: #fff;
+    overflow-y: auto;
+}
+
+/* Ensure content doesn't get hidden behind fixed bottom navbar on mobile */
+@media (max-width: 991.98px) {
+    body {
+        padding-bottom: 80px;
+    }
+}
+
+/* Admin Layout Specific */
+.admin-layout {
+    .container-fluid {
+        padding: 0;
+    }
+
+    .content-area {
+        background-color: #EDEFEF;
+    }
+}

@@ -1,0 +1,1905 @@
+/* Remove outline on the forms and links*/
+
+:active, :hover, :focus {
+    outline: 0;
+    outline-offset: 0;
+}
+
+img {
+    object-fit: cover;
+}
+
+//--------------------------------------------------------------------------------------------------//
+/* The loader */
+
+.preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1020;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: radial-gradient(37.08% 94.93% at 48.02% 47.78%, #082B3C 0%, #05212E 100%);
+    transition: 1s all;
+    opacity: 1;
+    visibility: visible;
+}
+
+.done {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.pre-loader {
+    display: block;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    border-top-color: #16a085;
+    animation: spin 1.7s linear infinite;
+    z-index: 11;
+}
+
+.pre-loader:before {
+    content: "";
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    right: 5px;
+    bottom: 5px;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    border-top-color: #EB8B12;
+    animation: spin-reverse .6s linear infinite;
+}
+
+.pre-loader:after {
+    content: "";
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    right: 15px;
+    bottom: 15px;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    border-top-color: #1FFCFF;
+    animation: spin 1s linear infinite;
+}
+
+
+@keyframes spin-reverse {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(-360deg);
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+//--------------------------------------------------------------------------------------------------//
+/* Adaptive font */
+
+$maxWidth: 1440;
+
+@mixin adaptive-font($pcSize, $mobSize) {
+    $addSize: $pcSize - $mobSize;
+    $maxWidth: $maxWidth - 320;
+    font-size: calc(#{$mobSize + px} + #{$addSize} * ((100vw - 320px) / #{$maxWidth}));
+}
+
+//--------------------------------------------------------------------------------------------------//
+/* Adaptive */
+$maxWidth: 1440;
+$maxWidthContainer: 1439;
+
+@mixin adaptive-value($property, $startSize, $minSize, $type) {
+    $addSize: $startSize - $minSize;
+
+    @if $type==1 {
+        //Только если меньше контейнера
+        #{$property}: $startSize + px;
+        @media (max-width: #{$maxWidthContainer + px}) {
+            #{$property}: calc(#{$minSize + px} + #{$addSize} * ((100vw - 320px) / #{$maxWidthContainer - 320}));
+        }
+
+    } @else if $type==2 {
+        //Только если больше контейнера
+        #{$property}: $startSize + px;
+        @media (min-width: #{$maxWidthContainer + px}) {
+            #{$property}: calc(#{$minSize + px} + #{$addSize} * ((100vw - 320px) / #{$maxWidth - 320}));
+        }
+
+    } @else {
+        //Всегда
+        #{$property}: calc(#{$minSize + px} + #{$addSize} * ((100vw - 320px) / #{$maxWidth - 320}));
+    }
+}
+
+//--------------------------------------------------------------------------------------------------//
+//изменения в main
+
+.main .container-fluid {
+    padding: 0px 0px !important;
+}
+
+main.hideMenu {
+    margin: 0px !important;
+}
+
+//--------------------------------------------------------------------------------------------------//
+//изменения в auth
+
+.auth-body {
+    padding-top: 44px !important;
+}
+
+//--------------------------------------------------------------------------------------------------//
+// изменения в admin
+
+.form-group {
+    margin-bottom: 0px !important;
+    margin-top: 0px !important;
+}
+
+.admin-table {
+    padding-left: 15px;
+}
+
+.admin-form {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.admin_card-header_nav {
+    height: 0px !important;
+}
+
+//--------------------------------------------------------------------------------------------------//
+
+.student-dashboard__main-hero {
+    height: 100vh;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 99;
+
+    img {
+        max-width: 100%;
+        height: 100%;
+        -o-object-fit: cover;
+        object-fit: cover;
+        vertical-align: middle;
+    }
+}
+
+.student-dashboard {
+    padding-top: 2.9%;
+    height: 100vh;
+    //padding-left: 35%;
+
+    @media screen and (max-width: 1400px) {
+        height: unset;
+    }
+}
+
+.student-dashboard_info {
+    display: flex;
+    box-sizing: border-box;
+    flex-direction: column;
+    align-items: center;
+    width: 49%;
+    z-index: 100;
+}
+
+.student-dashboard_info-avatar {
+    margin-right: 36px !important;
+
+    img {
+        width: 93% !important;
+    }
+}
+
+.student-dashboard_info-name {
+    max-width: calc(100% - 220px) !important;
+}
+
+.student-dashboard_info-footer {
+    width: 84%;
+    margin: 20px;
+}
+
+.admin-table {
+    padding-left: 76px;
+}
+
+.statistic_fuel-content p {
+    display: flex;
+    justify-content: center;
+    @include adaptive-font(12, 11);
+}
+
+.statistic_fuel-content {
+    padding-left: 1px;
+}
+
+.statistic_games-content p {
+    display: flex;
+    justify-content: center;
+    font-size: 11px !important;
+}
+
+.student-dashboard_info-hometask p {
+    @include adaptive-font(18, 12);
+}
+
+label {
+    margin: 0px;
+}
+
+button:active, button:focus {
+    outline: none !important;
+}
+
+button::-moz-focus-inner {
+    border: 0 !important;
+}
+
+//--------------------------------------------------------------------------------------------------//
+//flex box
+
+.flex-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.dis__flex {
+    display: flex;
+}
+
+//--------------------------------------------------------------------------------------------------//
+// create
+
+.adaptive__warning {
+    position: fixed;
+    inset: 0;
+    z-index: 1200;
+    background: #051F2C;
+    flex-direction: column;
+    display: none;
+
+    figure {
+        width: 149px;
+        height: 132px;
+        margin-bottom: 10px;
+
+        img {
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+    h1 {
+        font-family: "Days One", sans-serif;
+        font-style: normal;
+        color: #ffffff;
+    }
+
+    p {
+        font-family: "Days One", sans-serif;
+        font-style: normal;
+        color: #ffffff;
+    }
+}
+
+@media only screen and (orientation: portrait) and (max-width: 991px) {
+    .adaptive__warning {
+        display: flex;
+    }
+}
+
+
+.training__form {
+    width: 100%;
+    height: 100vh;
+    background-image: url('/images/training_background.svg');
+    @include adaptive-value("padding", 40, 20, 1);
+
+    .training__block {
+        width: 100%;
+        height: 100%;
+        min-height: 95vh;
+        position: relative;
+
+        .training__top {
+            width: 182px;
+            height: 68px;
+            display: flex;
+            position: absolute;
+            top: 0;
+            left: 0;
+
+            .training__top-left {
+                width: 91px;
+                height: 34px;
+                color: black;
+                display: flex;
+                align-items: center;
+                justify-content: end;
+
+                .training__top-back {
+                    width: 100%;
+
+                    p {
+                        font-family: "Days One", sans-serif;
+                        font-style: normal;
+                        font-weight: 400;
+                        font-size: 16px;
+                        line-height: 100%;
+                        display: flex;
+                        margin: 0px 0px 0px 4px;
+                        padding-bottom: 3px;
+                        justify-content: center;
+                        align-items: center;
+                        font-variant: small-caps;
+                        color: #FEFFFF;
+                    }
+                }
+            }
+
+            .training__top-right {
+                width: 91px;
+                display: flex;
+                justify-content: center;
+
+                img {
+                    height: 34px;
+                }
+            }
+        }
+
+        .training__container {
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(to bottom right, rgb(0, 176, 203), rgba(0, 176, 203, 0));
+            clip-path: polygon(0 100%, 0 68px, 35px 39px, 140px 39px, 182px 0, 96% 0, 100% 53px, 100% 100%);
+            padding: 4px;
+
+            .training__card {
+                width: 100%;
+                height: 100%;
+                background: white;
+                clip-path: polygon(0 100%, 0 68px, 35px 39px, 140px 39px, 182px 0, 96% 0, 100% 53px, 100% 100%);
+                display: flex;
+
+                .training__card-left {
+                    width: 15%;
+                    height: 100%;
+                    display: flex;
+                    justify-content: end;
+                    flex-direction: column;
+
+                    @media (max-width: 1182px) {
+                        width: 12%
+                    }
+
+                    .card__box {
+                        width: 100%;
+                        height: 94%;
+                        display: flex;
+                        justify-content: start;
+                        align-items: center;
+
+                        .card__box-side {
+                            width: 90px;
+                            height: 90%;
+                            display: flex;
+                            justify-content: center;
+                        }
+                    }
+                }
+
+                .lesson__left {
+                    width: 6% !important; //10%
+                }
+
+                .training__card-center {
+                    width: 65%;
+                    height: 100%;
+
+                    @media (max-width: 1182px) {
+                        width: 770px;
+                    }
+
+                    .card__header {
+                        width: 100%;
+                        height: 21%;
+                        align-items: normal;
+                        flex-direction: column;
+
+                        .card__header-logo {
+                            width: 100%;
+                            height: 70%;
+
+                            img {
+                                height: 100%;
+                            }
+                        }
+
+                        .card__title {
+                            width: 100%;
+                            height: 30%;
+                            font-family: "Days One", sans-serif;
+                            font-style: normal;
+                            line-height: 26px;
+                            font-weight: 400;
+                            @include adaptive-value("font-size", 32, 24, 1);
+                            text-align: center;
+                            font-variant: small-caps;
+                            color: rgba(6, 34, 48, 0.8);
+                        }
+                    }
+
+                    .card__header-sub {
+                        width: 100%;
+                        height: 30%;
+                        align-items: normal;
+                        flex-direction: column;
+
+                        .card__header-logo-sub {
+                            width: 100%;
+                            height: 57%;
+
+                            img {
+                                height: 100%;
+                            }
+                        }
+
+                        .card__title-sub {
+                            width: 100%;
+                            height: 30%;
+                            font-family: "Days One", sans-serif;
+                            font-style: normal;
+                            line-height: 26px;
+                            font-weight: 400;
+                            @include adaptive-value("font-size", 32, 24, 1);
+                            text-align: center;
+                            font-variant: small-caps;
+                            color: rgba(6, 34, 48, 0.8);
+                        }
+
+                        .card__subtitle {
+                            width: 100%;
+                            height: 13%;
+                            font-family: 'Days One', sans-serif;
+                            font-style: normal;
+                            font-weight: 400;
+                            @include adaptive-value("font-size", 18, 8, 1);
+                            line-height: 32px;
+                            text-align: center;
+                            font-variant: small-caps;
+                            color: rgba(6, 34, 48, 0.8);
+                        }
+                    }
+
+                    .card__content {
+                        width: 100%;
+                        height: 79%;
+                        padding-top: 20px;
+                    }
+
+                    .card__content-flex {
+                        display: flex;
+                        justify-content: center;
+                    }
+
+                    .card__content-sub {
+                        width: 100%;
+                        height: 70%;
+                        padding-top: 15px;
+                        position: relative;
+
+                        .content__wrap {
+                            .content__box {
+                                width: 100%;
+                                height: 100%;
+                                @include main-border-bg;
+                                padding: 15px;
+                            }
+
+                            .content {
+                                width: 100%;
+                                height: 100%;
+                                padding: 0px 0px 10px 0px;
+                                overflow-y: scroll;
+                                overflow-x: hidden;
+
+                                &[data-scroll-mode="off"] {
+                                    overflow: auto;
+                                }
+
+                                &[data-scroll-mode="on"] {
+                                    overflow: auto;
+                                }
+
+                                &::-webkit-scrollbar {
+                                    background: rgba(0, 176, 203, 0.4);
+                                    border-radius: 5px;
+                                    width: 6px;
+                                }
+
+                                &::-webkit-scrollbar-thumb {
+                                    background: #EB8B12;
+                                    border-radius: 5px;
+                                }
+
+                                &:root {
+                                    scrollbar-width: thin;
+                                    scrollbar-color: #EB8B12 rgba(0, 176, 203, 0.4);
+                                }
+                            }
+
+                            #helpDiv {
+                                .content {
+                                    height: 120px;
+                                    overflow-y: hidden;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                .lesson__center {
+                    width: 88% !important; //80%
+                }
+            }
+        }
+
+        .training__card-right {
+            width: 30%;
+            height: 100%;
+            position: absolute;
+            right: -30px;
+            pointer-events: none;
+
+            .card__top {
+                width: 100%;
+                height: 29%;
+                align-items: end;
+
+                .card__top-block {
+                    width: 218px;
+                    height: 149px;
+
+                    .card__top-subtract {
+                        width: 100%;
+                        height: 100%;
+                        background-image: linear-gradient(to bottom right, rgb(0, 176, 203), rgba(0, 176, 203, 0));
+                        clip-path: polygon(0 123px, 0 25px, 20px 0, 100% 0, 100% 123px, 154px 123px, 136px 100%, 118px 123px);
+                        padding: 4px;
+
+                        .card__top-background {
+                            width: 100%;
+                            height: 100%;
+                            background: #FFFFFF;
+                            clip-path: polygon(0 115px, 0 25px, 20px 0, 100% 0, 100% 115px, 148px 115px, 132px 98%, 116px 115px);
+
+                            .card__top-text {
+                                width: 100%;
+                                height: 100%;
+                                padding: 0px 10px 23px 10px;
+                                font-family: 'Days One', sans-serif;
+                                font-style: normal;
+                                font-weight: 400;
+                                font-size: 18px;
+                                line-height: 32px;
+                                text-align: center;
+                                font-variant: small-caps;
+                                color: #062230;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .card__down {
+                width: 100%;
+                height: 71%;
+
+                .card__down-main-hero {
+                    width: 100%;
+                    height: 100%;
+                    justify-content: end;
+
+                    img {
+                        height: 89%;
+                    }
+
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 1182px) {
+
+    .training__form .training__block .training__card-right {
+        display: none;
+    }
+
+}
+
+.workout-container {
+    width: 82%;
+    height: 100%;
+    justify-content: flex-start;
+    flex-direction: column;
+    position: relative;
+}
+
+[type=checkbox]:not(:checked) + label:before, [type=checkbox]:checked + label:before {
+    top: 50%;
+    left: 50%;
+    transform: translate(-90%, -50%);
+}
+
+[type=checkbox]:not(:checked) + label:after, [type=checkbox]:checked + label:after {
+    top: 50%;
+    left: 50%;
+    transform: translate(-10%, 27%);
+}
+
+.training_card-body {
+    width: 100%;
+    height: 80%;
+}
+
+.training__homework-wrap {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    height: 100%;
+    gap: 15px;
+
+    .training__border {
+        width: 82%;
+        max-width: 1000px;
+        min-height: 45px;
+        background: rgba(23, 183, 208, 0.06);
+        border-radius: 10px;
+        padding: 10px;
+        display: grid;
+
+        .training__index-title {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 0px 0px 0px 3px;
+            font-family: "Days One", sans-serif;
+            font-style: normal;
+            font-weight: 500;
+            @include adaptive-value("font-size", 14, 11, 1);
+            line-height: 16px;
+            color: rgba(6, 34, 48, 0.8);
+
+            &:nth-child(2) {
+                text-align: center;
+            }
+        }
+
+        .training__index-title-center {
+            justify-content: center;
+            text-align: center;
+        }
+
+        .training__index-select {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .training__index-checkbox-wrap {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+
+            .training__index-checkbox {
+                [type=checkbox]:not(:checked) + label:before, [type=checkbox]:checked + label:before {
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-100%, -50%);
+                }
+
+                [type=checkbox]:not(:checked) + label:after, [type=checkbox]:checked + label:after {
+                    top: 0%;
+                    left: 22%;
+                    width: 0px;
+                    height: 0px;
+                }
+
+                [type=checkbox]:checked + label:after {
+                    width: 20px;
+                    height: 20px;
+                    transform: translate(-8%, 27%) scale(1);
+                    content: "";
+                    background: url('/images/card/correct.webp') no-repeat center / 18px transparent;
+                }
+            }
+        }
+    }
+
+    .training__border-2 {
+        grid-template-rows: 1fr;
+        grid-template-columns: 160px 1fr;
+        gap: 0px;
+    }
+
+    .training__border-3 {
+        grid-template-rows: 1fr;
+        grid-template-columns: 160px 150px 1fr;
+        gap: 0px;
+    }
+
+    .training__border-sel-2 {
+        grid-template-rows: 1fr;
+        grid-template-columns: 1fr 1fr;
+        gap: 0px;
+    }
+
+    .training__border-sel-3 {
+        grid-template-rows: 1fr;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 0px;
+    }
+
+    .training__border-4 {
+        grid-template-rows: 1fr;
+        grid-template-columns: 160px 1fr 130px 1fr;
+        gap: 0px;
+    }
+
+    .training_border {
+        width: 80%;
+        max-width: 1000px;
+        background: rgba(23, 183, 208, 0.04);
+        padding: 10px;
+        text-align: center;
+        border-radius: 16px;
+
+        .training__index-box {
+            display: grid;
+            grid-template-rows: 1fr;
+            grid-template-columns: 31% 23% 23% 23%;
+            gap: 0px;
+            height: 100%;
+
+            .training__index-title {
+                display: flex;
+                align-items: center;
+                padding: 0px 10px;
+                grid-row-start: 1;
+                grid-column-start: 1;
+                grid-row-end: 2;
+                grid-column-end: 2;
+                font-family: "Days One", sans-serif;
+                font-style: normal;
+                font-weight: 500;
+                @include adaptive-value("font-size", 14, 12, 1);
+                line-height: 16px;
+                color: rgba(6, 34, 48, 0.8);
+            }
+
+            .training__index-body {
+                display: flex;
+                gap: 20px;
+                grid-row-start: 1;
+                grid-column-start: 2;
+                grid-row-end: 2;
+                grid-column-end: 5;
+
+                .training__index-select {
+                    width: 140px;
+                    display: flex;
+                    align-items: center;
+                }
+
+                .training__index-container {
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+
+                    .training__index-title {
+                        font-family: "Days One", sans-serif;
+                        font-style: normal;
+                        font-weight: 500;
+                        @include adaptive-value("font-size", 14, 12, 1);
+                        line-height: 16px;
+                        color: rgba(6, 34, 48, 0.8);
+                    }
+
+                    .training__index-select {
+                        width: 130px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.training__homework {
+    width: 100%;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 15px;
+}
+
+@media (max-width: 1050px) {
+    .training__homework-wrap {
+        .training__border-4 {
+            grid-template-rows: 1fr 1fr 1fr 1fr;
+            grid-template-columns: 1fr;
+
+            .training__index-title {
+                justify-content: center;
+            }
+        }
+    }
+}
+
+@media (max-width: 900px) {
+    .training__homework-wrap {
+        .training__border-sel-2 {
+            grid-template-rows: 1fr 1fr;
+            grid-template-columns: 1fr;
+            gap: 10px;
+        }
+
+        .training__border-sel-3 {
+            grid-template-rows: 1fr 1fr 1fr;
+            grid-template-columns: 1fr;
+            gap: 10px;
+        }
+    }
+}
+
+@media (max-width: 830px) {
+    .training__homework-wrap {
+        .training__border-2 {
+            grid-template-rows: 1fr 1fr;
+            grid-template-columns: 1fr;
+
+            .training__index-title {
+                justify-content: center;
+            }
+        }
+    }
+}
+
+@media (max-width: 1182px) {
+
+    .training-homework .training_border .training__index-box {
+        grid-template-rows: 40px 1fr;
+        grid-template-columns: 1fr;
+        gap: 5px;
+
+        .training__index-title {
+            justify-content: center;
+            grid-row-start: initial;
+            grid-column-start: initial;
+            grid-row-end: initial;
+            grid-column-end: initial;
+        }
+
+        .training__index-body {
+            flex-direction: column;
+            gap: 5px;
+            grid-row-start: initial;
+            grid-column-start: initial;
+            grid-row-end: initial;
+            grid-column-end: initial;
+
+            .training__index-select {
+                width: 100%;
+            }
+
+            .training__index-container {
+                flex-direction: column;
+                gap: 5px;
+
+                .training__index-title {
+                    height: 40px;
+                }
+
+                .training__index-select {
+                    width: 100%;
+                }
+            }
+        }
+    }
+
+}
+
+//--------------------------------------------------------------------------------------------------//
+// buttons
+
+.button-start {
+    width: 100%;
+    height: 20%;
+}
+
+.btn__stop-container {
+    width: 100%;
+    height: 30%;
+}
+
+.btn__stop-wrap {
+    width: 91.75px;
+    height: 91.27px;
+    background: #FEFFFF;
+    border: 10px solid rgba(235, 139, 18, 0.24);
+    box-shadow: inset 0px 32px 12px rgb(0 0 0 / 50%);
+    border-radius: 50%;
+}
+
+.btn__stop {
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 176, 203, 0.92);
+    box-shadow: 0px 4px 4px rgb(0 0 0 / 25%), 0px 4px 4px rgb(0 0 0 / 25%), inset -8px 6px 8px #4bc0b1;
+    border-radius: 50%;
+}
+
+.btn__wrap {
+    width: 25%;
+    padding-left: 4px;
+    padding-right: 4px;
+    opacity: 1;
+}
+
+.btn__size-wrap {
+    @include adaptive-value("width", 283, 200, 1);
+    height: 70.28px;
+    border-radius: 37px;
+    position: relative;
+    transition: transform .30s;
+
+    &::after {
+        transition: opacity 1s;
+    }
+
+    &:active {
+        transform: scale(.87);
+
+        &::before {
+            opacity: 1;
+        }
+    }
+
+    &::before {
+        transition: opacity .5s;
+    }
+
+    &:hover::after {
+        opacity: 1;
+    }
+}
+
+.btn__size {
+    width: 100%;
+    height: 100%;
+    border-radius: 37px;
+    font-family: 'Days One', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    text-align: center;
+    @include adaptive-value("font-size", 24, 19, 1);
+    line-height: 32px;
+    font-variant: small-caps;
+    color: #FEFFFF;
+}
+
+.btn__start-wrap {
+    background-color: rgba(252, 251, 251, 0.24);
+    border: 10px solid rgba(235, 139, 18, 0.24);
+    box-shadow: inset 0px 32px 12px rgb(235 139 18 / 80%);
+    transition: all 0.5s ease-in-out;
+
+    .btn__start {
+        background-color: rgba(235, 139, 18, 0.82);
+        box-shadow: 0px 4px 4px rgb(0 0 0 / 25%), 0px 4px 4px rgb(0 0 0 / 25%), inset -8px 6px 8px #ff6b18;
+        z-index: 1;
+        transition: all 0.5s ease-in-out;
+        background-image: -webkit-linear-gradient(30deg, transparent 50%, #FFB800 50%);
+        background-image: linear-gradient(30deg, transparent 50%, #FFB800 50%);
+        background-size: 300%;
+        background-position: 0%;
+
+        .btn__start-img {
+            position: absolute;
+            @include adaptive-value("right", 27, 1, 1);
+        }
+    }
+}
+
+.btn__start:hover {
+    background-position: 100%;
+}
+
+.btn__start-wrap:hover {
+    border: 10px solid rgba(255, 184, 0, 0.24);
+}
+
+.btn__next-wrap {
+    background-color: rgba(254, 255, 255, 0.2);
+    border: 10px solid rgba(235, 139, 18, 0.2);
+    box-shadow: inset 0px 16px 3px rgba(0, 0, 0, 0.16);
+    transition: all 0.5s ease-in-out;
+
+    .btn__next {
+        background: rgb(0, 176, 203, 0.72);
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25), inset -8px 6px 8px #4BC0B1;
+        z-index: 1;
+        transition: all 0.5s ease-in-out;
+        background-image: -webkit-linear-gradient(30deg, transparent 50%, #00E0FF 50%);
+        background-image: linear-gradient(30deg, transparent 50%, #00E0FF 50%);
+        background-size: 300%;
+        background-position: 0%;
+    }
+}
+
+.btn__next-wrap-unavailable {
+
+    .btn__next {
+        background: rgba(81, 95, 97, 0.72) !important;
+        box-shadow: -8px 6px 8px 0px #4E6562 inset, 0px 4px 4px 0px rgba(0, 0, 0, 0.25), 0px 4px 4px 0px rgba(0, 0, 0, 0.25) !important;
+    }
+}
+
+.btn__next:hover {
+    background-position: 100%;
+}
+
+.btn__next-wrap:hover {
+    border: 10px solid rgba(235, 139, 18, 0.2);
+}
+
+.btn__input {
+    width: 100%;
+    height: 100%;
+    border: none;
+    background-color: transparent;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.btn__adaptive-font {
+    @include adaptive-value("font-size", 24, 12, 1);
+}
+
+//--------------------------------------------------------------------------------------------------//
+
+//form-number_letter
+.workout {
+    width: 100%;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.training__border-row {
+    width: 95%;
+    display: flex;
+}
+
+.multiselect {
+    border-radius: 8px !important;
+}
+
+.multiselect__select:before {
+    border-color: #062230 transparent transparent !important;
+}
+
+.multiselect__tags {
+    border-radius: 8px !important;
+    border-color: #b9c8de !important;
+}
+
+.multiselect__single {
+    font-size: 13px !important;
+    font-family: "Days One" !important;
+}
+
+.multiselect__option--selected.multiselect__option--highlight {
+    background: rgba(235, 139, 18, 0.8) !important;
+}
+
+.multiselect__option--selected.multiselect__option--highlight:after {
+    background: rgba(235, 139, 18, 0.8) !important;
+}
+
+.multiselect__option--highlight {
+    background: rgba(0, 176, 203, 0.8) !important;
+}
+
+.multiselect__option--highlight:after {
+    background: rgba(0, 176, 203, 0.8) !important;
+}
+
+.multiselect__tag {
+    background: rgba(0, 176, 203, 0.8) !important;
+}
+
+.multiselect__tag-icon {
+    background: rgba(0, 176, 203, 0.8);
+}
+
+.multiselect__option {
+    font-size: 14px !important;
+    font-family: "Days One" !important;
+}
+
+.first-caption {
+    display: flex;
+    align-items: center;
+    margin: 0px !important;
+    width: 31%;
+}
+
+.selection-menu {
+    width: 60%;
+}
+
+.absolute__center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%)
+}
+
+.pick {
+    width: 33.33333333333333%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.check-label {
+    margin-left: 12px;
+    font-family: "Days One";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    letter-spacing: -0.02em;
+    color: rgba(6, 34, 48, 0.8);
+}
+
+
+.number-range {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.number-range-row {
+    width: 40%;
+}
+
+.second-caption {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.double-choice {
+    width: 24%;
+}
+
+.double-choice_atop {
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.double-choice_underarm {
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.sel-menu-second {
+    display: flex;
+    justify-content: end;
+}
+
+.number-range__box {
+    width: 90%;
+}
+
+.selection-menu-second {
+    width: 100%;
+}
+
+.create_input {
+    width: 90%;
+    min-height: 40px;
+    background: #FEFFFF;
+    border: 1px solid rgba(119, 129, 146, 0.2);
+    border-radius: 8px;
+    font-family: 'Days One';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 180%;
+    text-align: center;
+    letter-spacing: 0.02em;
+    color: rgba(6, 34, 48, 0.8);
+}
+
+
+.fourth_border {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row-reverse;
+}
+
+.speed {
+    display: flex;
+    align-items: center;
+    width: 50%;
+}
+
+.third-caption {
+    display: flex;
+    align-items: center;
+    width: 50%;
+}
+
+.third-caption_right {
+    width: 70%;
+}
+
+.number-of-repetitions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+}
+
+.speed-box {
+    width: 50%;
+}
+
+.selection-menu-third {
+    width: 40%;
+}
+
+
+.training-border_none {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.fifth_border {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.bit-depth {
+    display: flex;
+    align-items: center;
+    width: 50%;
+}
+
+.bit__depth-box {
+    width: 50%;
+}
+
+.fourth-caption {
+    display: flex;
+    align-items: center;
+    width: 50%;
+}
+
+.selection-menu-fourth {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.selection-menu-fourth_right {
+    display: flex;
+    align-items: center;
+    width: 45%;
+}
+
+.btn_minus,
+.btn_plus {
+    width: 50px;
+    height: 20px;
+    border: none;
+    background: transparent;
+    font-family: 'Days One', sans-serif;
+    font-size: 28px;
+    color: #00B0CB;
+    padding-bottom: 5px;
+    transition: all 0.5s ease-in-out;
+    outline: none;
+    user-select: none;
+    position: relative;
+    overflow: hidden;
+
+    &::after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        transform: scale(0);
+        transition: transform .3s ease-in;
+        mix-blend-mode: difference;
+    }
+
+    &:active {
+        top: 3px;
+    }
+}
+
+.btn_plus:hover {
+    color: #EB8B12;
+}
+
+.btn_minus:hover {
+    color: #EB8B12;
+}
+
+.choose-words {
+    width: 80%;
+    justify-content: normal;
+}
+
+.label__form {
+    font-family: "Days One", sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    @include adaptive-value("font-size", 14, 12, 1);
+    line-height: 17px;
+    color: rgba(6, 34, 48, 0.8);
+}
+
+.label__wrap {
+    @include adaptive-value("width", 150, 140, 1);
+    justify-content: flex-start;
+}
+
+.fourth__border-wrap {
+    width: 60%;
+    display: flex;
+    justify-content: space-between;
+}
+
+//--------------------------------------------------------------------------------------------------//
+
+//banner blade
+
+.card__animation {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.button-stop {
+    width: 100%;
+    height: 30%;
+
+    .btn-stop {
+        display: flex;
+        justify-content: center;
+    }
+}
+
+/*.training_countdown-animation {
+    width: 100%;
+    height: 70%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    position: relative;
+    font-family: 'Days One', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    @include adaptive-font(128, 50);
+    line-height: 32px;
+    text-align: center;
+    font-variant: small-caps;
+    color: #EB8B12;
+}
+
+.training_countdown-animation div {
+    position: absolute;
+    top: 40%;
+}
+
+.animation-first {
+    right: 0px;
+    opacity: 0;
+    animation: anim 5s;
+    transform: translate(-50%);
+}
+
+.animation-second {
+    right: 0px;
+    opacity: 0;
+    animation: anim2 5s;
+    transform: translate(-50%);
+}
+
+.animation-third {
+    right: 0px;
+    opacity: 0;
+    animation: anim3 5s;
+    transform: translate(-50%);
+}
+
+@keyframes anim {
+    0% {
+        right: 0px;
+        opacity: 0;
+    }
+    10% {
+        right: 50%;
+        transform: translate(50%) scale(1.5);
+        opacity: 1;
+    }
+    30% {
+        right: 50%;
+        transform: translate(50%) scale(1.5);
+        opacity: 1;
+    }
+    40% {
+        right: 100%;
+        opacity: 0;
+        transform: scale(0.5);
+    }
+}
+
+@keyframes anim2 {
+    30% {
+        right: 0px;
+        opacity: 0;
+    }
+    40% {
+        right: 50%;
+        transform: translate(50%) scale(1.5);
+        opacity: 1;
+    }
+    60% {
+        right: 50%;
+        transform: translate(50%) scale(1.5);
+        opacity: 1;
+    }
+    70% {
+        right: 100%;
+        opacity: 0;
+        transform: scale(0.5);
+    }
+
+}
+
+@keyframes anim3 {
+    60% {
+        right: 0px;
+        opacity: 0;
+    }
+    70% {
+        right: 50%;
+        transform: translate(50%) scale(1.5);
+        opacity: 1;
+    }
+    90% {
+        right: 50%;
+        transform: translate(50%) scale(1.5);
+        opacity: 1;
+
+    }
+    100% {
+        right: 100%;
+        opacity: 0;
+        transform: scale(0.5);
+    }
+}
+
+ */
+
+.training_countdown-animation {
+    width: 100%;
+    height: 70%;
+    position: relative;
+    font-family: 'Days One', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    color: #EB8B12;
+}
+
+.animation-first,
+.animation-second,
+.animation-third {
+    width: 200px;
+    height: 200px;
+    font-size: 150px;
+    text-align: center;
+    position: absolute;
+    right: 0px;
+    opacity: 0;
+    animation-timing-function: ease-in-out;
+    animation-duration: 3.5s;
+    animation-fill-mode: forwards;
+    animation-name: bounce;
+}
+
+.animation-first {
+    animation-delay: 0s;
+}
+
+.animation-second {
+    animation-delay: 1s;
+}
+
+.animation-third {
+    animation-delay: 2s;
+}
+
+@keyframes bounce {
+    30% {
+        right: 0px;
+        opacity: 0;
+        bottom: 0;
+        transform: scale(0.5);
+    }
+    40% {
+        right: 50%;
+        bottom: 50%;
+        transform: translate(50%, 50%) scale(1.5);
+        opacity: 1;
+    }
+    60% {
+        right: 50%;
+        transform: translate(50%, 50%) scale(1.5);
+        bottom: 50%;
+        opacity: 1;
+    }
+    70% {
+        right: 100%;
+        opacity: 0;
+        transform: scale(0.5);
+        bottom: 0;
+    }
+}
+
+
+
+
+//--------------------------------------------------------------------------------------------------//
+
+
+//banner-start
+
+.card__start {
+    width: 100%;
+    height: 50%;
+    font-family: 'Days One', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    @include adaptive-font(128, 50);
+    line-height: 32px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    font-variant: small-caps;
+    color: #EB8B12;
+}
+
+//--------------------------------------------------------------------------------------------------//
+
+// info
+
+.card__homework {
+    width: 100%;
+    height: 100%;
+
+    .homework__wrap {
+        width: 100%;
+        height: 100%;
+
+        .homework__container {
+            width: 100%;
+            height: 65%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            .homework__box {
+                width: 100%;
+                height: 100%;
+                border: 2px solid rgba(0, 176, 203, 0.4);
+                border-radius: 37px;
+                @include adaptive-value("padding-left", 32, 17, 1);
+                @include adaptive-value("padding-right", 32, 17, 1);
+
+                .homework {
+                    width: 100%;
+                    height: 100%;
+                    overflow-y: auto;
+                    overflow-x: hidden;
+                    padding: 0px 7px;
+
+                    .homework__card {
+                        width: 100%;
+                        //height: 91px;
+                        @include adaptive-value-imp("height", 91, 250);
+                        background: rgba(235, 139, 18, 0.1);
+                        border-radius: 16px;
+                        margin-top: 10px;
+                        font-family: 'Days One', sans-serif;
+                        font-style: normal;
+                        font-weight: 400;
+
+                        .homework__card-top {
+                            width: 100%;
+                            height: 50%;
+                            display: flex;
+                            padding-left: 16px;
+
+                            .homework__card-title {
+                                width: 40%;
+                                height: 100%;
+                                display: flex;
+                                align-items: center;
+                                @include adaptive-value("font-size", 16, 13, 1);
+                                line-height: 180%;
+                                letter-spacing: 0.02em;
+                                color: #EB8B12;
+                                margin-right: 24px;
+
+                                .homework__card-title-circle {
+                                    width: 10px;
+                                    height: 10px;
+                                    margin-right: 16px;
+                                }
+
+                                .homework__card-title-circle::before {
+                                    content: "";
+                                    width: 8px;
+                                    height: 8px;
+                                    border-radius: 50%;
+                                    background-color: #EB8B12;
+                                }
+                            }
+
+                            .homework__card-subtitle {
+                                width: 50%;
+                                height: 100%;
+                                display: flex;
+                                align-items: center;
+                                @include adaptive-value("font-size", 16, 13, 1);
+                                line-height: 180%;
+                                letter-spacing: 0.02em;
+                                color: rgba(6, 34, 48, 0.8);
+                                padding-left: 10px;
+
+                                .homework__card-subtitle-circle {
+                                    width: 10px;
+                                    height: 10px;
+                                    margin-right: 10px;
+                                }
+
+                                .homework__card-subtitle-circle::before {
+                                    content: "";
+                                    width: 6px;
+                                    height: 6px;
+                                    border-radius: 50%;
+                                    background-color: rgba(6, 34, 48, 0.8);
+                                }
+                            }
+                        }
+
+                        .homework__card-bottom {
+                            width: 100%;
+                            height: 50%;
+                            display: flex;
+                            flex-wrap: wrap;
+                            justify-content: center;
+                            align-items: center;
+                            padding-left: 37px;
+                            padding-right: 10px;
+
+                            .homework__card-active {
+                                @include adaptive-value("height", 22, 20, 1);
+                                margin: 0px 7px;
+                            }
+
+                            .homework__text {
+                                margin: 0px;
+                                font-family: "Days One", sans-serif;
+                                font-style: normal;
+                                font-weight: 400;
+                                @include adaptive-value("font-size", 12, 10, 1);
+                                line-height: 180%;
+                                letter-spacing: 0.02em;
+                                color: rgba(6, 34, 48, 0.4);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .homework__button-wrap {
+            width: 100%;
+            height: 35%;
+            margin: 0px;
+            flex-direction: column;
+
+            .homework__speed {
+                width: 100%;
+                height: 50%;
+            }
+        }
+    }
+}
+
+@media (min-width: 1370px) {
+    .homework__card-bottom-wrap {
+        display: contents;
+    }
+}
+
+@media (max-width: 1370px) {
+    .homework__card-bottom-wrap {
+        width: 50%;
+    }
+}
+
+.homework::-webkit-scrollbar {
+    background: rgba(0, 176, 203, 0.4);
+    border-radius: 5px;
+    width: 4px;
+    height: 100px;
+}
+
+.homework::-webkit-scrollbar-thumb {
+    width: 8px;
+    height: 50px;
+    background: #EB8B12;
+    border-radius: 5px;
+}
+
+
+.homework-body {
+    width: 100%;
+    height: 44%;
+}
+
+.homework_footer {
+    width: 100%;
+    height: 56%;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.homework-body_footer {
+    width: 50%;
+    height: 31%;
+}
+
+.speed-header {
+    font-family: 'Days One', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 32px;
+    font-variant: small-caps;
+    color: rgba(6, 34, 48, 0.8);
+}
+
+.speed-input {
+    width: 117px;
+    height: 42px;
+
+    input {
+        width: 100%;
+        height: 100%;
+        border: none;
+        background: rgba(23, 183, 208, 0.04);
+        box-shadow: 0px 2px 4px rgb(0 0 0 / 25%), inset 0px 0px 4px #00b0cb;
+        border-radius: 13px;
+        text-align: center;
+        font-family: 'Days One', sans-serif;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 32px;
+        font-variant: small-caps;
+        color: rgba(6, 34, 48, 0.8);
+    }
+}
+
+.homework-body_center {
+    width: 100%;
+    height: 100%;
+}
+
+.tasks.homework-body__tasks {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.task_li {
+    width: 50%;
+    height: 20%;
+    border-radius: 13px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Days One';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 32px;
+    font-variant: small-caps;
+    color: rgba(6, 34, 48, 0.8);
+}
+
+.homework-body-footer_speed {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
+}
+
+.training_badge {
+  width: 220px;
+  height: 100px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 16px;
+  background: #fff;
+
+  border: 2px solid #f2b49c;
+  box-shadow: 0 0 8px rgba(242, 180, 156, 0.6);
+
+  font-size: 55px;
+  font-weight: 600;
+  color: #e05a5a;
+}    
+//--------------------------------------------------------------------------------------------------//

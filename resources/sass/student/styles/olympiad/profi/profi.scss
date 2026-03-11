@@ -1,0 +1,163 @@
+//Olympiad profi
+
+.olympiad__wrap {
+
+    .olympiad__profi-wrap {
+        display: flex;
+        justify-content: center;
+        padding: 0px;
+        height: 75%;
+
+        .olympiad__number {
+            width: 95%;
+            height: 100%;
+            background: rgba(23, 183, 208, 0.04);
+            border: 1px solid #17B7D0;
+            border-radius: 16px;
+            position: relative;
+
+            .olympiad__number-box {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+                overflow-y: scroll;
+                position: absolute;
+                @include adaptive-value("top", 16, 13, 1);
+                @include adaptive-value("right", 9, 6, 1);
+                @include adaptive-value("left", 9, 6, 1);
+                bottom: 0px;
+                padding: 0px 7px;
+
+                .olympiad__number-column {
+                    width: 19%;
+
+                    .olympiad__number-block {
+                        width: 100%;
+                        height: 48px;
+                        background: rgba(254, 255, 255, 0.2);
+                        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25), inset 0px 0px 4px #00B0CB;
+                        border-radius: 8px;
+                        display: flex;
+                        align-items: center;
+                        margin-bottom: 15px;
+                        font-family: 'Days One', sans-serif;
+                        font-style: normal;
+                        font-weight: 400;
+                        font-size: 16px;
+                        color: #062230;
+                        padding-left: 16px;
+                        transition: all .4s ease;
+                        cursor: pointer;
+
+                        span:first-child {
+                            opacity: 0.4;
+                        }
+                        .wordNumber{
+                            opacity: 0.4;
+                        }
+                        .bubbleWordHelp{
+                            position: absolute;
+                            margin-top: -22pt;
+                            height: 15pt;
+                            min-width: 17%;
+                            text-align: right;
+                        }
+
+
+                        .bubbleWordHelp_span{
+                            font-size: 10pt;
+                            color: #19b8d0;
+                            display: flex;
+                            flex-direction:column;
+                            align-items:end;
+                        }
+                        .olympiad__number-stick {
+                            width: 24px;
+                            height: 24px;
+                            display: flex;
+                            justify-content: center;
+                        }
+
+                        .olympiad__number-stick:before {
+                            content: "";
+                            width: 2px;
+                            height: 100%;
+                            background: #00B0CB;
+                            opacity: 0.8;
+                            border-radius: 3px;
+                        }
+
+                        .olympiad__input {
+                            width: 70%;
+                            box-shadow: none;
+                            background: transparent;
+                            text-align: left;
+                            padding: 0px;
+                        }
+
+                        .olympiad__input:focus {
+                            box-shadow: none !important;
+                        }
+
+                        span:last-child {
+                            opacity: 0.8;
+                        }
+                    }
+                }
+            }
+
+            .olympiad__number-box::-webkit-scrollbar {
+                background: rgba(0, 176, 203, 0.4);
+                border-radius: 5px;
+                width: 4px;
+                height: 80%;
+            }
+
+            .olympiad__number-box::-webkit-scrollbar-thumb {
+                width: 8px;
+                height: 101px;
+                background: #EB8B12;
+                border-radius: 5px;
+            }
+        }
+    }
+}
+
+.olympiad__wrap-profi {
+    display: flex;
+    flex-direction: column-reverse;
+
+    .olympiad__top-wrap {
+        flex-shrink: 0;
+
+        .olympiad__top {
+
+            .olympiad__btn-wrap {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                font-family: 'Days One', sans-serif;
+                font-style: normal;
+                font-weight: 400;
+                font-size: 16px;
+                color: rgba(6, 34, 48, 0.6);
+
+                .olympiad__btn {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    background: transparent;
+                    border: 2px solid rgba(0, 176, 203, 0.4);
+                }
+            }
+        }
+    }
+}
+
+@media print {
+    .olympiad__number {
+        display: none;
+    }
+}
+
+//--------------------------------------------------------------------------------------------------//

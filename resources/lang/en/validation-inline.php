@@ -1,0 +1,131 @@
+<?php
+
+/*
+|--------------------------------------------------------------------------
+| Validation Language Lines
+|--------------------------------------------------------------------------
+|
+| The following language lines contain the default error messages used by
+| the validator class. Some of these rules have multiple versions such
+| as the size rules. Feel free to tweak each of these messages here.
+|
+*/
+
+return [
+    'accepted'             => 'The field must be accepted.',
+    'active_url'           => 'Invalid URL.',
+    'after'                => 'Date should be later than :date.',
+    'after_or_equal'       => 'Data powinna być późniejsza, albo równa :date',
+    'alpha'                => 'The field can only contain letters.',
+    'alpha_dash'           => 'The field can only contain letters, numbers, hyphens and underscores.',
+    'alpha_num'            => 'The field can only contain letters and numbers.',
+    'array'                => 'The field can only contain capital letters.',
+    'attached'             => 'This field is already included.',
+    'before'               => 'The date should be earlier than :date.',
+    'before_or_equal'      => 'Date should be earlier or equal to :date.',
+    'between'              => [
+        'array'   => 'Content should include between :min and :max elements.',
+        'file'    => 'The file should have from :min to :max kilobytes.',
+        'numeric' => 'The value must be in between :min and :max.',
+        'string'  => 'The row should have between :min and  :max symbols.',
+    ],
+    'boolean'              => 'The field must be true or false',
+    'confirmed'            => 'Confirmation does not match.',
+    'date'                 => 'Date is incorrect',
+    'date_equals'          => 'Date should be equal to :date.',
+    'date_format'          => 'Doesnt fit the format :format.',
+    'different'            => 'Value must differ from :other.',
+    'digits'               => 'Should be: :digits numbers.',
+    'digits_between'       => 'Should be between :min and :max numbers.',
+    'dimensions'           => 'Image has wrong dimensions',
+    'distinct'             => 'Field had double meaning',
+    'email'                => 'Email must be correct',
+    'ends_with'            => 'Must finish with: :values.',
+    'exists'               => 'The selected meaning does not exist.',
+    'file'                 => 'The content should be in the file.',
+    'filled'               => 'It is mandatory',
+    'gt'                   => [
+        'array'   => 'Contetn should be bigger than :value elements.',
+        'file'    => 'The file size must be larger than :value kilobytes.',
+        'numeric' => 'Value must be bigger than :value.',
+        'string'  => 'String must be bigger than :value of the value.',
+    ],
+    'gte'                  => [
+        'array'   => 'Content must contain :value or more elements.',
+        'file'    => 'The file size must be larger or equal to :value kilobytes.',
+        'numeric' => 'Value must be bigger or equal to :value.',
+        'string'  => 'String must be bigger or equal to :value of the value.',
+    ],
+    'image'                => 'An image is needed.',
+    'in'                   => 'The selected value is invalid.',
+    'in_array'             => 'Value does not exist in :other.',
+    'integer'              => 'It should be an integer.',
+    'ip'                   => 'IP address must be a valid.',
+    'ipv4'                 => 'Address IPv4 must be a valid.',
+    'ipv6'                 => 'Address IPv6 must be a valid.',
+    'json'                 => 'JSON must be a valid.',
+    'lt'                   => [
+        'array'   => 'Content should contain less than :value elements.',
+        'file'    => 'The file size should be less than :value kilobytes.',
+        'numeric' => 'The value should be less than :value.',
+        'string'  => 'The string must be less than :value symbols.',
+    ],
+    'lte'                  => [
+        'array'   => 'Content should contain :value or more elements.',
+        'file'    => 'The file size should be less or equal to :value kilobytes.',
+        'numeric' => 'The value should be more or equal to :value.',
+        'string'  => 'The string must be more or equal to  :value value .',
+    ],
+    'max'                  => [
+        'array'   => 'Content should contain :value or more elements.',
+        'file'    => 'The file size should be less or equal to :value kilobytes.',
+        'numeric' => 'The value should be more or equal to :value.',
+        'string'  => 'The string must be more or equal to  :value value.',
+    ],
+    'mimes'                => 'File type must be: :values.',
+    'mimetypes'            => 'File type must be: :values.',
+    'min'                  => [
+        'array'   => 'The value cannot be less than :min elements.',
+        'file'    => 'File size cannot be less than :min kilobytes.',
+        'numeric' => 'The value cannot be less than :min.',
+        'string'  => 'The value cannot be less than :min symbols.',
+    ],
+    'multiple_of'          => 'This field must contain a few :value',
+    'not_in'               => 'The selected value is invalid.',
+    'not_regex'            => 'The format is incorrect.',
+    'numeric'              => 'It should be a number',
+    'password'             => 'Incorrect password.', 
+    'present'              => 'This field must be present',
+    'prohibited'           => 'This field is prohibited',
+    'prohibited_if'        => 'This field is forbidden if :other is equal  :value.',
+    'prohibited_unless'    => 'This field is forbidden if :other does not include :values year.',
+    'regex'                => 'Incorrect format',
+    'relatable'            => 'This field may not be associated with this resource.',
+    'required'             => 'This field is mandatory.',
+    'required_if'          => 'This field is mandatory if :other is :value.',
+    'required_unless'      => 'This field is mandatory if :other says differently in :values.',
+    'required_with'        => 'This field is mandatory if :values.',
+    'required_with_all'    => 'This field is mandatory if :values are required.',
+    'required_without'     => 'This field is mandatory if :values has no value.',
+    'required_without_all' => 'This field is mandatory, if any of :values is required.',
+    'same'                 => 'The value of this field must match the value of :other.',
+    'size'                 => [
+        'array'   => 'Content must contain :size elements.',
+        'file'    => 'File size should be :size kilobytes.',
+        'numeric' => 'The value should be:size.',
+        'string'  => 'In string should be :size symbols.',
+    ],
+    'starts_with'          => 'Must start with one of the following conditions: :values.',
+    'string'               => 'Must be in string.',
+    'timezone'             => 'This must be a valid time zone.',
+    'unique'               => 'Is already taken.',
+    'uploaded'             => 'Failed to load',
+    'url'                  => 'Incorrect format',
+    'uuid'                 => 'Must be a valid UUID.',
+    'custom'               => [
+        'attribute-name' => [
+            'rule-name' => 'custom-message',
+        ],
+    ],
+    'attributes'           => [],
+];

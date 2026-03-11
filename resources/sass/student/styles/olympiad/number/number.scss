@@ -1,0 +1,382 @@
+//Olympiad number
+
+.olympiad__title-wrap {
+    width: 100%;
+    height: 43%;
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 10% 10% 60% 10% 10%;
+    gap: 0px;
+
+
+    .olympiad__title-btn {
+        grid-row-start: 1;
+        grid-column-start: 1;
+        grid-row-end: 3;
+        grid-column-end: 3;
+
+        .print__btn {
+            width: 155px;
+            height: 70%;
+            background: rgba(23, 183, 208, 0.04);
+            border: 1px solid #00B0CB;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            transition: all .3s ease;
+
+            img {
+                width: 32px;
+                height: 32px;
+            }
+
+            span {
+                font-family: 'Days One', sans-serif;
+                font-style: normal;
+                font-weight: 400;
+                font-size: 24px;
+                color: rgba(6, 34, 48, 0.6);
+                transition: all .3s ease;
+            }
+        }
+    }
+
+    .olympiad__main-title {
+        grid-row-start: 1;
+        grid-column-start: 3;
+        grid-row-end: 3;
+        grid-column-end: 4;
+
+        .olympiad__title {
+            width: 100%;
+            height: 60%;
+            font-family: "Days One", sans-serif;
+            font-style: normal;
+            line-height: 20px;
+            font-weight: 400;
+            @include adaptive-value("font-size", 30, 22, 1);
+            @include adaptive-value("line-height", 30, 22, 1);
+            text-align: center;
+            font-variant: small-caps;
+            color: rgba(6, 34, 48, 0.8);
+        }
+
+        .olympiad__subtitle {
+            width: 100%;
+            height: 40%;
+            display: flex;
+            font-family: 'Days One', sans-serif;
+            font-style: normal;
+            font-weight: 400;
+            @include adaptive-value("font-size", 17, 7, 1);
+            line-height: 32px;
+            text-align: center;
+            font-variant: small-caps;
+            color: rgba(6, 34, 48, 0.8);
+
+            .olympiad__card-subtitle {
+                height: 100%;
+                opacity: 0.4;
+            }
+
+            .left-sub {
+                justify-content: end;
+            }
+
+            .right-sub {
+                justify-content: normal;
+            }
+
+            .olympiad__card-line {
+                width: 4%;
+                height: 100%;
+                opacity: 0.8;
+            }
+
+            .olympiad__card-line:before {
+                content: "";
+                width: 2px;
+                height: 95%;
+                background: #00B0CB;
+                border-radius: 3px;
+            }
+        }
+    }
+
+    .olympiad__main-timer {
+        grid-row-start: 1;
+        grid-column-start: 4;
+        grid-row-end: 3;
+        grid-column-end: 6;
+        font-family: 'Days One', sans-serif;
+        font-style: normal;
+        font-weight: 400;
+        @include adaptive-value("font-size", 16, 14, 1);
+        line-height: 32px;
+        color: rgba(6, 34, 48, 0.6);
+
+        &.flex-box {
+            flex-wrap: wrap-reverse;
+        }
+    }
+}
+
+.olympiad__wrap {
+    width: 100%;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    &.olympiad__wrap-number {
+        flex-direction: column-reverse;
+        justify-content: space-evenly;
+    }
+
+    .olympiad__number-wrap {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 13px;
+        padding: 10px 0px 10px 0px;
+
+        .olympiad__number {
+            width: fit-content;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 0px 7px;
+
+            @media (max-width: 1200px) {
+                gap: 5px;
+                padding: 0px 3px;
+            }
+
+            .olympiad__number-text {
+                width: 45px;
+                font-family: 'Days One', sans-serif;
+                font-style: normal;
+                font-weight: 400;
+                font-size: 18px;
+                color: rgba(6, 34, 48, 0.6);
+
+                @media (max-width: 1200px) {
+                    width: 38px;
+                    font-size: 16px;
+                }
+            }
+
+            .olympiad__number-row {
+                width: 1240px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+
+                @media (max-width: 1470px) {
+                    width: auto;
+                    gap: 2px;
+                }
+
+                .olympiad__number-box {
+                    width: 25px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    padding: 5px;
+                    position: relative;
+
+                    @media (max-width: 1305px) {
+                        width: 22px;
+                        padding: 5px 3px;
+                    }
+
+                    @media (max-width: 1200px) {
+                        width: 20px;
+                        padding: 5px 3px;
+                    }
+
+
+                    @media (max-width: 1080px) {
+                        width: 19px;
+                        padding: 5px 2px;
+                    }
+
+                    span {
+                        font-family: 'Days One', sans-serif;
+                        font-style: normal;
+                        font-weight: 400;
+                        @include adaptive-value("font-size", 20, 16, 1);
+                        color: #062230;
+                    }
+
+                    .helpControl {
+                        position: absolute;
+                        top: -6px;
+                    }
+
+                    .bubbleHelp_span{
+                        font-size: 10pt;
+                        color: #19b8d0;
+                        display: flex;
+                        flex-direction:column;
+                        align-items:center;
+                    }
+                }
+
+
+                .olympiad__number-line {
+                    width: 2px;
+                    height: 24px;
+
+                    @media (max-width: 1000px) {
+                        width: 1px;
+                    }
+                }
+
+                .olympiad__number-line:before {
+                    content: "";
+                    display: flex;
+                    width: 100%;
+                    height: 100%;
+                    background: #00B0CB;
+                    opacity: 0.8;
+                    border-radius: 3px;
+                }
+
+                .olympiad__number-border {
+                    background: rgba(254, 255, 255, 0.2);
+                    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25), inset 0px 0px 4px #00B0CB;
+                    border-radius: 8px;
+                }
+
+                .olympiad__number-input {
+                    width: 25px;
+                    padding: 0px 5px;
+
+                    @media (max-width: 1305px) {
+                        width: 22px;
+                        padding: 0px 4px;
+                        line-height: 27px;
+                        font-size: 15px;
+                    }
+
+                    @media (max-width: 1200px) {
+                        width: 21px;
+                        padding: 0px 3px;
+                        line-height: 27px;
+                        font-size: 15px;
+                    }
+
+                    @media (max-width: 1130px) {
+                        width: 19px;
+                        padding: 0px 2px;
+                        line-height: 27px;
+                        font-size: 15px;
+                    }
+                }
+            }
+
+            .olympiad__number-row-small {
+                width: auto;
+                gap: 6px;
+
+                @media (max-width: 1470px) {
+                    gap: 0;
+                }
+            }
+            .olympiad__number-row-small-learn {
+                width: auto;
+                 //gap: 6px;
+            }
+            .olympiad__number-row-small-practice{
+                width: auto;
+            }
+            .olympiad__number-row-small-profi{
+                width: auto;
+            }
+        }
+    }
+
+    .olympiad__number-hide {
+        overflow-x: scroll;
+        overflow-y: hidden;
+        align-items: flex-start;
+    }
+
+    .olympiad__result-wrap {
+        width: 100%;
+        display: flex;
+        justify-content: space-evenly;
+        gap: 16px;
+
+        .olympiad__result {
+            display: flex;
+            background: rgba(23, 183, 208, 0.04);
+            border: 1px solid #17B7D0;
+            border-radius: 16px;
+            gap: 20px;
+            padding: 8px 15px;
+
+            .olympiad__result-row {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                font-family: 'Days One', sans-serif;
+                font-style: normal;
+                font-weight: 400;
+                @include adaptive-value("font-size", 16, 12, 1);
+                position: relative;
+
+                .olympiad__result-title {
+                    color: rgba(6, 34, 48, 0.8);
+                    opacity: 0.4;
+                }
+
+                img {
+                    @include adaptive-value("width", 32, 28, 1);
+                    @include adaptive-value("height", 32, 28, 1);
+                }
+
+                span:last-child {
+                    color: #00B0CB;
+                    opacity: 0.9;
+                }
+
+                .cl-orange {
+                    color: #EB8B12 !important;
+                }
+            }
+        }
+    }
+
+    .olympiad__number-page {
+        font-family: 'Days One', sans-serif;
+        font-style: normal;
+        font-weight: 400;
+        @include adaptive-value("font-size", 16, 14, 1);
+        line-height: 32px;
+        color: rgba(6, 34, 48, 0.6);
+        padding-bottom: 15px;
+    }
+}
+
+.olympiad__wrap-number {
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: space-evenly;
+
+    .olympiad__number-wrap-number {
+        padding-top: 0px;
+        padding-bottom: 0px;
+
+        .olympiad__result-number {
+            width: 450px;
+        }
+    }
+}
+
+//--------------------------------------------------------------------------------------------------//

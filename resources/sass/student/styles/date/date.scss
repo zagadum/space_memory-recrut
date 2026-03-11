@@ -1,0 +1,102 @@
+//=== date ===/
+
+.date__wrap {
+  width: 100%;
+  height: 100%;
+  @include main-border-bg;
+  padding: 8px 13px;
+
+  .date__box {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 13px;
+    padding: 7px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+
+    .date__row {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-family: "Days One", sans-serif;
+      font-style: normal;
+      font-weight: 400;
+      color: rgba(6, 34, 48, 0.8);
+
+      .date {
+        width: 30px;
+        height: 35px;
+        padding: 0px 40px;
+        text-align: center;
+        border: none;
+        border-radius: 8px;
+        box-shadow: 0px 0px 4px 0px #00B0CB inset, 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
+        transition: all .3s ease-in-out;
+        cursor: pointer;
+        position: relative;
+
+        .date__input {
+          width: 70px;
+          border: none;
+          background: transparent;
+          position: absolute;
+          text-align: center;
+        }
+      }
+
+      .date__text {
+        flex-grow: 1;
+        border-radius: 8px;
+        box-shadow: 0px 0px 4px 0px #00B0CB inset, 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
+        padding: 7px 20px;
+        cursor: pointer;
+        transition: all .3s ease-in-out;
+      }
+
+      &:hover {
+        .date {
+          box-shadow: 0px 0px 4px 0px #F5DDBE inset, 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
+        }
+
+        .date__text {
+          box-shadow: 0px 0px 4px 0px #F5DDBE inset, 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
+        }
+      }
+    }
+
+    .date__row-active {
+
+
+      .date {
+        box-shadow: 0px 0px 6px 0px #EB8B12 inset, 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
+      }
+
+      .date__text {
+        box-shadow: 0px 0px 6px 0px #EB8B12 inset, 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
+      }
+    }
+
+    &::-webkit-scrollbar {
+      background: rgba(0, 176, 203, 0.4);
+      border-radius: 5px;
+      width: 6px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #EB8B12;
+      border-radius: 5px;
+    }
+
+    &:root {
+      scrollbar-width: thin;
+      scrollbar-color: #EB8B12 rgba(0, 176, 203, 0.4);
+    }
+  }
+}
+
+//--------------------------------------------------------------------------------------------------//

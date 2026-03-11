@@ -1,0 +1,154 @@
+//=== style ===/
+
+button {
+  padding: 0px;
+  margin: 0px;
+  border: none;
+}
+
+.vis__hidden {
+  visibility: hidden;
+}
+
+.content__wrap {
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.pages__wrap {
+  grid-row-start: 1;
+  grid-column-start: 1;
+  grid-row-end: 3;
+  grid-column-end: 3;
+
+  .pages {
+    font-family: 'Days One', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    @include adaptive-value("font-size", 16, 14, 1);
+    line-height: 32px;
+    color: rgba(6, 34, 48, 0.6);
+    padding-bottom: 15px;
+  }
+}
+
+//=== / style ===/
+
+//form-show
+
+.row__maths-wrap {
+  justify-content: space-evenly;
+
+  .maths__wrap {
+    height: 100%;
+    background: rgba(23, 183, 208, 0.04);
+    border: 2px solid rgba(0, 176, 203, 0.4);
+    border-radius: 16px;
+    padding: 14px 40px;
+
+    .maths__box {
+      display: grid;
+      grid-template-columns: 1fr 15px fit-content(145px);
+      grid-template-rows: repeat(5, 1fr);
+      grid-column-gap: 15px;
+      grid-row-gap: 20px;
+      height: 100%;
+
+      .maths__row {
+        display: contents;
+
+        .maths__number {
+          padding: 0px 7px;
+          border-radius: 8px;
+          background: #FEFFFF;
+          box-shadow: 0px 0px 4px 0px #00B0CB inset, 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
+          font-family: 'Days One', sans-serif;
+          font-style: normal;
+          font-weight: 400;
+          font-size: 14px;
+          color: #062230;
+        }
+
+        .maths__sign {
+
+          img {
+            width: 100%;
+          }
+        }
+
+        .correct-answer {
+          //add border green
+          box-shadow: 0px 0px 4px 0px green inset, 0px 4px 4px 0px rgba(0, 0, 0, 0.25) !important;
+        }
+
+        .bad-answer {
+          //add border green
+          box-shadow: 0px 0px 4px 0px red inset, 0px 4px 4px 0px rgba(0, 0, 0, 0.25) !important;
+        }
+
+        .maths__result {
+          border: none;
+          padding: 1px 0px;
+          border-radius: 8px;
+          background: #FEFFFF;
+          box-shadow: 0px 0px 4px 0px #00B0CB inset, 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
+          text-align: center;
+          font-family: 'Days One', sans-serif;
+          font-style: normal;
+          font-weight: 400;
+          font-size: 16px;
+          color: #062230;
+          transition: all .3s;
+
+          &:focus {
+            box-shadow: 0px 0px 4px 0px #EB8B12 inset, 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
+          }
+        }
+
+        .maths__answer {
+          padding: 0px 17px;
+          border-radius: 8px;
+          background: #FEFFFF;
+          font-family: 'Days One', sans-serif;
+          font-style: normal;
+          font-weight: 400;
+          font-size: 14px;
+          color: #062230;
+          position: relative;
+        }
+
+        .maths__correct-answer {
+          padding: 0px 5px;
+          color: #31C62E;
+          font-family: 'Days One', sans-serif;
+          font-style: normal;
+          font-weight: 400;
+          font-size: 14px;
+        }
+      }
+    }
+
+    .maths__box-result {
+      grid-template-columns: 1fr 15px fit-content(145px) fit-content(20px);
+    }
+  }
+}
+
+//--------------------------------------------------------------------------------------------------//
+
+//form-result
+
+
+
+//--------------------------------------------------------------------------------------------------//

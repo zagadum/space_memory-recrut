@@ -1,0 +1,38 @@
+{"steps": {
+        "step1": "Step 1",
+        "step2": "Step 2",
+        "step3": "Step 3",
+        "step4": "Step 4"
+    },
+    "languages": {
+        "uk": "Ukrainian",
+        "pl": "Polish",
+        "en": "English"
+    },
+    "countries": {
+        "ua": "Ukraine",
+        "allUa": "All of Ukraine",
+        "international": "International for all countries",
+        "nationalOlympiad": "Ukrainian National Olympiad"
+    },
+    "description": {
+        "general": "For all students in Ukraine, we organize the national olympiad",
+        "detailed": "Detailed description of the olympiad"
+    },
+    "price": {
+        "price": "Price",
+        "internationalPayments": "For international payments",
+        "ukrainianPayments": "For Ukrainian payments"
+    },
+    "dates": {
+        "announcementDate": "Announcement date of the olympiad",
+        "from": "From some time",
+        "to": "To some time",
+        "activationDate": "Activation date of the olympiad"
+    },
+    "navigation": {
+        "back": "Back",
+        "next": "Next",
+        "preview": "Preview"
+    }
+}

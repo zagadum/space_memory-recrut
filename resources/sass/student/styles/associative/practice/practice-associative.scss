@@ -1,0 +1,279 @@
+//form-move
+
+.associative__practice-wrap {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .associative__practice-container {
+        width: 100%;
+        height: 80%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        .associative__practice-box-top {
+            width: 100%;
+            height: 37%;
+            padding: 15px 0px;
+            display: flex;
+            justify-content: center;
+
+            .associative__practice-top {
+                width: 90%;
+                height: 100%;
+                display: grid;
+                align-items: center;
+                grid-template-columns: repeat(10, 10%);
+                grid-template-rows: 100%;
+                gap: 0px 0px;
+
+                .associative__practice-card {
+                    @include adaptive-value("width", 80, 30, 1);
+                    @include adaptive-value("height", 80, 30, 1);
+                    justify-self: center;
+                    background: rgba(254, 255, 255, 0.2);
+                    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25), inset 0px 0px 4px #00B0CB;
+                    border-radius: 8px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    //font-family: 'Mulish';
+                    font-family: 'Days One', sans-serif;
+                    font-style: normal;
+                    font-weight: 400;
+                    @include adaptive-value("font-size", 32, 24, 1);
+                    line-height: 32px;
+                    text-align: center;
+                    font-variant: small-caps;
+                    color: rgba(6, 34, 48, 0.8);
+                    position: relative;
+
+                    img {
+                        width: 80%;
+                        height: 80%;
+                    }
+
+                    .associative__practice-drop-card {
+                        background: #FEFFFF !important;
+                        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25), inset 0px 0px 4px #EB8B12 !important;
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                    }
+
+                    .associative__practice-drop-card:hover .delete__button {
+                        display: initial;
+                    }
+                }
+            }
+        }
+
+        .associative__practice-box-down {
+            width: 100%;
+            height: 58%;
+            padding: 20px 0px;
+            background: rgba(23, 183, 208, 0.04);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+
+            .associative__practice-down {
+                width: 90%;
+                height: 70%;
+                display: grid;
+                align-items: center;
+                grid-template-columns: repeat(10, 10%);
+                grid-template-rows: 100%;
+            }
+        }
+
+        .associative__practice-border {
+            border: 2px solid rgba(0, 176, 203, 0.4);
+            border-radius: 16px;
+        }
+    }
+}
+
+.warning-for-draggable-second {
+    height: 30%;
+}
+
+.associative__practice-drop-card {
+    @include adaptive-value("width", 80, 30, 1);
+    @include adaptive-value("height", 80, 30, 1);
+    position: relative;
+    background: #FFFFFF;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25), inset 0px 0px 4px #00B0CB;
+    border-radius: 8px;
+    justify-self: center;
+    cursor: all-scroll;
+
+    img {
+        width: 90%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+}
+
+.delete__button {
+    width: 22px;
+    height: 22px;
+    padding: 0px;
+    position: absolute;
+    top: -10px;
+    right: -7px;
+    border: none;
+    background: #FEFFFF;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25), inset 0px 0px 4px #EB5757;
+    border-radius: 8px;
+    display: none;
+
+    .delete__button-img {
+        width: 14px !important;
+        height: 14px !important;
+        position: absolute;
+        top: 11px;
+        left: 11px;
+    }
+}
+
+.associative__input-wrap {
+    width: 50px;
+    height: 50px;
+    justify-self: center;
+    position: relative;
+}
+
+.associative__input-correct-answer {
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    background: #FEFFFF;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25), inset 0px 0px 4px #EB5757;
+    border-radius: 8px;
+    bottom: -10px;
+    right: -4px;
+
+    .associative__input-correct-answer-img {
+        width: 60% !important;
+        height: 60% !important;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-44%, -50%);
+    }
+}
+
+.associative__result-wrap {
+    width: 50px;
+    height: 50px;
+    background: #FEFFFF;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25), inset 0px 0px 4px #EB8B12;
+    border-radius: 8px;
+
+    img {
+        width: 80%;
+        height: 80%;
+    }
+}
+
+.associative__practice-correct-answer {
+    width: 45px;
+    height: 45px;
+    background: #FEFFFF;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25), inset 0px 0px 4px #EB5757;
+    border-radius: 8px;
+    position: absolute;
+    top: 55px;
+    right: -17px;
+    z-index: 20;
+
+    img {
+        width: 80%;
+        height: 80%;
+        position: absolute;
+        top: 5px;
+        left: 5px;
+    }
+}
+
+.associative__practice-down {
+
+    .associative__practice-drop-card {
+        display: none;
+    }
+
+    .associative__practice-drop-card:nth-child(1) {
+        display: block !important;
+    }
+
+    .associative__practice-drop-card:nth-child(2) {
+        display: block !important;
+    }
+
+    .associative__practice-drop-card:nth-child(3) {
+        display: block !important;
+    }
+
+    .associative__practice-drop-card:nth-child(4) {
+        display: block !important;
+    }
+
+    .associative__practice-drop-card:nth-child(5) {
+        display: block !important;
+    }
+
+    .associative__practice-drop-card:nth-child(6) {
+        display: block !important;
+    }
+
+    .associative__practice-drop-card:nth-child(7) {
+        display: block !important;
+    }
+
+    .associative__practice-drop-card:nth-child(8) {
+        display: block !important;
+    }
+
+    .associative__practice-drop-card:nth-child(9) {
+        display: block !important;
+    }
+
+    .associative__practice-drop-card:nth-child(10) {
+        display: block !important;
+    }
+}
+
+//--------------------------------------------------------------------------------------------------//
+//form-result-move
+
+.associative__practice-box-top-height {
+    height: 100% !important;
+    display: block !important;
+    padding: 19px 40px !important;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.associative__practice-top-result {
+    width: 100% !important;
+    height: 41% !important;
+}
+
+//--------------------------------------------------------------------------------------------------//
+// form-edit
+
+.associative__input-font-size {
+    @include adaptive-value("font-size", 28, 20, 1);
+}
+
+.bg_error-card {
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25), inset 0px 0px 4px #FF0000 !important;
+}
+
+//--------------------------------------------------------------------------------------------------//

@@ -1,0 +1,38 @@
+{"steps": {
+        "step1": "Krok 1",
+        "step2": "Krok 2",
+        "step3": "Krok 3",
+        "step4": "Krok 4"
+    },
+    "languages": {
+        "uk": "Ukraińska",
+        "pl": "Polski",
+        "en": "Angielski"
+    },
+    "countries": {
+        "ua": "Ukraina",
+        "allUa": "Cała Ukraina",
+        "international": "Międzynarodowy dla wszystkich krajów",
+        "nationalOlympiad": "Ukraińska Olimpiada Krajowa"
+    },
+    "description": {
+        "general": "Dla wszystkich studentów w Ukrainie organizujemy krajową olimpiadę",
+        "detailed": "Szczegółowy opis olimpiady"
+    },
+    "price": {
+        "price": "Cena",
+        "internationalPayments": "Dla międzynarodowych płatności",
+        "ukrainianPayments": "Dla ukraińskich płatności"
+    },
+    "dates": {
+        "announcementDate": "Data ogłoszenia olimpiady",
+        "from": "Od jakiegoś czasu",
+        "to": "Do jakiegoś czasu",
+        "activationDate": "Data aktywacji olimpiady"
+    },
+    "navigation": {
+        "back": "Wstecz",
+        "next": "Dalej",
+        "preview": "Podgląd"
+    }
+}

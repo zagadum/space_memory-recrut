@@ -1,0 +1,78 @@
+{
+    "name": "laravel/laravel",
+    "type": "project",
+    "description": "The Laravel Framework.",
+    "keywords": ["framework", "laravel"],
+    "license": "MIT",
+
+    "require": {
+        "php": "^8.2",
+        "darkaonline/l5-swagger": "^10.1",
+        "firebase/php-jwt": "^7.0",
+        "guzzlehttp/guzzle": "^7.0.1",
+        "intervention/image": "2.7",
+        "laravel/framework": "^12.0",
+        "laravel/tinker": "^2.5",
+        "laravel/ui": "^4.2",
+        "mpdf/mpdf": "^8.1",
+        "phpoffice/phpspreadsheet": "^1.30",
+        "sendgrid/sendgrid": "^8.1",
+        "spatie/laravel-translatable": "^6.0"
+    },
+    "require-dev": {
+        "barryvdh/laravel-debugbar": "^4.0",
+        "fakerphp/faker": "^1.9.1",
+        "filp/whoops": "^2.0",
+        "laravel/sail": "^1.0.1",
+        "mockery/mockery": "^1.4.2",
+        "nunomaduro/collision": "^8.0",
+        "phpunit/phpunit": "^11.5",
+        "sebastian/environment": "^7.2.1",
+        "spatie/laravel-ignition": "^2.0",
+        "symfony/mailer": "^7.0"
+    },
+    "autoload": {
+        "classmap": [
+            "database"
+        ],
+
+        "psr-4": {
+            "App\\": "app/",
+            "App\\Http\\Controllers\\": "app/Http/Controllers",
+            "App\\Helpers\\": "app/Helpers",
+            "MemoryOlympiad\\": "src/"
+
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "post-autoload-dump": [
+            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
+            "@php artisan package:discover --ansi"
+        ],
+        "post-root-package-install": [
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+        ],
+        "post-create-project-cmd": [
+            "@php artisan key:generate --ansi"
+        ],
+        "phpstan": "php phpstan.phar analyse --memory-limit=1G",
+        "phpstan-changed": "php phpstan.phar analyse app/Http/Controllers/Recruting/IndexController.php --level=7 --memory-limit=1G"
+    },
+    "extra": {
+        "laravel": {
+            "dont-discover": []
+        }
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

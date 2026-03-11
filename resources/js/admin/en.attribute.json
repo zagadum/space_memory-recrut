@@ -1,0 +1,76 @@
+{
+    "name": "Name",
+    "first_name": "First Name",
+    "surname": "Surname",
+    "parent1_surname": "Parent Surname",
+    "parent1_lastname": "Parent First Name",
+    "lastname": "Last Name",
+    "email": "E-mail",
+    "phone": "Phone",
+    "fin_royalty": "Royalty",
+    "fin_pr": "PR Deduction",
+    "fin_legal": "Contract Number",
+    "fin_vid": "Legal Activity Type",
+    "fin_address": "Legal Address",
+    "fin_regno": "Registration Number",
+    "fin_price_aboniment": "Subscription Price",
+    "dob": "Date of Birth",
+    "address": "Group Address",
+    "language": "Language",
+    "country": "Country",
+    "region": "Region",
+    "city": "City",
+    "currency": "Currency",
+    "The form contains invalid fields.": "The form contains invalid fields.",
+    "test22": "aaaaaaaaaa",
+    "warning": "Warning!",
+    "max_num": "Max number:",
+
+    "duplicateDialog": {
+        "title": "Warning!",
+        "text": "Do you really want to duplicate this item?",
+        "yes": "Yes, duplicate.",
+        "no": "No, cancel.",
+        "success_title": "Success!",
+        "success": "Item successfully duplicated.",
+        "error_title": "Error!",
+        "error": "An error has occurred."
+    },
+    "deleteDialog": {
+        "title": "Warning!",
+        "text": "Do you really want to delete this item?",
+        "yes": "Yes, delete.",
+        "no": "No, cancel.",
+        "success_title": "Success!",
+        "success": "Item successfully deleted.",
+        "error_title": "Error!",
+        "error": "An error has occurred."
+    },
+    "deleteItemsDialog": {
+        "title": "Warning!",
+        "text": "Do you really want to delete?",
+        "yes": "Okay",
+        "no": "Cancel",
+        "success_title": "Success!",
+        "success": "Item successfully deleted.",
+        "error_title": "Error!",
+        "error": "An error has occurred."
+    },
+    "UnBlokingItem": {
+        "text": "Unblock?",
+        "yes": "Okay",
+        "no": "Cancel"
+    },
+    "BlokingItem": {
+        "text": "Do you really want to block?",
+        "reason": "Blocking Reason",
+        "yes": "Block",
+        "no": "Cancel"
+    },
+    "BlokingItemSm": {
+        "text": "Do you really want to block?",
+        "reason": "Blocking Reason",
+        "yes": "Block",
+        "no": "Cancel"
+    }
+}

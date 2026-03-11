@@ -1,0 +1,273 @@
+.homework-right_btn {
+    display: flex;
+    align-items: center;
+
+    @media screen and (max-width: 1266px) {
+        flex-direction: column;
+        align-items: flex-end;
+    }
+
+    @media screen and (max-width: 575px) {
+        margin-top: 15px;
+        align-items: center;
+    }
+
+    a {
+        padding: 9px 26px 10px;
+
+        &:not(:last-of-type) {
+            margin-right: 15px;
+
+            @media screen and (max-width: 1266px) {
+                margin-right: unset;
+                margin-bottom: 15px;
+            }
+        }
+    }
+}
+
+.new-homework-btn {
+    font-family: 'Roboto';
+    font-size: 12px;
+    line-height: 14px;
+    letter-spacing: 0.3px;
+    color: #252733;
+
+
+    span {
+        position: relative;
+
+        &:after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: #252733;
+        }
+    }
+
+    &:hover {
+        color: #252733;
+        text-decoration: none;
+
+        span {
+            &:after {
+                display: none;
+            }
+        }
+    }
+}
+
+.homework-right_btn .calendar-btn {
+    display: flex;
+    align-items: center;
+    border-radius: 30px;
+    font-family: "Days One";
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 15px;
+    color: #ffffff;
+    background: radial-gradient(83.55% 73.47% at 50.21% 26.53%, #08293A 0%, #05212E 99.48%);
+    border: 1px solid #22FEFF;
+    box-shadow: 0 0 5px 0 rgb(5 33 46 / 50%);
+
+    img {
+        margin-left: 10px;
+    }
+}
+
+.admin-homework {
+    .check-theme_homework {
+        .form-check {
+            display: flex;
+            justify-content: center;
+
+            @media screen and (max-width: 575px) {
+                justify-content: flex-start;
+            }
+        }
+    }
+}
+
+.number_repeat {
+    font-family: 'Roboto';
+    font-size: 14px;
+    line-height: 16px;
+    color: #2B4754;
+    text-align: center;
+    max-width: 150px;
+    margin-left: auto;
+
+    @media screen and (max-width: 767px) {
+        display: none;
+    }
+}
+
+.homework-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 15px;
+
+    &_content {
+        background: #FFFFFF;
+        box-shadow: 0 0 30px rgb(0 0 0 / 10%);
+        border-radius: 10px;
+        display: flex;
+        flex: 1;
+
+        @media screen and (max-width: 767px) {
+            flex-direction: column;
+        }
+
+        &-number {
+            background: #4F4F4F;
+            border-radius: 10px 0 0 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+
+            font-family: 'Roboto';
+            font-weight: bold;
+            font-size: 24px;
+            line-height: 32px;
+            color: #FAFAFA;
+            padding: 5px 12px;
+            box-sizing: border-box;
+
+            //cursor: move;
+            position: relative;
+
+            @media screen and (max-width: 767px) {
+                border-radius: 10px 10px 0 0;
+                flex-direction: row;
+            }
+
+            &:after {
+                content: '';
+                position: absolute;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                margin: auto;
+                //background-image: url(/images/move.svg?ad02127…);
+                background-repeat: no-repeat;
+                background-position: center;
+                width: 5px;
+                height: 10px;
+                display: block;
+            }
+
+            button {
+                margin: 0;
+                padding: 0;
+            }
+        }
+
+        &-info {
+            display: flex;
+            flex-direction: column;
+            padding: 12px 35px 23px;
+            box-sizing: border-box;
+
+            @media screen and (max-width: 575px) {
+                padding: 12px 15px 23px;
+            }
+
+            p {
+                font-family: 'Roboto';
+                font-weight: bold;
+                font-size: 16px;
+                line-height: 32px;
+                color: #4F4F4F;
+            }
+
+            ul, li {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+            }
+
+            ul {
+                display: flex;
+                align-items: center;
+
+                @media screen and (max-width: 1366px) {
+                    flex-direction: column;
+                    align-items: flex-start;
+                }
+
+                li {
+                    background: #D8D8D84D;
+                    border-radius: 30px;
+                    padding: 3px 10px;
+                    box-sizing: border-box;
+
+                    &:first-child {
+                        background: #FF5B3A4D;
+                    }
+
+                    &:not(:last-of-type) {
+                        margin-right: 15px;
+
+                        @media screen and (max-width: 1366px) {
+                            margin-right: unset;
+                            margin-bottom: 15px;
+                        }
+                    }
+
+                    span {
+                        font-family: 'Inter';
+                        font-weight: 600;
+                        font-size: 12px;
+                        line-height: 16px;
+                        color: #778192;
+                    }
+                }
+            }
+
+            &_repeat {
+                display: none;
+                margin-top: 25px;
+                font-weight: bold;
+
+                @media screen and (max-width: 767px) {
+                    display: block;
+                }
+            }
+        }
+    }
+
+    &_repeat {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex: 0 0 125px;
+        font-family: 'Roboto';
+        font-weight: bold;
+        font-size: 24px;
+        line-height: 32px;
+        color: #2B4754;
+
+        @media screen and (max-width: 767px) {
+            flex: 0 0 100px;
+        }
+
+        @media screen and (max-width: 767px) {
+            display: none;
+        }
+    }
+}
+
+.admin-filter-white {
+    filter: invert(1);
+}
+
+.admin-filter-grey {
+    filter: invert(49%) sepia(50%) saturate(9%) hue-rotate(315deg) brightness(97%) contrast(92%);
+}

@@ -1,0 +1,129 @@
+//form-show
+    .card__words-profi {
+        width: 100%;
+        height: 100%;
+
+            .card__profi {
+                width: 100%;
+                height: 80%;
+
+                    .card__profi-container {
+                        width: 95%;
+                        height: 100%;
+                        border: 2px solid rgba(0, 176, 203, 0.4);
+                        border-radius: 16px;
+
+                            .profi-box{
+                                width: 95%;
+                                height: 90%;
+                                overflow-y: auto;
+                                overflow-x: hidden;
+
+                                    .profi__chain-row {
+                                        width: 100%;
+                                        height: 33.3333333333%;
+
+                                            .profi__chain-box {
+                                                width: 20%;
+                                                height: 100%;
+                                                position: relative;
+                                                font-family: "Days One", sans-serif;
+                                                font-style: normal;
+                                                font-weight: 400;
+                                                line-height: 32px;
+                                                text-align: center;
+                                                font-variant: small-caps;
+                                                color: rgba(6, 34, 48, 0.8);
+
+                                                    .profi__chain-box-num {
+                                                        width: 32px;
+                                                        height: 24px;
+                                                        position: absolute;
+                                                        left: -9px;
+
+                                                            .profi__chain-box-num-block {
+                                                                width: 100%;
+                                                                height: 100%;
+                                                                @include adaptive-font(18, 15);
+                                                            }
+                                                    }
+
+                                                    .profi__chain-container {
+                                                        width: 90%;
+                                                        height: 50%;
+                                                        position: relative;
+
+                                                            .profi__chain-container-correct-answer {
+                                                                position: absolute;
+                                                                top: -17px;
+                                                                color: #00B0CB;
+                                                                @include adaptive-font(18, 14);
+                                                            }
+
+                                                            .profi__chain-container-border {
+                                                                width: 100%;
+                                                                height: 100%;
+                                                                box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25), inset 0px 0px 4px 2px #00B0CB;
+                                                                border-radius: 8px;
+                                                                border: none;
+                                                                text-align: center;
+                                                                padding: 10px;
+                                                                font-size: 17pt;
+                                                                line-height: 1em;
+                                                                overflow: hidden;
+                                                                overflow-wrap: normal;
+                                                                word-wrap: normal;
+                                                                word-break: normal;
+                                                                line-break: auto;
+                                                                hyphens: none;
+                                                            }
+
+                                                            .profi__chain-container-border:focus {
+                                                                box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25), inset 0px 0px 4px #EB8B12;
+                                                            }
+
+                                                            .profi__chain-container-border-input {
+                                                                @include adaptive-font(18, 14);
+                                                            }
+
+                                                            .profi__chain-container-border-results {
+                                                                box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25), inset 0px 0px 4px #EB8B12;
+                                                            }
+                                                    }
+                                            }
+                                    }
+                            }
+                    }
+            }
+    }
+
+    .word__input-wrap {
+        width: 100%;
+        height: 100%;
+        font-size: 17pt;
+    }
+
+    .input__word {
+        height: 100%;
+        border-radius: 41px !important;
+        @include adaptive-value("font-size", 17, 15 ,1);
+        transition: all 0.4s;
+    }
+
+    .profi-box::-webkit-scrollbar {
+        background: rgba(0, 176, 203, 0.4);
+        border-radius: 5px;
+        width: 4px;
+        height: 332px;
+    }
+
+    .profi-box::-webkit-scrollbar-thumb {
+        width: 8px;
+        height: 101px;
+        background: #EB8B12;
+        border-radius: 5px;
+    }
+
+    .profi__chain-container-width {
+        width: 88% !important;
+    }

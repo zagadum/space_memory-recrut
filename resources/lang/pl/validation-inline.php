@@ -1,0 +1,131 @@
+<?php
+
+/*
+|--------------------------------------------------------------------------
+| Validation Language Lines
+|--------------------------------------------------------------------------
+|
+| The following language lines contain the default error messages used by
+| the validator class. Some of these rules have multiple versions such
+| as the size rules. Feel free to tweak each of these messages here.
+|
+*/
+
+return [
+    'accepted'             => 'Pole musi zostać zaakceptowane.',
+    'active_url'           => 'Nieprawidłowy adres URL.',
+    'after'                => 'Data powinna być późniejsza niż :date.',
+    'after_or_equal'       => 'Data powinna być późniejsza, albo równa :date',
+    'alpha'                => 'Pole może zawierać tylko litery.',
+    'alpha_dash'           => 'Pole może zawierać tylko litery, cyfry, myślniki i podkreślenia.',
+    'alpha_num'            => 'Pole może zawierać tylko litery oraz cyfry.',
+    'array'                => 'Pole musi zawierać drukowane litery.',
+    'attached'             => 'To pole jest już załączone.',
+    'before'               => 'Data powinna być wcześniejsza niż :date.',
+    'before_or_equal'      => 'Data powinna być wcześniejsza albo równa :date.',
+    'between'              => [
+        'array'   => 'Treść powinna zawierać między :min a :max elementów.',
+        'file'    => 'Plik powinien mieć od :min do :max kilobajtów.',
+        'numeric' => 'Wartość musi mieć pomiędzy :min a :max.',
+        'string'  => 'Rząd powinien mieć między :min a :max symbolami.',
+    ],
+    'boolean'              => 'Поле має бути істинним або хибним.Pole musi być prawdziwe lub fałszywe',
+    'confirmed'            => 'Potwierdzenie nie pasuje.',
+    'date'                 => 'Data nie jest prawidłowa',
+    'date_equals'          => 'Powinna być data która jest równa :date.',
+    'date_format'          => 'Nie pasuje do formatu :format.',
+    'different'            => 'Wartość musi być różna od :other.',
+    'digits'               => 'Powinno być: :digits cyfr.',
+    'digits_between'       => 'Powinno być między :min a :max cyfr.',
+    'dimensions'           => 'Obraz ma nieprawidłowe wymiary.',
+    'distinct'             => 'Pole ma powtórne znaczenie.',
+    'email'                => 'Adres email musi być prawidłowy.',
+    'ends_with'            => 'Musi kończyć się na: :values.',
+    'exists'               => 'Wybrane znaczenie nie istnieje.',
+    'file'                 => 'Treść powinna być w pliku.',
+    'filled'               => 'Wypełnienie obowiązkowe.',
+    'gt'                   => [
+        'array'   => 'Treść powinna być większa niż :value elementów.',
+        'file'    => 'Rozmiar pliku musi być większy :value kilobajtów.',
+        'numeric' => 'Wartość musi być większa niż :value.',
+        'string'  => 'Ciąg musi być większy niż :value wartości.',
+    ],
+    'gte'                  => [
+        'array'   => 'Treść musi zawierać :value lub więcej elementów.',
+        'file'    => 'Rozmiar pliku musi być większy lub równy :value kilobajtów.',
+        'numeric' => 'Wartość musi być większa lub równa:value.',
+        'string'  => 'Ciąg musi być większy lub równy :value wartości.',
+    ],
+    'image'                => 'Potrzebny jest obraz.',
+    'in'                   => 'Wybrana wartość jest nieprawidłowa.',
+    'in_array'             => 'Wartość nie istnieje w :other.',
+    'integer'              => 'powinna to być liczba całkowita.',
+    'ip'                   => 'Musi być ważny adres IP.',
+    'ipv4'                 => 'Musi być ważny adres IPv4.',
+    'ipv6'                 => 'Musi być ważny adres IPv6.',
+    'json'                 => 'Musi być ważny ciąg JSON.',
+    'lt'                   => [
+        'array'   => 'Treść powinna zawierać mniej niż :value elementów.',
+        'file'    => 'Rozmiar pliku powinien być mniejszy niż :value kilobajtów.',
+        'numeric' => 'Wartość powinna być mniejsza :value.',
+        'string'  => 'Ciąg musi być mniejszy niż :value symboli.',
+    ],
+    'lte'                  => [
+        'array'   => 'Treść powinna zawierać :value lub więcej elementów.',
+        'file'    => 'Rozmiar pliku musi być mniejszy lub równy :value kilobajtów.',
+        'numeric' => 'Wartość musi być większa lub równa :value.',
+        'string'  => 'Ciąg musi być większy lub równy  :value wartości .',
+    ],
+    'max'                  => [
+        'array'   => 'Treść powinna zawierać :value lub więcej elementów.',
+        'file'    => 'Rozmiar pliku musi być mniejszy lub równy  :value kilobajtów.',
+        'numeric' => 'Wartość musi być większa lub równa :value.',
+        'string'  => 'Ciąg musi być większy lub równy :value значення.',
+    ],
+    'mimes'                => 'Musi być plik typu: :values.',
+    'mimetypes'            => 'Musi być plik typu: :values.',
+    'min'                  => [
+        'array'   => 'Wartość nie może być mniejsza niż :min elementów.',
+        'file'    => 'Rozmiar pliku nie może być mniejszy niż :min kilobajtów.',
+        'numeric' => 'Wartość powinna wynosić co najmniej :min.',
+        'string'  => 'W ciągu ma być nie mniej niż :min symboli.',
+    ],
+    'multiple_of'          => 'To pole musi zawierać kilka :value',
+    'not_in'               => 'Wybrana wartość jest nieprawidłowa.',
+    'not_regex'            => 'Format jest nieprawidłowy.',
+    'numeric'              => 'Powinna to być liczba.',
+    'password'             => 'Niepoprawne hasło.',
+    'present'              => 'Pole musi być obecne.',
+    'prohibited'           => 'To pole jest zabronione.',
+    'prohibited_if'        => 'To pole jest zabronione, jeśli :other dorównuje  :value.',
+    'prohibited_unless'    => 'To pole jest zabronione, jeśli tylko :other nie znajduje się :values roku.',
+    'regex'                => 'Niepoprawny format.',
+    'relatable'            => 'To pole może nie być powiązane z tym zasobem.',
+    'required'             => 'To pole jest obowiązkowe.',
+    'required_if'          => 'To pole jest obowiązkowe jeśli :other to :value.',
+    'required_unless'      => 'To pole jest obowiązkowe jeśli :other inaczej nie określono w :values.',
+    'required_with'        => 'To pole jest obowiązkowe jeśli :values.',
+    'required_with_all'    => 'To pole jest obowiązkowe jeśli :values są obecne.',
+    'required_without'     => 'To pole jest obowiązkowe :values nie ma wartości.',
+    'required_without_all' => 'To pole jest obowiązkowe, gdy żadne z :values jest obecne.',
+    'same'                 => 'Wartość tego pola musi być zgodna z wartością z :other.',
+    'size'                 => [
+        'array'   => 'Treść musi zawierać :size elementów.',
+        'file'    => 'Rozmiar pliku powinien mieć :size kilobajtów.',
+        'numeric' => 'Wartość powinna wynosić :size.',
+        'string'  => 'W ciągu powinno być :size symboli.',
+    ],
+    'starts_with'          => 'Musi zaczynać się od jednego z poniższych warunków: :values.',
+    'string'               => 'Musi występować w ciągu.',
+    'timezone'             => 'Musi to być prawidłowa strefa czasowa.',
+    'unique'               => 'Już jest zajęty.',
+    'uploaded'             => 'Nie udało się załadować.',
+    'url'                  => 'Nieprawidłowy format.',
+    'uuid'                 => 'Musi być prawidłowyUUID.',
+    'custom'               => [
+        'attribute-name' => [
+            'rule-name' => 'custom-message',
+        ],
+    ],
+    'attributes'           => [],
+];

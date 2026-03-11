@@ -1,0 +1,243 @@
+.table-listing {
+    th, td {
+        display: table-cell !important;
+    }
+
+    tr {
+        border-bottom: 1px solid #f6f6f6;
+
+        display: table-row;
+    }
+
+    thead {
+        background: #D8D8D8;
+        box-shadow: inset 0px -1px 0px #e8e8e8;
+
+        tr {
+            border: none;
+
+            th {
+                font-family: 'Mulish';
+                font-style: normal;
+                font-weight: 900;
+                font-size: 12px;
+                line-height: 20px;
+                letter-spacing: 0.2px;
+                color: #121212;
+
+                p {
+                    margin: 0;
+                }
+
+                a {
+                    display: flex;
+                }
+            }
+        }
+    }
+
+    tbody {
+        tr {
+            box-shadow: inset 0px -1px 0px #E8E8E8;
+
+            &:nth-child(odd), &:hover {
+                background: #F7F7F7;
+            }
+
+            td {
+                font-family: 'Mulish';
+                font-style: normal;
+                font-weight: normal;
+                font-size: 12px;
+                line-height: 20px;
+                letter-spacing: 0.2px;
+                color: #121212;
+
+                .btn {
+                    padding: 5px 3px;
+                }
+
+                .table-controls {
+                    display: flex;
+                    align-items: center;
+                    justify-content: flex-end;
+
+                    form {
+                        padding: 0;
+                    }
+                }
+
+                p {
+                    margin: 0;
+
+                    &.table_th-link {
+                        cursor: pointer;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.active-franchisee {
+    font-family: 'Mulish';
+    font-style: normal;
+    font-weight: 900;
+    font-size: 12px;
+    line-height: 20px;
+    letter-spacing: 0.2px;
+    color: #121212;
+
+    span {
+        font-family: 'Days One';
+        font-style: normal;
+        font-weight: normal;
+        font-size: 12px;
+        line-height: 20px;
+        letter-spacing: 0.3px;
+        color: #0E5C60;
+    }
+}
+
+.pagination {
+    .page-item {
+        .page-link {
+            font-family: 'Mulish';
+            font-style: normal;
+            font-weight: 600;
+            font-size: 12px;
+            line-height: 20px;
+            letter-spacing: 0.2px;
+            color: #121212;
+            box-shadow: none;
+            background: #FFFFFF;
+            border: 1px solid #E5E4E9;
+            box-sizing: border-box;
+            border-radius: 3px;
+            margin: 0 2px;
+            padding: 5px 11px 4px;
+        }
+
+        &:hover,
+        &.active {
+            .page-link {
+                background-color: #B3BAC4;
+                border-color: #B3BAC4;
+                border-radius: 4px;
+                color: #ffffff;
+            }
+        }
+
+        &:first-of-type {
+
+            .page-link {
+                position: relative;
+                background: #B3BAC433;
+                border-radius: 4px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 8px 7px 7px 6px;
+
+                &:before {
+                    content: url("../../../images/Arro_Left.svg");
+                    height: 14px;
+                    width: 14px;
+                }
+
+                &:hover {
+                    background: #B3BAC4;
+
+                    &:before {
+                        content: url("../../../images/Arro_Left-light.svg");
+                    }
+                }
+            }
+
+            span {
+                display: none;
+            }
+        }
+
+        &:last-of-type {
+
+            .page-link {
+                position: relative;
+                background: #B3BAC433;
+                border-radius: 4px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 8px 6px 7px 7px;
+
+                &:before {
+                    content: url("../../../images/Arro_Left.svg");
+                    height: 14px;
+                    width: 14px;
+                    transform: rotate(180deg);
+                }
+
+                &:hover {
+                    background: #B3BAC4;
+
+                    &:before {
+                        content: url("../../../images/Arro_Left-light.svg");
+                    }
+                }
+            }
+
+            span {
+                display: none;
+            }
+        }
+    }
+}
+
+.block-item_btn {
+    border: 1px solid #5F6565bf;
+    box-sizing: border-box;
+    border-radius: 30px;
+    background-color: transparent;
+    font-family: 'Days One';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 15px;
+    width: fit-content;
+    min-height: 38px;
+    color: #474545;
+    padding: 0 20px;
+    margin-top: 36px;
+
+    img {
+        transform: rotate(180deg);
+    }
+}
+ 
+
+.form-control.input-table-sm {
+    width: 55px !important;
+    font-size: 11px !important;
+    height: 28px !important;
+    padding: 0 !important;
+    padding-right: 0 !important;  
+    text-align: center !important;
+}
+
+ 
+/* Обычный текст ссылок */
+.nav-link.shopproduct {
+    color: #393A42 !important;
+    background: transparent !important; /* Убираем фон, если не нужен */
+}
+.nav-link.shopproduct:hover {
+    color: #007bff !important;
+    background: transparent !important; /* Убираем фон, если не нужен */
+}
+
+
+.nav-link.shopproduct.active {
+    color: #007bff !important;
+    background-color: transparent !important;
+ 
+}

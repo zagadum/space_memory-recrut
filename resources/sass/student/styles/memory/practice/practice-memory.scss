@@ -1,0 +1,679 @@
+//form-show
+
+.memory__practice-wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .memory__practice-left {
+        width: 60%;
+        height: 100%;
+        border: 2px solid rgba(0, 176, 203, 0.4);
+        border-radius: 16px;
+        @include adaptive-value("padding", 23, 17, 1);
+
+        .memory__practice-box {
+            width: 100%;
+            height: 100%;
+            padding: 0px 7px;
+            overflow-x: hidden;
+            overflow-y: auto;
+
+            .memory__practice-box-row {
+                width: 100%;
+                height: 100%;
+                display: flex;
+                flex-wrap: wrap;
+
+                .memory__practice-card-wrap {
+                    width: 20%;
+                    height: 30%;
+                    padding: 0px 8px;
+                    margin-bottom: 15px;
+
+                    .practice__card-header {
+                        width: 100%;
+                        height: 20%;
+                        color: #00B0CB;
+                        opacity: 0.5;
+                        font-family: 'Days One', sans-serif;
+                        font-style: normal;
+                        font-weight: 400;
+                        @include adaptive-value("font-size", 17, 10, 1);
+                        line-height: 32px;
+                    }
+
+                    .practice__card-footer {
+                        width: 100%;
+                        height: 80%;
+                        align-items: normal;
+
+                        .practice__card-image-wrap {
+                            width: 100%;
+                            height: 100%;
+                            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25), inset 0px 0px 4px #00B0CB;
+                            border-radius: 8px;
+                            padding: 8px;
+
+                            img {
+                                width: 100%;
+                                height: 100%;
+                                border-radius: 8px;
+                                opacity: 0;
+                                transition: opacity 1s;
+                                object-fit: cover;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .memory__practice-right {
+        width: 35%;
+        height: 65%;
+        border: 2px solid rgba(0, 176, 203, 0.4);
+        border-radius: 16px;
+        @include adaptive-value("padding", 23, 17, 1);
+
+        .memory__practice-box-image {
+            width: 100%;
+            height: 100%;
+            border: 2px solid rgba(0, 176, 203, 0.9);
+            border-radius: 8px;
+            position: relative;
+            font-family: "Days One", sans-serif;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 32px;
+            text-align: center;
+            color: rgba(6, 34, 48, 0.4);
+
+            .memory__plug {
+                width: 100%;
+                height: 100%;
+                background: rgba(196, 196, 196, 0.8);
+                border-radius: 5px;
+                @include adaptive-value("font-size", 18, 12, 1);
+                position: absolute;
+                z-index: 3;
+                opacity: 1;
+                transition: opacity .5s;
+            }
+
+            .memory__finish-text {
+                @include adaptive-value("font-size", 18, 12, 1);
+                opacity: 1;
+                transition: opacity .5s;
+            }
+
+            img {
+                width: 100%;
+                height: 100%;
+                border-radius: 6px;
+                position: absolute;
+                z-index: 2;
+            }
+        }
+    }
+}
+
+.opacity-one {
+    opacity: 1 !important;
+}
+
+.opacity-zero {
+    opacity: 0 !important;
+}
+
+//--------------------------------------------------------------------------------------------------//
+
+//form-edit
+
+.memory__practice-wrap-edit {
+    display: grid;
+    grid-template-rows: 55% 40%;
+    grid-template-columns: 60% 1fr;
+    gap: 18px;
+
+
+    .memory__edit-left {
+        width: 100%;
+        height: 100%;
+        border: 2px solid rgba(0, 176, 203, 0.4);
+        border-radius: 16px;
+        @include adaptive-value("padding", 20, 15, 1);
+        grid-row-start: 1;
+        grid-column-start: 1;
+        grid-row-end: 2;
+        grid-column-end: 2;
+
+        .memory__edit-left-wrap {
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden; //убрать позже
+            overflow-y: auto; //убрать позже
+
+            .memory__edit-left-box {
+                width: 100%;
+                height: 100%;
+                display: grid;
+                grid-template-columns: repeat(5, 20%);
+                grid-template-rows: 100%;
+                grid-column-gap: 0px;
+                grid-row-gap: 0px;
+
+                .memory__edit-left-card {
+                    width: 100%;
+                    height: 100%;
+                    padding: 0px 8px 0px 0px;
+
+                    .memory__edit-left-card-header {
+                        width: 100%;
+                        height: 20%;
+                        color: #00B0CB;
+                        opacity: 0.5;
+                        font-family: 'Days One', sans-serif;
+                        font-style: normal;
+                        font-weight: 400;
+                        @include adaptive-value("font-size", 17, 10, 1);
+                        line-height: 32px;
+                    }
+
+                    .memory__edit-left-card-bottom-wrap {
+                        width: 100%;
+                        height: 80%;
+                        align-items: normal;
+
+                        .memory__edit-left-card-bottom {
+                            width: 100%;
+                            height: 70%;
+                            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25), inset 0px 0px 4px #00B0CB;
+                            border-radius: 8px;
+
+                            .memory__edit-bottom-card {
+                                width: 100%;
+                                height: 100%;
+                            }
+
+                            .memory__edit-bottom-card:hover .delete__button {
+                                display: initial;
+                            }
+                        }
+                    }
+                }
+
+                .memory__edit-left-card:nth-child(5) {
+                    padding: 0px;
+                }
+            }
+        }
+    }
+
+    .memory__edit-right {
+        width: 100%;
+        height: 100%;
+        border: 2px solid rgba(0, 176, 203, 0.4);
+        border-radius: 16px;
+        @include adaptive-value("padding", 18, 13, 1);
+        grid-row-start: 1;
+        grid-column-start: 2;
+        grid-row-end: 2;
+        grid-column-end: 3;
+
+        .memory__edit-right-wrap {
+            width: 80%;
+            height: 100%;
+            border: 2px solid rgba(0, 176, 203, 0.9);
+            border-radius: 8px;
+            position: relative;
+
+            .memory__edit-right-photo {
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                border-radius: 8px;
+                opacity: 0;
+                transition: opacity 0.5s;
+
+                img {
+                    width: 100%;
+                    height: 100%;
+                    border-radius: 6px;
+                }
+            }
+        }
+    }
+
+
+    .memory__edit-bottom {
+        width: 100%;
+        height: 100%;
+        background: rgba(23, 183, 208, 0.04);
+        border: 2px solid rgba(0, 176, 203, 0.4);
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: space-between;
+        padding-bottom: 10px;
+        grid-row-start: 2;
+        grid-column-start: 1;
+        grid-row-end: 3;
+        grid-column-end: 3;
+
+        .memory__edit-bottom-wrap {
+            width: 96%;
+            height: 65%;
+            position: relative;
+
+            .memory__edit-bottom-box {
+                width: 100%;
+                height: 100%;
+                display: grid;
+                grid-template-columns: repeat(8, 12.5%);
+                grid-template-rows: 100%;
+                grid-column-gap: 0px;
+                grid-row-gap: 0px;
+                align-items: end;
+
+                .memory__edit-bottom-card-wrap {
+                    width: 60%;
+                    height: 88%;
+                    border: 2px solid rgba(0, 176, 203, 0.4);
+                    border-radius: 4px;
+                    justify-self: center;
+                }
+
+                .memory__edit-bottom-card {
+                    width: 90%;
+                    height: 93%;
+                    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25), inset 0px 0px 4px #00B0CB;
+                    justify-self: center;
+                    display: none;
+                }
+
+                .memory__edit-bottom-card:first-child {
+                    display: block;
+                }
+
+                .memory__edit-bottom-card:nth-child(2) {
+                    display: block;
+                }
+
+                .memory__edit-bottom-card:nth-child(3) {
+                    display: block;
+                }
+
+                .memory__edit-bottom-card:nth-child(4) {
+                    display: block;
+                }
+
+                .memory__edit-bottom-card:nth-child(5) {
+                    display: block;
+                }
+
+                .memory__edit-bottom-card:nth-child(6) {
+                    display: block;
+                }
+
+                .memory__edit-bottom-card:nth-child(7) {
+                    display: block;
+                }
+
+                .memory__edit-bottom-card:nth-child(8) {
+                    display: block;
+                }
+            }
+
+            .memory__edit-bottom-box:last-child {
+                position: absolute;
+                top: 0;
+                left: 0;
+            }
+        }
+    }
+}
+
+.memory__edit-bottom-card-photo {
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+}
+.memory__edit-bottom-card-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.memory__edit-right-photo.active {
+    opacity: 1 !important;
+}
+
+.yellow__border {
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25), inset 0px 0px 4px #EB8B12 !important;
+}
+
+.memory__edit-bottom-card {
+    background: #FFFFFF;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25), inset 0px 0px 4px #EB8B12;
+    border-radius: 8px;
+    border: none;
+    padding: 8px;
+    transition: all .5s;
+    position: relative;
+}
+
+//--------------------------------------------------------------------------------------------------//
+
+//form-result
+
+.memory__practice-result-box {
+    width: 90%;
+    height: 95%;
+    border: 2px solid rgba(0, 176, 203, 0.4);
+    border-radius: 16px;
+    @include adaptive-value("padding", 23, 17, 1);
+
+    .memory__practice-result {
+        width: 100%;
+        height: 100%;
+        padding: 0px 7px;
+        overflow-x: hidden;
+        overflow-y: auto;
+
+        .memory__practice-card-result-wrap {
+            width: 100%;
+            height: 100%;
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            grid-column-gap: 10px;
+            grid-row-gap: 0px;
+            align-items: center;
+
+            .memory__practice-card-result {
+                width: 100%;
+                height: 90%;
+
+                .memory__practice-card-result-header {
+                    width: 100%;
+                    height: 20%;
+                    color: rgba(4, 203, 0, 0.8);
+                    opacity: 0.5;
+                    font-family: 'Days One', sans-serif;
+                    font-style: normal;
+                    font-weight: 400;
+                    @include adaptive-value("font-size", 17, 10, 1);
+                    line-height: 32px;
+                }
+
+                .memory__practice-card-result-bottom-wrap {
+                    width: 100%;
+                    height: 80%;
+                    display: flex;
+                    justify-content: space-between;
+                    border-radius: 8px;
+
+                    .memory__practice-card-result-bottom {
+                        width: 100%;
+                        height: 100%;
+                        padding: 7px;
+                        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25), inset 0px 0px 4px #04CB00;
+                        border-radius: 8px;
+
+                        img {
+                            width: 100%;
+                            height: 100%;
+                            border-radius: 6px;
+                            object-fit: cover;
+                        }
+                    }
+
+                    .memory__practice-clue-wrap {
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: space-between;
+
+                        .memory__practice-clue {
+                            width: 40px;
+                            height: 40px;
+                            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25), inset 0px 0px 4px #04CB00;
+                            border-radius: 8px;
+                            padding: 2px;
+
+                            img {
+                                width: 100%;
+                                height: 100%;
+                                border-radius: 6px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .memory__practice-result::-webkit-scrollbar {
+        background: rgba(0, 176, 203, 0.4);
+        border-radius: 5px;
+        width: 4px;
+        height: 80%;
+    }
+
+    .memory__practice-result::-webkit-scrollbar-thumb {
+        width: 8px;
+        height: 101px;
+        background: #EB8B12;
+        border-radius: 5px;
+    }
+}
+
+
+.memory__result-wrap {
+    width: 85%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+
+    .memory__result-box {
+        width: 25%;
+        height: 87%;
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 60% 40%;
+        grid-column-gap: 0px;
+        grid-row-gap: 0px;
+
+        div {
+            font-family: 'Days One', sans-serif;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 24px;
+            color: rgba(6, 34, 48, 0.8);
+            @include adaptive-value("font-size", 16, 9, 1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+
+    .memory__result-card {
+        width: 100%;
+        height: 97%;
+        border: 2px solid rgba(0, 176, 203, 0.4);
+        border-radius: 16px;
+        padding: 11px;
+
+        .memory__result-card-1 {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+
+            .memory__slide-wrap {
+                width: 100%;
+                height: 100%;
+
+                .memory__slide {
+                    width: 100%;
+                    height: 45%;
+                    display: flex;
+                    flex-direction: column;
+                    @include adaptive-value("padding", 12, 4, 1);
+
+                    .memory__num-wrap {
+                        width: 100%;
+                        height: 15%;
+                        display: grid;
+                        grid-template-columns: repeat(5, 1fr);
+                        grid-template-rows: 1fr;
+                        grid-column-gap: 0px;
+                        grid-row-gap: 0px;
+
+                        .memory__num {
+                            width: 100%;
+                            height: 100%;
+                            display: flex;
+                            justify-content: center;
+                            font-family: 'Days One', sans-serif;
+                            font-style: normal;
+                            font-weight: 400;
+                            color: rgba(0, 176, 203, 0.5);
+                            @include adaptive-value("font-size", 17, 12, 1);
+                        }
+                    }
+
+                    .memory__header {
+                        width: 100%;
+                        height: 15%;
+                        font-family: 'Days One', sans-serif;
+                        font-style: normal;
+                        font-weight: 500;
+                        color: rgba(6, 34, 48, 0.8);
+                        @include adaptive-value("font-size", 16, 10, 1);
+                        display: flex;
+                        align-items: center;
+                        padding-left: 8px;
+                    }
+
+                    .memory__slide-row {
+                        width: 100%;
+                        height: 85%;
+                        display: grid;
+                        grid-template-columns: repeat(5, 1fr);
+                        grid-template-rows: 100%;
+                        grid-column-gap: 0px;
+                        grid-row-gap: 0px;
+                        align-items: center;
+
+                        .memory__result {
+                            width: 93%;
+                            height: 93%;
+                            justify-self: center;
+                            border-radius: 8px;
+                            background: #FFFFFF;
+                            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25), inset 0px 0px 4px #04CB00;
+                            padding: 8px;
+
+                            img {
+                                width: 100%;
+                                height: 100%;
+                                border-radius: 8px;
+                                object-fit: cover;
+                            }
+                        }
+                    }
+
+                    .memory__slide-row-top {
+                        height: 70%;
+                    }
+                }
+
+                .memory__slide:first-child {
+                    height: 50%;
+                    background: rgba(0, 176, 203, 0.1);
+                    border-radius: 12px;
+                    justify-content: flex-end;
+                }
+            }
+        }
+    }
+}
+
+.memory__result-btn-wrap {
+    width: 5%;
+    height: 87%;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 60% 40%;
+    grid-column-gap: 0px;
+    grid-row-gap: 0;
+
+    div {
+        display: flex;
+        justify-content: end;
+
+        .memory__result-btn {
+            width: 40px;
+            height: 40px;
+            background: #FFFFFF;
+            border-radius: 50%;
+            border: 2px solid rgba(0, 176, 203, 0.4);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            img {
+                width: 50%;
+                height: 60%;
+            }
+        }
+
+        .up-button {
+            transform: rotate(-180deg);
+        }
+    }
+
+    div:first-child {
+        align-items: end;
+        padding-bottom: 20px;
+    }
+
+    div:last-child {
+        align-items: baseline;
+        padding-top: 20px;
+    }
+}
+
+.card__memory-wrap {
+    transition: all .8s ease;
+}
+
+.card__memory-wrap-anim-1 {
+    opacity: 1;
+    z-index: 2;
+}
+
+.card__memory-wrap-anim-2 {
+    opacity: 0 !important;
+    z-index: 1 !important;
+}
+
+.bs-error {
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25), inset 0px 0px 4px #EB5757 !important;
+}
+
+.bs-good {
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25), inset 0px 0px 4px #04CB00 !important;
+}
+
+.memory__wd {
+    width: 100% !important;
+}
+
+.memory__card-wd {
+    width: 60% !important;
+}
+
+//--------------------------------------------------------------------------------------------------//

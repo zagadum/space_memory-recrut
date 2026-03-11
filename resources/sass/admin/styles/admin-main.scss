@@ -1,0 +1,407 @@
+.admin-header {
+    @media screen and (min-width: 992px) {
+        display: none;
+
+        & + .app-body {
+            margin-top: 0 !important;
+
+            .sidebar {
+                height: calc(100vh) !important;
+            }
+        }
+    }
+
+    @media screen and (max-width: 991px) {
+        display: flex;
+        flex-direction: row-reverse;
+        align-items: center;
+        justify-content: space-between;
+        background: #FCFBFB;
+        box-shadow: 0 3px 4px rgba(0, 0, 0, .12);
+
+        & + .app-body {
+            main.main {
+                margin-top: 0 !important;
+                padding-top: 1.5rem;
+            }
+        }
+    }
+
+    .navbar-brand {
+        position: absolute;
+        top: 0;
+        left: 0;
+        margin-left: 0;
+        display: block !important;
+
+        img {
+            max-height: 38px !important;
+        }
+    }
+
+    .navbar-toggler {
+        outline: transparent;
+    }
+}
+
+
+body {
+    background-color: #EDEFEF;
+}
+.flatpickr-current-month{
+    font-size: 110% !important;
+}
+.admin-breadcrumb {
+    margin-left: 20px;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+    a, span {
+        font-family: 'Mulish';
+        font-style: normal;
+        font-weight: normal;
+        font-size: 12px;
+        line-height: 20px;
+        letter-spacing: 0.2px;
+        color: #474545;
+    }
+
+    span {
+        margin: 0 5px;
+    }
+}
+
+.admin_header-button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+
+    @media screen and (max-width: 479px) {
+        flex-direction: column;
+    }
+
+    button {
+        border-radius: 30px;
+        border: none;
+        font-family: 'Days One';
+        font-style: normal;
+        font-weight: normal;
+        font-size: 12px;
+        line-height: 15px;
+        padding: 11px 21px 12px 20px;
+        box-sizing: border-box;
+
+        @media screen and (max-width: 479px) {
+            width: 100%;
+        }
+
+        &:not(:last-of-type) {
+            margin-right: 18px;
+
+            @media screen and (max-width: 767px) {
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+        }
+
+        img {
+            margin-left: 15px;
+        }
+    }
+
+    &_left {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        @media screen and (max-width: 767px) {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        @media screen and (max-width: 479px) {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .calendar-btn {
+            color: #ffffff;
+            background: radial-gradient(83.55% 73.47% at 50.21% 26.53%, #08293A 0%, #05212E 99.48%);
+            border: 1px solid #22FEFF;
+            -webkit-box-shadow: 0px 0px 5px 0px rgb(5 33 46 / 50%);
+            -moz-box-shadow: 0px 0px 5px 0px rgb(5 33 46 / 50%);
+            box-shadow: 0px 0px 5px 0px rgb(5 33 46 / 50%);
+        }
+
+        .dollar-btn {
+            background: #16BFC7bf;
+            color: #474545bf;
+
+            span {
+                color: #030D12;
+            }
+        }
+    }
+
+    &_right {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        @media screen and (max-width: 767px) {
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        @media screen and (max-width: 479px) {
+            width: 100%;
+        }
+
+        .delete-btn {
+            background: transparent;
+            border: 1px solid #D70404;
+            color: #D70404;
+        }
+
+        .block-btn {
+            color: #474545;
+            background: #FABC29;
+            border: 1px solid #F8B61A;
+
+        }
+    }
+}
+
+.admin_card-header {
+    background: #FCFBFB;
+    box-shadow: 0 3px 4px rgba(0, 0, 0, 0.12);
+    border-radius: 10px;
+    padding: 3px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    margin-bottom: 5px;
+
+    @media screen and (max-width: 639px) {
+        flex-direction: column;
+        align-items: unset;
+    }
+
+    &_title {
+        margin-bottom: 0;
+        font-family: 'Days One';
+        font-style: normal;
+        font-weight: normal;
+        font-size: 20px;
+        line-height: 25px;
+        letter-spacing: 0.3px;
+        color: #252733;
+    }
+
+    &_nav {
+        border-left: 1px solid #DFE0EB;
+        padding-left: 36px;
+
+        @media screen and (max-width: 639px) {
+            border: none;
+        }
+
+        .dropdown-toggle {
+            &:after {
+                display: none;
+            }
+
+            & > span {
+                font-family: 'Mulish';
+                font-style: normal;
+                font-weight: normal;
+                font-size: 12px;
+                line-height: 20px;
+                text-align: right;
+                letter-spacing: 0.2px;
+                color: #252733;
+            }
+        }
+
+        .dropdown-menu {
+            position: absolute;
+        }
+
+        .dropdown-header {
+            background: #4CCBD133 !important;
+            color: #121212;
+        }
+
+        .avatar-initials {
+            width: 16px;
+            height: 16px;
+            line-height: 12px;
+            background-color: transparent;
+        }
+    }
+}
+
+.admin-form {
+    .card {
+        border: none;
+        border-radius: 10px;
+        background-color: transparent;
+
+        &-body {
+            padding: 0;
+        }
+
+        &-footer {
+            padding-top: 2rem;
+            background-color: transparent;
+
+            &_btn-container {
+                margin: 0 auto;
+                display: flex;
+                align-items: center;
+                justify-content: space-around;
+                width: 51%;
+
+                button {
+                    width: 204px;
+                    border-radius: 30px;
+                    min-height: 38px;
+
+                    &.btn-cancel-form {
+                        border: 1px solid #5F6565bf;
+                        box-sizing: border-box;
+                        border-radius: 30px;
+                        background-color: transparent;
+
+                        font-family: 'Days One';
+                        font-style: normal;
+                        font-weight: normal;
+                        font-size: 12px;
+                        line-height: 15px;
+                        color: #474545;
+                    }
+
+                    &.btn-save-form {
+                        background: #16BFC7bf;
+                        box-sizing: border-box;
+                        border-radius: 30px;
+                        font-family: "Days One";
+                        font-style: normal;
+                        font-weight: normal;
+                        font-size: 12px;
+                        line-height: 15px;
+                        color: #ffffff;
+                        border: 1px solid #82BCBCbf;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.admin-table {
+    .card {
+        border: none;
+        border-radius: 10px;
+        background-color: transparent;
+
+        &-body {
+            padding: 0;
+            background: #FCFBFB;
+            box-shadow: 0 3px 4px rgba(0, 0, 0, .12);
+            border-radius: 10px;
+
+            .card-block {
+                .card-header {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    font-family: 'Days One';
+                    font-style: normal;
+                    font-weight: normal;
+                    font-size: 20px;
+                    line-height: 25px;
+                    letter-spacing: 0.3px;
+                    color: #0E5C60;
+                    margin-bottom: 24px;
+                    padding: 0;
+                    background-color: #FCFBFB;
+
+                    @media screen and (max-width: 575px) {
+                        flex-direction: column;
+                    }
+
+                    & > p {
+                        margin-bottom: 0;
+                    }
+
+                    &_btns {
+                        display: flex;
+
+                        .btn-create-item {
+                            &:not(:last-child) {
+                                margin-right: 18px;
+                            }
+                        }
+                    }
+                }
+
+                .btn-create-item {
+                    display: flex;
+                    align-items: center;
+                    border-radius: 30px;
+                    padding: 8px 26px;
+                    font-family: "Days One";
+                    font-style: normal;
+                    font-weight: normal;
+                    font-size: 12px;
+                    line-height: 15px;
+                    color: #ffffff;
+                    color: #ffffff;
+                    background: radial-gradient(83.55% 73.47% at 50.21% 26.53%, #08293A 0%, #05212E 99.48%);
+                    border: 1px solid #22FEFF;
+                    -webkit-box-shadow: 0px 0px 5px 0px rgb(5 33 46 / 50%);
+                    -moz-box-shadow: 0px 0px 5px 0px rgb(5 33 46 / 50%);
+                    box-shadow: 0px 0px 5px 0px rgb(5 33 46 / 50%);
+
+                    @media screen and (max-width: 575px) {
+                        margin-top: 5px;
+                    }
+
+                    img {
+                        margin-left: 10px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.ps__rail-y,
+.ps__rail-x {
+    opacity: 0 !important;
+}
+
+.add_field-btn {
+    font-family: 'Mulish';
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0.2px;
+    color: #0E5C60;
+    border: none;
+    background: transparent;
+    text-decoration: underline;
+    text-align: left;
+    outline: transparent !important;
+    margin-bottom: 1rem;
+    height: 29px;
+
+    &:hover {
+        text-decoration: none;
+    }
+}

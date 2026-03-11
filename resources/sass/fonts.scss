@@ -1,0 +1,186 @@
+@font-face {
+    font-family: 'Roboto';
+    src: url('../fonts/Roboto-Thin.eot');
+    src: local('../fonts/Roboto-Thin'),
+    url('../fonts/Roboto-Thin.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/Roboto-Thin.woff') format('woff'),
+    url('../fonts/Roboto-Thin.ttf') format('truetype');
+    font-weight: 100;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('../fonts/Roboto-Light.eot');
+    src: local('../fonts/Roboto-Light'),
+    url('../fonts/Roboto-Light.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/Roboto-Light.woff') format('woff'),
+    url('../fonts/Roboto-Light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('../fonts/Roboto-Regular.eot');
+    src: local('../fonts/Roboto-Regular'),
+    url('../fonts/Roboto-Regular.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/Roboto-Regular.woff') format('woff'),
+    url('../fonts/Roboto-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('../fonts/Roboto-Medium.eot');
+    src: local('../fonts/Roboto-Medium'),
+    url('../fonts/Roboto-Medium.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/Roboto-Medium.woff') format('woff'),
+    url('../fonts/Roboto-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('../fonts/Roboto-Bold.eot');
+    src: local('../fonts/Roboto-Bold'),
+    url('../fonts/Roboto-Bold.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/Roboto-Bold.woff') format('woff'),
+    url('../fonts/Roboto-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('../fonts/Roboto-Black.eot');
+    src: local('../fonts/Roboto-Black'),
+    url('../fonts/Roboto-Black.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/Roboto-Black.woff') format('woff'),
+    url('../fonts/Roboto-Black.ttf') format('truetype');
+    font-weight: 900;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Days One";
+    src: url("../fonts/days.eot");
+    src: url("../fonts/days.eot?#iefix") format("embedded-opentype"),
+    url("../fonts/days.ttf") format("truetype"),
+    url("../fonts/days.woff") format("woff");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Mulish';
+    src: url('../fonts/Mulish-Light.eot');
+    src: local('../fonts/Mulish-Light'),
+    url('../fonts/Mulish-Light.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/Mulish-Light.woff') format('woff'),
+    url('../fonts/Mulish-Light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Mulish';
+    src: url('../fonts/Mulish-Regular.eot');
+    src: local('../fonts/Mulish-Regular'),
+    url('../fonts/Mulish-Regular.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/Mulish-Regular.woff') format('woff'),
+    url('../fonts/Mulish-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Mulish';
+    src: url('../fonts/Mulish-Medium.eot');
+    src: local('../fonts/Mulish-Medium'),
+    url('../fonts/Mulish-Medium.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/Mulish-Medium.woff') format('woff'),
+    url('../fonts/Mulish-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Mulish';
+    src: url('../fonts/Mulish-Bold.eot');
+    src: local('../fonts/Mulish-Bold'),
+    url('../fonts/Mulish-Bold.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/Mulish-Bold.woff') format('woff'),
+    url('../fonts/Mulish-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Mulish';
+    src: url('../fonts/Mulish-Black.eot');
+    src: local('../fonts/Mulish-Black'),
+    url('../fonts/Mulish-Black.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/Mulish-Black.woff') format('woff'),
+    url('../fonts/Mulish-Black.ttf') format('truetype');
+    font-weight: 900;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Inter';
+    src: url('../fonts/Inter-Regular.eot');
+    src: local('../fonts/Inter-Regular'),
+    url('../fonts/Inter-Regular.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/Inter-Regular.woff') format('woff'),
+    url('../fonts/Inter-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Inter';
+    src: url('../fonts/Inter-Medium.eot');
+    src: local('../fonts/Inter-Medium'),
+    url('../fonts/Inter-Medium.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/Inter-Medium.woff') format('woff'),
+    url('../fonts/Inter-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Inter';
+    src: url('../fonts/Inter-Bold.eot');
+    src: local('../fonts/Inter-Bold'),
+    url('../fonts/Inter-Bold.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/Inter-Bold.woff') format('woff'),
+    url('../fonts/Inter-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+}
+
+
+@font-face {
+    font-family: "Manrope";
+    src: url("../fonts/Manrope.eot");
+    src: url("../fonts/Manrope.eot?#iefix") format("embedded-opentype"),
+    url("../fonts/Manrope.ttf") format("truetype"),
+    url("../fonts/Manrope.woff") format("woff");
+
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Manrope";
+    src: url("../fonts/Manrope-Bold.eot");
+    src: url("../fonts/Manrope-Bold.eot?#iefix") format("embedded-opentype"),
+    url("../fonts/Manrope-Bold.ttf") format("truetype"),
+    url("../fonts/Manrope-Bold.woff2") format("woff2");
+
+    font-weight: 900;
+    font-style: normal;
+}
