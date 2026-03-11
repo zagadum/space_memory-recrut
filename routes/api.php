@@ -17,6 +17,18 @@ use App\Http\Controllers\Api\FallbackController;
 |
 */
 
+use App\Http\Controllers\Api\NewStudentsController;
+use App\Http\Controllers\Api\LeadsController;
+
+Route::prefix('v1')->group(function () {
+    Route::get('/recruitment/new-students', [NewStudentsController::class, 'index']);
+    Route::post('/recruitment/new-students', [NewStudentsController::class, 'store']);
+    Route::post('/recruitment/new-students/{id}/archive', [NewStudentsController::class, 'archive']);
+    
+    Route::get('/recruitment/leads', [LeadsController::class, 'index']);
+    Route::post('/recruitment/leads', [LeadsController::class, 'store']);
+    Route::patch('/recruitment/leads/{id}', [LeadsController::class, 'update']);
+});
 
 Route::fallback(FallbackController::class);
 
