@@ -62,6 +62,48 @@ class NewStudentsController extends Controller
         return response()->json(['success' => true, 'data' => $student]);
     }
 
+    public function update(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'name'           => 'nullable|string|max:100',
+            'surname'        => 'nullable|string|max:100',
+            'email'          => 'nullable|email|max:150|unique:recruting_student,email,' . $id,
+            'phone'          => 'nullable|string|max:20',
+            'subject'        => 'nullable|string|max:100',
+            'status'         => 'nullable|in:new,registered,paid,expelled,transferred,archived',
+            'group_id'       => 'nullable|integer',
+            'teacher_id'     => 'nullable|integer',
+            'parent_name'    => 'nullable|string|max:100',
+            'parent_surname' => 'nullable|string|max:100',
+            'parent_phone'   => 'nullable|string|max:20',
+            'city'           => 'nullable|string|max:100',
+            'country'        => 'nullable|string|max:100',
+            'address'        => 'nullable|string|max:200',
+            'zip'            => 'nullable|string|max:20',
+            'dob'            => 'nullable|date',
+        ]);
+
+        $student = DB::table('recruting_student')->where('id', $id)->first();
+
+        if (!$student) {
+            return response()->json(['message' => 'Student not found'], 404);
+        }
+
+        DB::table('recruting_student')
+            ->where('id', $id)
+            ->update($validated);
+
+        // Записать в историю что данные были изменены
+        event(new StudentUpdatedEvent(
+            $id,
+            'Данные обновлены менеджером',
+            $request->header('X-Manager-Name', 'Admin'),
+            ['fields' => array_keys($validated)]
+        ));
+
+        return response()->json(['success' => true]);
+    }
+
     public function store(Request $request)
     {
         try {

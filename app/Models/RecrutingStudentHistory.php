@@ -17,4 +17,8 @@ class RecrutingStudentHistory extends Model
         'changed_by',
         'meta',
     ];
+
+    protected $casts = [
+        'meta' => 'array',
+    ];
 }

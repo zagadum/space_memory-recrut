@@ -28,6 +28,7 @@ Route::prefix('v1')->group(function () {
     Route::get('/recruitment/new-students/{id}', [NewStudentsController::class, 'show']);
     Route::get('/recruitment/new-students/{id}/history', [NewStudentsController::class, 'history']);
     Route::post('/recruitment/new-students', [NewStudentsController::class, 'store']);
+    Route::patch('/recruitment/new-students/{id}', [NewStudentsController::class, 'update']);
     Route::post('/recruitment/new-students/{id}/archive', [NewStudentsController::class, 'archive']);
     
     Route::get('/recruitment/leads', [LeadsController::class, 'index']);
