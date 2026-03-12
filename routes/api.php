@@ -20,6 +20,7 @@ use App\Http\Controllers\Api\FallbackController;
 use App\Http\Controllers\Api\NewStudentsController;
 use App\Http\Controllers\Api\LeadsController;
 use App\Http\Controllers\Api\ExpelledStudentsController;
+use App\Http\Controllers\Api\StudentCabinetController;
 
 Route::post('/v1/register', [NewStudentsController::class, 'register']);
 
@@ -30,6 +31,9 @@ Route::prefix('v1')->group(function () {
     Route::post('/recruitment/new-students', [NewStudentsController::class, 'store']);
     Route::patch('/recruitment/new-students/{id}', [NewStudentsController::class, 'update']);
     Route::post('/recruitment/new-students/{id}/archive', [NewStudentsController::class, 'archive']);
+    
+    Route::post('/recruitment/verify-code', [StudentCabinetController::class, 'verifyCode']);
+    Route::post('/recruitment/resend-code', [StudentCabinetController::class, 'resendCode']);
     
     Route::get('/recruitment/leads', [LeadsController::class, 'index']);
     Route::post('/recruitment/leads', [LeadsController::class, 'store']);

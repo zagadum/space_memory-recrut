@@ -7,10 +7,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Log;
 use App\Events\StudentCreatedEvent;
 use App\Events\StudentUpdatedEvent;
 use App\Events\StudentArchivedEvent;
 use App\Models\RecrutingStudentHistory;
+use App\Jobs\SendVerificationCodeJob;
 
 class NewStudentsController extends Controller
 {
@@ -228,6 +230,7 @@ class NewStudentsController extends Controller
             'terms_accepted'   => $request->terms_accepted ?? 0,
             'privacy_accepted' => $request->privacy_accepted ?? 0,
             'reg_comment'      => $request->reg_comment ?? '',
+            'verification_code' => $code = (string)rand(1000, 9999),
             'enabled'          => 0,
             'blocked'          => 0,
             'deleted'          => 0,
@@ -235,18 +238,32 @@ class NewStudentsController extends Controller
             'updated_at'       => now(),
         ];
 
-        $id = DB::table('recruting_student')->insertGetId($data);
+        try {
+            $id = DB::table('recruting_student')->insertGetId($data);
 
-        event(new StudentCreatedEvent(
-            studentId: $id,
-            detail: 'Зарегистрирован через форму',
-            changedBy: 'System'
-        ));
+            Log::info("Student registered: {$request->email}, ID: {$id}");
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Регистрация успешна'
-        ], 201);
+            SendVerificationCodeJob::dispatch($request->email, $code);
+
+            event(new StudentCreatedEvent(
+                studentId: $id,
+                detail: 'Зарегистрирован через форму',
+                changedBy: 'System'
+            ));
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Регистрация успешна'
+            ], 201);
+        } catch (\Exception $e) {
+            Log::error("Registration error for {$request->email}: " . $e->getMessage());
+            Log::error($e->getTraceAsString());
+            
+            return response()->json([
+                'success' => false,
+                'message' => 'Ошибка при регистрации: ' . $e->getMessage()
+            ], 500);
+        }
     }
 
     public function history($id)

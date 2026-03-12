@@ -771,7 +771,8 @@
                 });
                 const data = await response.json();
                 if (data.success) {
-                    alert('Регистрация успешна! Ожидайте подтверждения.');
+                    localStorage.setItem('student_email', payload.email);
+                    window.location.href = '/verify';
                 } else {
                     alert(data.message || 'Ошибка регистрации');
                     btn.disabled = false;

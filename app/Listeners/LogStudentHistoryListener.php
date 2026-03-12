@@ -23,7 +23,7 @@ class LogStudentHistoryListener
             'event'      => $eventName,
             'detail'     => $event->detail,
             'changed_by' => $event->changedBy,
-            'meta'       => $event->meta,
+            'meta'       => is_array($event->meta) ? json_encode($event->meta) : $event->meta,
         ]);
     }
 }

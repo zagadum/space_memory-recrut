@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Student\IndexController as StudentIndexController;
+use App\Http\Controllers\Api\StudentCabinetController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -132,6 +133,9 @@ Route::middleware(['is_student'])->group(static function () {
     Route::any('/', [StudentIndexController::class, 'dashboard'])->name('student-dashboard');
 
 });
+
+Route::get('/verify', [StudentCabinetController::class, 'showVerifyPage']);
+Route::get('/cabinet', [StudentCabinetController::class, 'showCabinetPage']);
 //------ END STUDENT -----------------------------------------------------
 
 

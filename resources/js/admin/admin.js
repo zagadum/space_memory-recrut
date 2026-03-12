@@ -39,6 +39,7 @@ import './index';
 
 
 
+
 import '@fullcalendar/core/vdom' ;
 import FullCalendar from '@fullcalendar/vue';
 import dayGridPlugin from '@fullcalendar/daygrid';
