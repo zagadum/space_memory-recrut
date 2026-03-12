@@ -24,8 +24,12 @@ use Illuminate\Support\Facades\Route;
 
 //----------------------- END TEST
 //--------- Старый рабочий код
-Route::get('/', '\App\Http\Controllers\LoginController@Login');
-Route::get('/login', '\App\Http\Controllers\LoginController@Login');
+Route::get('/', function () {
+    return redirect('/register');
+});
+Route::get('/login', function () {
+    return redirect('/register');
+});
 
 Route::get('/register', function () {
     return view('registration.index');
