@@ -92,7 +92,7 @@ class LeadsController extends Controller
                 'email' => 'nullable|email|unique:recruting_student,email,' . $id,
                 'phone' => 'nullable|string|max:20',
                 'subject' => 'nullable|string|max:100',
-                'status' => 'nullable|in:new,registered,paid,transferred,archived',
+                'status' => 'nullable|in:new,registered,paid,expelled,transferred,archived',
                 'group_id' => 'nullable|integer',
                 'teacher_id' => 'nullable|integer',
                 'enabled' => 'nullable|boolean',
