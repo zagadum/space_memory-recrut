@@ -4,8 +4,17 @@ if (isset($_SERVER['SERVER_NAME']) && ($_SERVER['SERVER_NAME']=='localhost' ||
     $_SERVER['SERVER_NAME']=='memory.localhost' ||
     $_SERVER['SERVER_NAME'] == 'memory.firm.kiev.ua' ||
     $_SERVER['SERVER_NAME'] == 'memory-pl.firm.kiev.ua' ||
-    $_SERVER['SERVER_NAME'] == 'memory-en.firm.kiev.ua')) {
+    $_SERVER['SERVER_NAME'] == 'memory-en.firm.kiev.ua' ||
+    $_SERVER['SERVER_NAME'] == 'memory-recruting.firm.kiev.ua')) {
 
+    // Рекрутинговый домен — все локали остаются на нём же
+    if ($_SERVER['SERVER_NAME'] == 'memory-recruting.firm.kiev.ua') {
+        return [
+            'uk' => 'memory-recruting.firm.kiev.ua',
+            'pl' => 'memory-recruting.firm.kiev.ua',
+            'en' => 'memory-recruting.firm.kiev.ua',
+        ];
+    }
 
     return [
         'uk'=>'memory.firm.kiev.ua',
