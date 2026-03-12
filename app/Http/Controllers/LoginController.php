@@ -12,15 +12,7 @@ class LoginController extends Controller{
 
     public function login(){
 
-        return redirect()->intended('/admin/login');
-//        $user= Auth::user();
-//        if (!empty($user->id)){
-//            return redirect()->intended('/cabinet/home');
-//
-//        }else{
-//            return view('auth.login');
-//
-//        }
+        return redirect('/admin/login');
 
     }
     public function auth(Request $request){
@@ -70,7 +62,7 @@ class LoginController extends Controller{
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect('/admin/login');
     }
 
 
