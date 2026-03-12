@@ -405,7 +405,7 @@
                 <button type="submit" class="submit-btn" id="regBtn">ЗАРЕГИСТРИРОВАТЬСЯ</button>
             </form>
             
-            <a href="#" class="login-link" id="haveAccLink">Уже есть аккаунт? Войти</a>
+            <a href="/admin/login" class="login-link" id="haveAccLink">Уже есть аккаунт? Войти</a>
         </div>
     </div>
 
