@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use App\Events\StudentCreatedEvent;
+use App\Events\StudentUpdatedEvent;
+use App\Events\StudentArchivedEvent;
+use App\Models\RecrutingStudentHistory;
 
 class NewStudentsController extends Controller
 {
@@ -15,16 +19,16 @@ class NewStudentsController extends Controller
         try {
             $students = DB::table('recruting_student')
                 ->where('deleted', 0)
-                ->where('enabled', 0)
+                ->whereNotIn('status', ['archived', 'transferred'])
                 ->select(
-                    'id', 'name', 'surname', 'lastname', 'email',
+                    'id', 'name', 'surname', 'lastname', 'email', 'status',
                     'group_id', 'teacher_id', 'created_at',
                     'parent_name', 'parent_surname', 'parent_phone', 'parent_passport',
                     'dob', 'country', 'city', 'address', 'zip', 'apartment',
                     'photo_consent', 'terms_accepted', 'privacy_accepted', 'reg_comment'
                 )
                 ->get();
-            
+
             return response()->json([
                 'success' => true,
                 'data' => $students
@@ -76,6 +80,7 @@ class NewStudentsController extends Controller
                 'surname' => $request->surname,
                 'lastname' => $request->lastname,
                 'email' => $request->email,
+                'status' => 'new',
                 'group_id' => $request->group_id,
                 'teacher_id' => $request->teacher_id,
                 'password' => Hash::make(Str::random(12)),
@@ -90,6 +95,12 @@ class NewStudentsController extends Controller
                 ->where('id', $id)
                 ->select('id', 'name', 'surname', 'lastname', 'email', 'group_id', 'teacher_id', 'created_at')
                 ->first();
+
+            event(new StudentCreatedEvent(
+                studentId: $id,
+                detail: 'Создан администратором',
+                changedBy: $request->input('manager') ?? 'Admin'
+            ));
 
             return response()->json([
                 'success' => true,
@@ -125,6 +136,12 @@ class NewStudentsController extends Controller
                 ], 404);
             }
 
+            event(new StudentArchivedEvent(
+                studentId: $id,
+                detail: 'Студент перемещён в архив',
+                changedBy: null
+            ));
+
             return response()->json([
                 'success' => true,
                 'data' => ['id' => $id]
@@ -147,6 +164,7 @@ class NewStudentsController extends Controller
         $data = [
             'email'            => $request->email,
             'password'         => bcrypt($request->password),
+            'status'           => 'registered',
             'name'             => $request->name ?? '',
             'surname'          => $request->surname ?? '',
             'lastname'         => $request->lastname ?? '',
@@ -171,11 +189,26 @@ class NewStudentsController extends Controller
             'updated_at'       => now(),
         ];
 
-        DB::table('recruting_student')->insert($data);
+        $id = DB::table('recruting_student')->insertGetId($data);
+
+        event(new StudentCreatedEvent(
+            studentId: $id,
+            detail: 'Зарегистрирован через форму',
+            changedBy: 'System'
+        ));
 
         return response()->json([
             'success' => true,
             'message' => 'Регистрация успешна'
         ], 201);
+    }
+
+    public function history($id)
+    {
+        $history = RecrutingStudentHistory::where('student_id', $id)
+            ->orderBy('created_at', 'desc')
+            ->get(['event', 'detail', 'changed_by', 'created_at']);
+
+        return response()->json(['data' => $history]);
     }
 }

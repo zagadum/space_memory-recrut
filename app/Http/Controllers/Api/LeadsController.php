@@ -15,10 +15,10 @@ class LeadsController extends Controller
         try {
             $leads = DB::table('recruting_student')
                 ->where('deleted', 0)
-                ->where('enabled', 0)
-                ->select('id', 'name', 'surname', 'lastname', 'email', 'created_at')
+                ->whereNotIn('status', ['archived', 'transferred'])
+                ->select('id', 'name', 'surname', 'lastname', 'email', 'status', 'phone', 'subject', 'created_at')
                 ->get();
-            
+
             return response()->json([
                 'success' => true,
                 'data' => $leads
@@ -39,6 +39,8 @@ class LeadsController extends Controller
                 'surname' => 'nullable|string|max:255',
                 'lastname' => 'nullable|string|max:255',
                 'email' => 'required|email|unique:recruting_student,email',
+                'phone' => 'nullable|string|max:20',
+                'subject' => 'nullable|string|max:100',
             ]);
 
             $now = now();
@@ -47,6 +49,9 @@ class LeadsController extends Controller
                 'surname' => $request->surname,
                 'lastname' => $request->lastname,
                 'email' => $request->email,
+                'status' => 'new',
+                'phone' => $request->phone ?? null,
+                'subject' => $request->subject ?? null,
                 'password' => Hash::make(Str::random(12)),
                 'enabled' => 0,
                 'blocked' => 0,
@@ -54,10 +59,10 @@ class LeadsController extends Controller
                 'created_at' => $now,
                 'updated_at' => $now,
             ]);
-            
+
             $lead = DB::table('recruting_student')
                 ->where('id', $id)
-                ->select('id', 'name', 'surname', 'lastname', 'email', 'created_at')
+                ->select('id', 'name', 'surname', 'lastname', 'email', 'status', 'phone', 'subject', 'created_at')
                 ->first();
 
             return response()->json([
@@ -85,20 +90,23 @@ class LeadsController extends Controller
                 'surname' => 'nullable|string|max:255',
                 'lastname' => 'nullable|string|max:255',
                 'email' => 'nullable|email|unique:recruting_student,email,' . $id,
+                'phone' => 'nullable|string|max:20',
+                'subject' => 'nullable|string|max:100',
+                'status' => 'nullable|in:new,registered,paid,transferred,archived',
                 'group_id' => 'nullable|integer',
                 'teacher_id' => 'nullable|integer',
                 'enabled' => 'nullable|boolean',
             ]);
 
-            $updateData = $request->only(['name', 'surname', 'lastname', 'email', 'group_id', 'teacher_id']);
-            
+            $updateData = $request->only(['name', 'surname', 'lastname', 'email', 'phone', 'subject', 'status', 'group_id', 'teacher_id']);
+
             if ($request->has('enabled')) {
                 $updateData['enabled'] = $request->enabled ? 1 : 0;
             }
-            
+
             if (!empty($updateData)) {
                 $updateData['updated_at'] = now();
-                
+
                 $updated = DB::table('recruting_student')
                     ->where('id', $id)
                     ->update($updateData);
@@ -113,7 +121,7 @@ class LeadsController extends Controller
 
             $lead = DB::table('recruting_student')
                 ->where('id', $id)
-                ->select('id', 'name', 'surname', 'lastname', 'email', 'group_id', 'teacher_id', 'enabled', 'created_at')
+                ->select('id', 'name', 'surname', 'lastname', 'email', 'status', 'phone', 'subject', 'group_id', 'teacher_id', 'enabled', 'created_at')
                 ->first();
 
             if (!$lead) {

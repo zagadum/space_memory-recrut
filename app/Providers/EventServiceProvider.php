@@ -24,6 +24,16 @@ class EventServiceProvider extends ServiceProvider
             \App\Listeners\LogSuccessfulLogin::class,
         ],
 
+        \App\Events\StudentCreatedEvent::class => [
+            \App\Listeners\LogStudentHistoryListener::class,
+        ],
+        \App\Events\StudentUpdatedEvent::class => [
+            \App\Listeners\LogStudentHistoryListener::class,
+        ],
+        \App\Events\StudentArchivedEvent::class => [
+            \App\Listeners\LogStudentHistoryListener::class,
+        ],
+
     ];
 
     /**

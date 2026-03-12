@@ -25,6 +25,7 @@ Route::post('/v1/register', [NewStudentsController::class, 'register']);
 Route::prefix('v1')->group(function () {
     Route::get('/recruitment/new-students', [NewStudentsController::class, 'index']);
     Route::get('/recruitment/new-students/{id}', [NewStudentsController::class, 'show']);
+    Route::get('/recruitment/new-students/{id}/history', [NewStudentsController::class, 'history']);
     Route::post('/recruitment/new-students', [NewStudentsController::class, 'store']);
     Route::post('/recruitment/new-students/{id}/archive', [NewStudentsController::class, 'archive']);
     
