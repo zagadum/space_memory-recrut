@@ -23,7 +23,7 @@
             <div class="father-form-group">
                 <label class="father-label">{{ __('father.payments.amount') }} (PLN)</label>
                 <input type="number" name="amount" required min="1" step="0.01" 
-                       class="father-input" placeholder="440.00">
+                       class="father-input" placeholder="440.00" value="440.00">
             </div>
 
             <button type="submit" class="father-btn father-btn--primary father-btn--full">
@@ -55,8 +55,8 @@
                     <td>{{ $tx->paid_at?->format('d.m.Y') ?? $tx->created_at?->format('d.m.Y') }}</td>
                     <td>{{ number_format((float)$tx->amount, 2, ',', ' ') }} {{ $tx->currency ?? 'PLN' }}</td>
                     <td>
-                        <span class="father-badge father-badge--{{ $tx->status === 'paid' ? 'success' : 'warning' }}">
-                            {{ $tx->status === 'paid' ? __('father.payments.paid') : __('father.payments.pending') }}
+                        <span class="father-badge father-badge--{{ $tx->status === 'completed' ? 'success' : 'warning' }}">
+                            {{ $tx->status === 'completed' ? __('father.payments.status_completed') : __('father.payments.status_pending') }}
                         </span>
                     </td>
                     <td>

@@ -57,10 +57,10 @@ class PaymentController extends Controller
             'student_id'  => (int)$studentId,
             'project_id'  => $project->id,
             'provider'    => 'imoje',
-            'direction'   => 'income',
+            'direction'   => 'in',
             'amount'      => (float)$validated['amount'],
             'currency'    => 'PLN',
-            'status'      => 'new',
+            'status'      => 'pending',
         ]);
 
         // Build iMoje form fields

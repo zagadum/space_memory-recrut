@@ -20,9 +20,9 @@ return [
     'payments' => [
         'title'           => 'Moje płatności',
         'pending'         => 'Brak oczekujących płatności.',
-        'table_date'      => 'Data',
-        'table_amount'    => 'Kwota',
-        'table_status'    => 'Status',
+        'date'            => 'Data',
+        'amount'          => 'Kwota',
+        'status'          => 'Status',
         'table_invoice'   => 'Faktura',
         'back'            => 'Wróć do płatności',
         'retry'           => 'Spróbuj ponownie',
@@ -39,6 +39,8 @@ return [
         'success_text'  => 'Dziękujemy za płatność. Faktura zostanie wygenerowana automatycznie.',
         'fail_title'    => 'Płatność nie powiodła się',
         'fail_text'     => 'Coś poszło nie tak. Spróbuj ponownie lub skontaktuj się z nami.',
+        'status_pending' => 'Oczekiwanie',
+        'status_completed' => 'Opłacone',
     ],
     'learn' => [
         'title' => 'Nauka',

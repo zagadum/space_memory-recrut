@@ -21,6 +21,7 @@ class RegistrationCompletionController extends Controller
      */
     public function index(string $token)
     {
+        \App::setLocale('pl');
         $import = RecruitingStudentImport::query()
             ->where('token', '=', $token)
             ->where('status', '!=', 'converted')
@@ -83,6 +84,7 @@ class RegistrationCompletionController extends Controller
                 'password'      => Hash::make($request->password),
                 'country_id'    => $this->mapCountry($import->country),
                 'locality'      => $import->city ?? '',
+                'language'      => 'pl',
                 'enabled'       => 1,
                 'blocked'       => 0,
                 'deleted'       => 0,
