@@ -65,7 +65,7 @@ Route::middleware(['web'])->group(static function () {
                 ; //see app\Http\Traits\AdminAuth\AuthenticatesUsers.php
                 Route::any('/admin/logout', 'LoginController@logout')->name('logoutAdmin');
                 Route::any('/logout', 'LoginController@logout')->name('logoutAny');
-                Route::get('/admin/setlocation/{type}/{stay}', 'LoginController@setLocation')->name('setlocation');
+
 
 
             // Route::get('/admin/password-reset', 'ForgotPasswordController@showLinkRequestForm')->name('brackets/admin-auth::admin/password/showForgotForm');
