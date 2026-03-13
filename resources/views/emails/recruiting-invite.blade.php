@@ -7,21 +7,21 @@
         <h1 style="color: #1a1a1a; font-size: 22px;">Global Leaders Skills</h1>
     </div>
 
-    <p>Szanowna/y {{ $name }},</p>
+    <p>{{ __('recruiting.email.greeting', ['name' => $name]) }}</p>
 
-    <p>Zapraszamy do rejestracji w programie <strong>{{ $subject ?? 'Space Memory' }}</strong>!</p>
+    <p>{!! __('recruiting.email.invitation_text', ['subject' => $subject ?? 'Space Memory']) !!}</p>
 
-    <p>Kliknij poniższy przycisk, aby rozpocząć rejestrację:</p>
+    <p>{{ __('recruiting.email.action_text') }}</p>
 
     <div style="text-align: center; margin: 32px 0;">
         <a href="{{ $registerUrl }}"
            style="display: inline-block; padding: 14px 32px; background: #4f6ef7; color: #fff; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 16px;">
-            Zarejestruj się
+            {{ __('recruiting.email.action_button') }}
         </a>
     </div>
 
     <p style="font-size: 12px; color: #888;">
-        Global Leaders Skills Sp. z o.o. · Al. Jerozolimskie 123A, 02-017 Warszawa
+        {{ __('recruiting.email.footer_address') }}
     </p>
 
 </body>

@@ -9,7 +9,10 @@ use App\Models\RecruitingCampaign;
 use App\Services\Recruiting\ImportService;
 use App\Services\Recruiting\MassMailService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
+use App\Http\Requests\Recruiting\StoreCampaignRequest;
+use App\Http\Requests\Recruiting\ImportStudentsRequest;
+use App\Http\Resources\Recruiting\RecruitingCampaignResource;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 final class RecruitingCampaignController extends Controller
 {
@@ -18,23 +21,18 @@ final class RecruitingCampaignController extends Controller
         private MassMailService $massMailService,
     ) {}
 
-    public function index(): JsonResponse
+    public function index(): AnonymousResourceCollection
     {
         $campaigns = RecruitingCampaign::query()
             ->orderByDesc('created_at')
             ->paginate(20);
 
-        return response()->json($campaigns);
+        return RecruitingCampaignResource::collection($campaigns);
     }
 
-    public function store(Request $request): JsonResponse
+    public function store(StoreCampaignRequest $request): RecruitingCampaignResource
     {
-        $validated = $request->validate([
-            'name'           => 'required|string|max:255',
-            'email_subject'  => 'required|string|max:255',
-            'email_template' => 'required|string',
-            'file'           => 'required|file|mimes:csv,txt',
-        ]);
+        $validated = $request->validated();
 
         $campaign = $this->importService->importFromFile(
             $request->file('file'),
@@ -44,23 +42,15 @@ final class RecruitingCampaignController extends Controller
             auth()->user()?->email ?? 'admin'
         );
 
-        return response()->json($campaign, 201);
+        return new RecruitingCampaignResource($campaign);
     }
 
-    public function import(Request $request, int $id): JsonResponse
+    public function import(ImportStudentsRequest $request, int $id): JsonResponse
     {
-        $campaign = RecruitingCampaign::findOrFail($id);
-        $request->validate(['file' => 'required|file|mimes:csv,txt']);
-
-        // Since ImportService::importFromFile creates a new campaign, 
-        // we'll implement a more granular import here if needed, 
-        // or just reuse the logic if it's acceptable to create a new one.
-        // For now, let's assume the upload endpoint also updates the existing campaign's imports.
-        
-        // Actually, let's add a method to ImportService if it's missing.
-        // But for the sake of following the user's provided code, I'll just use store() for creating+importing.
-        
-        return response()->json(['message' => 'Use POST /api/v1/recruiting/campaigns to import with a new campaign'], 400);
+        // For now, let's keep the user's intended fallback message but localized
+        return response()->json([
+            'message' => __('recruiting.campaign.import_new_only')
+        ], 400);
     }
 
     public function dryRun(int $id): JsonResponse
@@ -68,7 +58,13 @@ final class RecruitingCampaignController extends Controller
         $campaign = RecruitingCampaign::findOrFail($id);
         $stats = $this->massMailService->dryRun($campaign);
 
-        return response()->json($stats);
+        // CamelCase the stats keys manually since it's a raw array from service
+        return response()->json([
+            'validEmails'         => $stats['valid_emails'],
+            'invalidEmails'       => $stats['invalid_emails'],
+            'duplicateInStudents' => $stats['duplicate_in_students'],
+            'readyToSend'         => $stats['ready_to_send'],
+        ]);
     }
 
     public function start(int $id): JsonResponse
@@ -76,31 +72,22 @@ final class RecruitingCampaignController extends Controller
         $campaign = RecruitingCampaign::findOrFail($id);
         
         if ($campaign->status === 'sending') {
-            return response()->json(['message' => 'Campaign already in progress'], 400);
+            return response()->json([
+                'message' => __('recruiting.campaign.already_in_progress')
+            ], 400);
         }
 
         $this->massMailService->startCampaign($campaign);
 
-        return response()->json(['message' => 'Campaign started']);
+        return response()->json([
+            'message' => __('recruiting.campaign.started')
+        ]);
     }
 
-    public function stats(int $id): JsonResponse
+    public function stats(int $id): RecruitingCampaignResource
     {
         $campaign = RecruitingCampaign::findOrFail($id);
         
-        return response()->json([
-            'id' => $campaign->id,
-            'name' => $campaign->name,
-            'status' => $campaign->status,
-            'stats' => [
-                'total' => $campaign->total_count,
-                'sent' => $campaign->sent_count,
-                'failed' => $campaign->failed_count,
-                'clicked' => $campaign->clicked_count,
-                'converted' => $campaign->converted_count,
-            ],
-            'started_at' => $campaign->started_at,
-            'completed_at' => $campaign->completed_at,
-        ]);
+        return new RecruitingCampaignResource($campaign);
     }
 }

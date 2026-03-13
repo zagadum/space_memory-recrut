@@ -19,8 +19,8 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->string('subject')->nullable();           // предмет
             $table->string('source')->nullable();             // откуда: 'csv_import', 'manual', 'landing'
-            $table->string('campaign_id')->nullable()->index(); // ID кампании рассылки
-            $table->string('token', 64)->unique();            // уникальный токен для ссылки
+            $table->string('campaign_id')->nullable()->index('idx_rsi_camp_id'); // ID кампании рассылки
+            $table->string('token', 64)->unique('uni_rsi_token');            // уникальный токен для ссылки
             $table->string('status')->default('pending');     // pending | sent | delivered | clicked | converted | failed
             $table->timestamp('email_sent_at')->nullable();
             $table->timestamp('email_opened_at')->nullable();
@@ -31,8 +31,8 @@ return new class extends Migration
             $table->json('meta')->nullable();                 // доп. данные из CSV
             $table->timestamps();
 
-            $table->index(['campaign_id', 'status']);
-            $table->index('email');
+            $table->index(['campaign_id', 'status'], 'idx_rsi_camp_status');
+            $table->index('email', 'idx_rsi_email');
         });
     }
 

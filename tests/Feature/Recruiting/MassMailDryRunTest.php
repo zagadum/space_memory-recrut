@@ -91,8 +91,6 @@ class MassMailDryRunTest extends TestCase
 
     public function test_invite_link_converts_import_to_student()
     {
-        // Ensure the table exists for testing if RefreshDatabase didn't pick it up 
-        // (usually it does for migrations, but just in case)
         if (!Schema::hasTable('recruting_student')) {
             Schema::create('recruting_student', function ($table) {
                 $table->id();
@@ -123,5 +121,59 @@ class MassMailDryRunTest extends TestCase
         $response->assertRedirect();
         $this->assertEquals('converted', $import->fresh()->status);
         $this->assertTrue(DB::table('recruting_student')->where('email', 'new@test.pl')->exists());
+    }
+
+    public function test_api_returns_camel_case_json()
+    {
+        $this->withoutMiddleware();
+
+        $campaign = RecruitingCampaign::create([
+            'name' => 'Compliance Test',
+            'email_subject' => 'Subject',
+            'email_template' => 'template',
+            'status' => 'draft',
+            'total_count' => 10,
+        ]);
+
+        $response = $this->getJson("/api/v1/recruiting/campaigns/{$campaign->id}/stats");
+
+        $response->assertStatus(200);
+        $response->assertJsonStructure([
+            'data' => [
+                'id',
+                'name',
+                'status',
+                'emailSubject',
+                'emailTemplate',
+                'totalCount',
+                'sentCount',
+                'failedCount',
+                'clickedCount',
+                'convertedCount',
+                'createdAt',
+            ]
+        ]);
+    }
+
+    public function test_api_dry_run_returns_camel_case_json()
+    {
+        $this->withoutMiddleware();
+
+        $campaign = RecruitingCampaign::create([
+            'name' => 'Dry Run Test',
+            'email_subject' => 'Subject',
+            'email_template' => 'template',
+            'status' => 'draft',
+        ]);
+
+        $response = $this->postJson("/api/v1/recruiting/campaigns/{$campaign->id}/dry-run");
+
+        $response->assertStatus(200);
+        $response->assertJson([
+            'validEmails' => 0,
+            'invalidEmails' => 0,
+            'duplicateInStudents' => 0,
+            'readyToSend' => 0,
+        ]);
     }
 }

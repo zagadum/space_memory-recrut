@@ -24,7 +24,7 @@ final class RecruitingInviteMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: $this->campaign->email_subject,
+            subject: __('recruiting.email.subject', ['subject' => $this->import->subject ?? 'Space Memory']),
         );
     }
 

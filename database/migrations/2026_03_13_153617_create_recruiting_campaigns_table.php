@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('recruiting_campaigns', function (Blueprint $table) {
             $table->id();
             $table->string('name');                           // "Весенний набор 2026"
-            $table->string('status')->default('draft');       // draft | sending | paused | completed
+            $table->string('status')->default('draft')->index('idx_rc_status');       // draft | sending | paused | completed
             $table->unsignedInteger('total_count')->default(0);
             $table->unsignedInteger('sent_count')->default(0);
             $table->unsignedInteger('failed_count')->default(0);
