@@ -64,29 +64,10 @@ Route::middleware(['web'])->group(static function () {
                 Route::post('/admin/login', 'LoginController@login')->middleware('throttle:5,1');
                 ; //see app\Http\Traits\AdminAuth\AuthenticatesUsers.php
                 Route::any('/admin/logout', 'LoginController@logout')->name('logoutAdmin');
-                Route::any('/logout', 'LoginController@logout')->name('logoutAny');
-
-
-
-            // Route::get('/admin/password-reset', 'ForgotPasswordController@showLinkRequestForm')->name('brackets/admin-auth::admin/password/showForgotForm');
-            // Route::post('/admin/password-reset/send', 'ForgotPasswordController@sendResetLinkEmail');
-            //  Route::get('/admin/password-reset/{token}', 'ResetPasswordController@showResetForm')->name('brackets/admin-auth::admin/password/showResetForm');
-            //  Route::post('/admin/password-reset/reset', 'ResetPasswordController@reset');
-        
-            //  Route::get('/admin/activation/{token}', 'ActivationController@activate')->name('brackets/admin-auth::admin/activation');
-            }
+                Route::any('/logout', 'LoginController@logout')->name('logoutAny');}
             );
         });
 
-
-
-Route::middleware(['web'])->group(static function () {
-    Route::namespace ('App\\Http\\Controllers\\Auth')->group(static function () {
-            Route::get('/admin/activation', 'ActivationEmailController@showLinkRequestForm')->name('brackets/admin-auth::admin/activation');
-            Route::post('/admin/activation/send', 'ActivationEmailController@sendActivationEmail');
-        }
-        );
-    });
 //--------------- AUTH END
 //------------------------------------------------------------------------
 //------- STUDENT -----------------------
@@ -110,12 +91,9 @@ Route::middleware(['is_student'])->group(static function () {
 Route::get('/verify', [StudentCabinetController::class , 'showVerifyPage']);
 Route::get('/cabinet', [StudentCabinetController::class , 'showCabinetPage']);
 // Recruiting
-Route::get('/register/invite/{token}', [\App\Http\Controllers\RecruitingInviteController::class, 'accept'])
-    ->name('recruiting.invite');
-Route::get('/register/complete/{token}', [\App\Http\Controllers\RegistrationCompletionController::class, 'index'])
-    ->name('registration.complete');
-Route::post('/register/complete/{token}', [\App\Http\Controllers\RegistrationCompletionController::class, 'store'])
-    ->name('registration.complete.store');
+Route::get('/register/invite/{token}', [\App\Http\Controllers\RecruitingInviteController::class, 'accept'])->name('recruiting.invite');
+Route::get('/register/complete/{token}', [\App\Http\Controllers\RegistrationCompletionController::class, 'index'])->name('registration.complete');
+Route::post('/register/complete/{token}', [\App\Http\Controllers\RegistrationCompletionController::class, 'store'])->name('registration.complete.store');
 
 /*
 |--------------------------------------------------------------------------
