@@ -31,7 +31,7 @@ final class GeneratePdfInvoiceJob implements ShouldQueue
     {
         $document = $service->generateForTransaction($this->transaction);
 
-        InvoiceGeneratedEvent::dispatch($document);
+        \App\Events\InvoiceGeneratedEvent::dispatch($document);
     }
 
     public function failed(\Throwable $exception): void

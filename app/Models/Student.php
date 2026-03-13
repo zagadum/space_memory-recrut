@@ -18,7 +18,7 @@ class Student extends Authenticatable
    // use Notifiable;
   //  use CanActivate;
     //protected $connection = 'memory_ua';
-    protected $table = 'student';
+    protected $table = 'recruting_student';
     /** @var string */
     protected $guard = 'student';
     protected $fillable = [
@@ -68,7 +68,8 @@ class Student extends Authenticatable
         'last_login_at',
         'api_token',
         'sess_id',
-
+        'country_id',
+        'locality',
     ];
 
     protected $hidden = [
