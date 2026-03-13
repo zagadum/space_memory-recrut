@@ -11,7 +11,7 @@ class RecruitingStudentImport extends Model
 
     protected $fillable = [
         'email', 'name', 'surname', 'phone', 'subject',
-        'source', 'campaign_id', 'token', 'status',
+        'source', 'country', 'city', 'address', 'zip', 'campaign_id', 'token', 'status',
         'email_sent_at', 'email_opened_at', 'link_clicked_at',
         'converted_at', 'converted_student_id', 'error_message', 'meta',
     ];

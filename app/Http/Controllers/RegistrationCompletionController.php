@@ -7,7 +7,6 @@ namespace App\Http\Controllers;
 use App\Models\RecruitingStudentImport;
 use App\Models\RecruitingCampaign;
 use App\Models\Student;
-use App\Models\RecrutingStudent;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
@@ -48,8 +47,9 @@ class RegistrationCompletionController extends Controller
         ]);
 
         DB::transaction(function () use ($import, $request) {
-            // Convert to student using the primary Student model
+            // Convert to student in the legacy/student table used by auth.
             $student = Student::create([
+                'name'          => $import->name ?? '',
                 'email'         => $import->email,
                 'surname'       => $import->surname ?? '',
                 'lastname'      => $import->name ?? '',
@@ -63,23 +63,6 @@ class RegistrationCompletionController extends Controller
                 'deleted'       => 0,
             ]);
 
-            // Sync with recruting_student table for legacy/tracking reasons
-            DB::table('recruting_student')->insert([
-                'id'         => $student->id,
-                'email'      => $student->email,
-                'name'       => $student->lastname,
-                'surname'    => $student->surname,
-                'phone'      => $student->phone,
-                'subject'    => $student->subject,
-                'country_id' => $student->country_id,
-                'locality'   => $student->locality,
-                'password'   => $student->password,
-                'enabled'    => 1,
-                'blocked'    => 0,
-                'deleted'    => 0,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
 
             // Mark import as converted
             $import->update([

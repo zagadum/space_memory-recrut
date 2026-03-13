@@ -25,6 +25,7 @@ class Student extends Authenticatable
         'franchisee_id',
         'group_id',
         'teacher_id',
+        'name',
         'email',
         'subcribe_email',
         'password',
@@ -52,6 +53,7 @@ class Student extends Authenticatable
         'rang_level',
         'dob',
         'phone',
+        'subject',
         'phone_country',
         'start_day',
         'date_finish',
@@ -147,7 +149,8 @@ class Student extends Authenticatable
      */
     public function ProgramEvents()
     {
-        return $this->hasMany(StudentProgramEvent::class, 'student_id', 'id');
+        // Keep relation lazy-resolvable for legacy module where model may be absent.
+        return $this->hasMany('App\\Models\\StudentProgramEvent', 'student_id', 'id');
     }
 //    public function TwoChildren(){
 //        return $this->hasOne(Student::class, 'id ', 'twochildren_id');
