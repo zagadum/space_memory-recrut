@@ -96,7 +96,7 @@ class LoginController extends Controller
 
         if (isset($role)){
             if ($role=='student'){
-                return redirect('/student');
+                return redirect('/test-parent-portal');
             }
 
         }

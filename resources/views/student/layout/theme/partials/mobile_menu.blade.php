@@ -18,8 +18,7 @@
 
         {{-- Menu Items --}}
         <nav class="nav flex-column mb-auto px-4">
-            <a class="nav-link btn btn-outline-primary mb-3 {{ Request::is('student') || Request::is('student/dashboard') ? 'active' : '' }}" 
-               href="{{ url('student') }}">
+            <a class="nav-link btn btn-outline-primary mb-3" href="#">
                 <div class="nav-icon icon-home"></div>
                 {{ trans('student.main_menu.main') }}
             </a>
@@ -48,17 +47,18 @@
                 {{ trans('student.main_menu.olympiad-main') }}
             </a>
 
+            <a class="nav-link btn btn-outline-primary mb-3 {{ Request::is('test-parent-portal*') || Request::is('student*') ? 'active' : '' }}" 
+               href="{{ url('/test-parent-portal') }}">
+                <div class="nav-icon icon-parent"></div>
+                Strefa rodzica
+            </a>
+
             <a class="nav-link btn btn-outline-primary mb-3 {{ Request::is('student/bugtracker*') ? 'active' : '' }}"
                href="/student/bugtracker/create">
                 <div class="nav-icon icon-olympiad"></div>
                 {{ trans('student.main_menu.bugtracker') }}
             </a>
 
-            <a class="nav-link btn btn-outline-primary mb-3 {{ Request::is('student/bonus-history*') ? 'active' : '' }}"
-               href="{{ url('student/bonus-history') }}">
-                <div class="nav-icon icon-olympiad"></div>
-                {{ trans('student.main_menu.bonus-history') }}
-            </a>
 
             <a href="{{ url('/games/platform') }}" class="btn btn-primary btn-block mb-4">
                 {{ trans('student.main_menu.games') }}

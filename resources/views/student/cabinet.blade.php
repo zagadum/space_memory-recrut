@@ -95,6 +95,7 @@
     </div>
 
     <script>
+        window.location.href = '/test-parent-portal';
         function logout() {
             localStorage.clear();
             window.location.href = '/register';

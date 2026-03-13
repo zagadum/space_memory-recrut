@@ -7,12 +7,30 @@ use Illuminate\Support\Facades\Auth;
 
 class IndexController extends Controller {
     function dashboard(){
-        $role = session('role');
+        $student = Auth::guard('student')->user();
 
- 
+        // Safe null-safety for teacher and group
+        $teacher = $student ? $student->teacher : null;
+        $group = $student ? $student->group : null;
 
-        $retTemplate['is_dashboard']=1;
+        // Safe ranking fetch with try-catch and method_exists
+        try {
+            if ($student && method_exists($student, 'getTopStudents')) {
+                $ranking = $student::getTopStudents();
+            } else {
+                $ranking = [];
+            }
+        } catch (\Exception $e) {
+            $ranking = [];
+        }
 
-        return view('student.home.dashboard',$retTemplate);
+        // Stats array formation
+        $stats = [
+            'coins' => $student->coins ?? 0,
+            'diamonds' => $student->diams ?? 0,
+            'level' => $student->rang_level ?? 1
+        ];
+
+        return view('student.home.dashboard_father', compact('student', 'teacher', 'group', 'ranking', 'stats'));
     }
 }

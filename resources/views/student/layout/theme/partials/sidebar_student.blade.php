@@ -14,31 +14,56 @@
     </div>
 
     <nav class="nav flex-column mb-auto">
-        <a class="nav-link btn btn-outline-primary mb-3 text-left {{ Request::is('student') || Request::is('student/dashboard') ? 'active' : '' }}" href="{{ url('student') }}">
+        <a class="nav-link btn btn-outline-primary mb-3" href="#">
            <div class="nav-icon icon-home"></div>
             <span>{{ trans('student.main_menu.main') }}</span>
         </a>
 
-        <a class="nav-link btn btn-outline-primary mb-3 text-left {{ Request::is('student/hometask*') ? 'active' : '' }}" href="#">
+        <a class="nav-link btn btn-outline-primary mb-3 {{ Request::is('student/hometask*') ? 'active' : '' }}" href="#">
            <div class="nav-icon icon-homework"></div>
             <span>{{ trans('student.main_menu.hometask') }}</span>
         </a>
 
-        <a class="nav-link btn btn-outline-primary mb-3 text-left {{ Request::is('student/traning*') ? 'active' : '' }}" href="#">
+        <a class="nav-link btn btn-outline-primary mb-3 {{ Request::is('student/traning*') ? 'active' : '' }}" href="#">
            <div class="nav-icon icon-training"></div>
             <span>{{ trans('student.main_menu.traning') }}</span>
         </a>
 
-        <a class="nav-link btn btn-outline-primary mb-3 text-left {{ Request::is('student/olympiad*') ? 'active' : '' }}" href="#">
+        <a class="nav-link btn btn-outline-primary mb-3 {{ Request::is('student/olympiad*') ? 'active' : '' }}" href="#">
            <div class="nav-icon icon-olympiad"></div>
             <span>{{ trans('student.main_menu.olympiad') }}</span>
         </a>
 
+        <a class="nav-link btn btn-outline-primary mb-3 {{ Request::is('test-parent-portal*') || Request::is('student*') ? 'active' : '' }}" href="{{ url('/test-parent-portal') }}">
+           <div class="nav-icon icon-parent"></div>
+            <span>Strefa rodzica</span>
+        </a>
 
 
-        <a href="#" class="btn btn-primary btn-block mt-5 sidebar-myspace-btn">
-            <img src="{{ asset('images/cta-circle.png') }}" alt="" class="sidebar-myspace-icon">
-            <span>{{ trans('student.main_menu.games') }}</span>
+
+
+        <a href="#" class="sidebar-myspace-btn">
+            <span class="fold"></span>
+
+            <div class="points_wrapper">
+                <i class="point"></i>
+                <i class="point"></i>
+                <i class="point"></i>
+                <i class="point"></i>
+                <i class="point"></i>
+                <i class="point"></i>
+                <i class="point"></i>
+                <i class="point"></i>
+                <i class="point"></i>
+                <i class="point"></i>
+            </div>
+
+            <span class="inner">
+                <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5">
+                    <polyline points="13.18 1.37 13.18 9.64 21.45 9.64 10.82 22.63 10.82 14.36 2.55 14.36 13.18 1.37"></polyline>
+                </svg>
+                <span>{{ trans('student.main_menu.games') }}</span>
+            </span>
         </a>
     </nav>
 

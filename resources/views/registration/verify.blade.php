@@ -441,7 +441,7 @@
             `;
 
             confirmBtn.onclick = () => {
-                window.location.href = '/cabinet';
+                window.location.href = '/test-parent-portal';
             };
         }
 
