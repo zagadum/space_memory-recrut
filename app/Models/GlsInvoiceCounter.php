@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class GlsInvoiceCounter extends Model
 {
@@ -13,9 +14,9 @@ class GlsInvoiceCounter extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'prefix',
-        'year',
-        'month',
+        'project_id',
+        'period_year',
+        'period_month',
         'last_number',
         'updated_at',
     ];
@@ -23,9 +24,15 @@ class GlsInvoiceCounter extends Model
     protected function casts(): array
     {
         return [
-            'year'        => 'integer',
-            'month'       => 'integer',
-            'last_number' => 'integer',
+            'project_id'   => 'integer',
+            'period_year'  => 'integer',
+            'period_month' => 'integer',
+            'last_number'  => 'integer',
         ];
+    }
+
+    public function project(): BelongsTo
+    {
+        return $this->belongsTo(GlsProject::class, 'project_id');
     }
 }

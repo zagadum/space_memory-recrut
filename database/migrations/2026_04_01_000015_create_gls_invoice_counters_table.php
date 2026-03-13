@@ -10,13 +10,13 @@ return new class extends Migration
     {
         Schema::create('gls_invoice_counters', function (Blueprint $table) {
             $table->id();
-            $table->string('prefix', 10);
-            $table->unsignedSmallInteger('year');
-            $table->unsignedTinyInteger('month');
+            $table->foreignId('project_id')->constrained('gls_projects')->onDelete('cascade');
+            $table->unsignedSmallInteger('period_year');
+            $table->unsignedTinyInteger('period_month');
             $table->unsignedInteger('last_number')->default(0);
             $table->timestamp('updated_at')->useCurrent();
 
-            $table->unique(['prefix', 'year', 'month'], 'gls_inv_cnt_unq');
+            $table->unique(['project_id', 'period_year', 'period_month'], 'gls_inv_cnt_unq');
         });
     }
 
