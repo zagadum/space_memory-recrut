@@ -51,6 +51,11 @@ Route::middleware('verify.jwt')->prefix('v1')->group(function () {
     Route::get('/expelled-students',                    [ExpelledStudentsController::class, 'index']);
     Route::patch('/expelled-students/{id}',             [ExpelledStudentsController::class, 'update']);
     Route::post('/expelled-students/{id}/archive',      [ExpelledStudentsController::class, 'archive']);
+
+    // Платежи (GLS)
+    Route::get('/payments/student/{id}',            [\App\Http\Controllers\Api\Payments\PaymentController::class, 'getStudentPayments']);
+    Route::get('/payments/projects/{id}/transactions', [\App\Http\Controllers\Api\Payments\PaymentController::class, 'getStudentProjectTransactions']);
+    Route::get('/payments/documents/{id}/pdf',      [\App\Http\Controllers\Api\Payments\DocumentController::class, 'downloadPdf']);
 });
 
 Route::fallback(FallbackController::class);

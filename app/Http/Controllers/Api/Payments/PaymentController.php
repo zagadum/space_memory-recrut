@@ -1191,10 +1191,10 @@ class PaymentController extends Controller
                 ? 'paid'
                 : 'pending';
 
-            $ksef = GlsInvoiceDocument::query()
+            $doc = GlsInvoiceDocument::query()
                 ->where('transaction_id', $transaction->id)
                 ->orderByDesc('id')
-                ->value('ksef_status');
+                ->first();
 
             return [
                 'id' => (string) $transaction->id,
@@ -1205,8 +1205,9 @@ class PaymentController extends Controller
                 'amountFmt' => (float) $transaction->amount . ' zł',
                 'status' => $txStatus,
                 'type' => 'month',
-                'ksef' => $this->mapKsefStatus($ksef),
-                'fvnum' => GlsInvoiceDocument::query()->where('transaction_id', $transaction->id)->value('number'),
+                'ksef' => $this->mapKsefStatus($doc?->ksef_status),
+                'fvnum' => $doc?->number,
+                'documentId' => $doc?->id,
             ];
         })->values();
 
@@ -1421,6 +1422,7 @@ class PaymentController extends Controller
                     'type' => 'extra',
                     'ksef' => $item['ksef'] === 'ok' ? 'ok' : 'pending',
                     'fvnum' => $item['txId'],
+                    'documentId' => str_starts_with((string)$item['id'], 'ext_') ? (int)str_replace('ext_', '', $item['id']) : null, // Fallback for extra
                 ];
             })
             ->values()
