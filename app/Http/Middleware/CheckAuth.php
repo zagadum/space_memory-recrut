@@ -46,7 +46,10 @@ class CheckAuth
                 return $next($request);
             }
         }
-            return   redirect('/');
+        if ($request->is('father/*')) {
+            return redirect()->route('father.login');
+        }
+        return redirect('/');
 
     }
 }

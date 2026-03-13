@@ -100,6 +100,13 @@ Route::post('/register/complete/{token}', [\App\Http\Controllers\RegistrationCom
 | Father Portal (Кабинет Родителя)
 |--------------------------------------------------------------------------
 */
+Route::get('/father/login', [\App\Http\Controllers\Father\AuthController::class, 'showLogin'])
+    ->name('father.login');
+Route::post('/father/login', [\App\Http\Controllers\Father\AuthController::class, 'login'])
+    ->name('father.login.submit');
+Route::post('/father/logout', [\App\Http\Controllers\Father\AuthController::class, 'logout'])
+    ->name('father.logout');
+
 Route::prefix('father')->middleware('is_auth')->group(function () {
     // Documents
     Route::get('/document', [\App\Http\Controllers\Father\DocumentController::class, 'index'])

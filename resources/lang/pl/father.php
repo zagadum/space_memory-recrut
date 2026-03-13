@@ -5,6 +5,7 @@ return [
         'documents' => 'Dokumenty',
         'payments'  => 'Płatności',
         'learn'     => 'Nauka',
+        'logout'    => 'Wyloguj się',
     ],
     'documents' => [
         'title'       => 'Moje dokumenty',
@@ -35,5 +36,29 @@ return [
     ],
     'learn' => [
         'title' => 'Nauka',
+    ],
+    'verify' => [
+        'title'              => 'Weryfikacja konta',
+        'subtitle'           => 'Wprowadź 6-cyfrowy kod wysłany na Twój email',
+        'email_label'        => 'Adres email',
+        'code_label'         => 'Kod weryfikacyjny',
+        'code_placeholder'   => '000000',
+        'submit'             => 'Zweryfikuj',
+        'resend'             => 'Wyślij kod ponownie',
+        'resend_cooldown'    => 'Wyślij ponownie za :seconds s',
+        'too_many_attempts'  => 'Zbyt wiele prób. Spróbuj ponownie za :seconds sekund.',
+        'invalid_code'       => 'Nieprawidłowy kod weryfikacyjny.',
+        'code_expired'       => 'Kod wygasł. Wyślij nowy kod.',
+        'code_resent'        => 'Nowy kod został wysłany na Twój email.',
+    ],
+    'login' => [
+        'title'              => 'Logowanie — Portal Rodzica',
+        'subtitle'           => 'Zaloguj się, aby zobaczyć dokumenty i płatności',
+        'email'              => 'Adres email',
+        'password'           => 'Hasło',
+        'submit'             => 'Zaloguj się',
+        'forgot_password'    => 'Zapomniałem hasła',
+        'invalid_credentials'=> 'Nieprawidłowy email lub hasło.',
+        'too_many_attempts'  => 'Zbyt wiele prób logowania. Spróbuj za :seconds sekund.',
     ],
 ];

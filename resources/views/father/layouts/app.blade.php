@@ -22,6 +22,12 @@
                class="father-nav__link @if(request()->routeIs('father.learn')) father-nav__link--active @endif">
                 {{ __('father.nav.learn') }}
             </a>
+            <form method="POST" action="{{ route('father.logout') }}" style="display:inline;">
+                @csrf
+                <button type="submit" class="father-nav__link" style="background:none; border:none; cursor:pointer;">
+                    {{ __('father.nav.logout') }}
+                </button>
+            </form>
         </div>
     </nav>
 

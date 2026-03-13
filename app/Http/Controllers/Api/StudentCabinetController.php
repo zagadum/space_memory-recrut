@@ -15,7 +15,7 @@ class StudentCabinetController extends Controller
     {
         $request->validate([
             'email' => 'required|email',
-            'code'  => 'required|string|size:4',
+            'code'  => 'required|string|size:6',
         ]);
 
         $student = DB::table('recruting_student')
@@ -64,7 +64,7 @@ class StudentCabinetController extends Controller
             ], 404);
         }
 
-        $code = (string)rand(1000, 9999);
+        $code = str_pad((string)random_int(0, 999999), 6, '0', STR_PAD_LEFT);
 
         DB::table('recruting_student')
             ->where('id', $student->id)

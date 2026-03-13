@@ -24,7 +24,7 @@ use App\Http\Controllers\Api\StudentCabinetController;
 
 Route::post('/v1/register', [NewStudentsController::class, 'register']);
 
-Route::prefix('v1/recruitment')->group(function () {
+Route::prefix('v1/recruitment')->middleware('throttle:5,15')->group(function () {
     Route::post('/verify-code', [StudentCabinetController::class, 'verifyCode']);
     Route::post('/resend-code', [StudentCabinetController::class, 'resendCode']);
 });
