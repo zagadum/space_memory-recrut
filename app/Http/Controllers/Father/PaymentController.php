@@ -7,11 +7,15 @@ namespace App\Http\Controllers\Father;
 use App\Http\Controllers\Controller;
 use App\Models\GlsInvoiceDocument;
 use App\Models\GlsPaymentTransaction;
+use App\Models\GlsProject;
+use App\Services\ImojePaymentService;
 use App\Services\Invoice\InvoiceData;
 use App\Services\Invoice\InvoiceLineItem;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -20,7 +24,7 @@ class PaymentController extends Controller
 {
     public function index(Request $request): View
     {
-        $studentId = \Illuminate\Support\Facades\Auth::guard('student')->id();
+        $studentId = Auth::guard('student')->id();
 
         $transactions = GlsPaymentTransaction::query()
             ->where('student_id', '=', $studentId)
@@ -28,6 +32,69 @@ class PaymentController extends Controller
             ->get();
 
         return view('father.payment', ['transactions' => $transactions,]);
+    }
+
+    public function createOrder(Request $request): View
+    {
+        $studentId = Auth::guard('student')->id();
+        $student   = DB::table('recruting_student')->where('id', $studentId)->first();
+
+        if (!$student) {
+            abort(403);
+        }
+
+        $validated = $request->validate([
+            'project_code' => ['required', 'string', 'in:space_memory,indigo'],
+            'amount'       => ['required', 'numeric', 'min:1'],
+        ]);
+
+        $project = GlsProject::query()
+            ->where('code', $validated['project_code'])
+            ->firstOrFail();
+
+        // Create transaction in DB
+        $transaction = GlsPaymentTransaction::query()->create([
+            'student_id'  => (int)$studentId,
+            'project_id'  => $project->id,
+            'provider'    => 'imoje',
+            'direction'   => 'income',
+            'amount'      => (float)$validated['amount'],
+            'currency'    => 'PLN',
+            'status'      => 'new',
+        ]);
+
+        // Build iMoje form fields
+        $hashMethod = 'sha256';
+        $serviceKey = env('IMOJE_SERVICE_KEY');
+
+        $fields = [
+            'merchantId'          => (string)env('IMOJE_MERCHANT_ID'),
+            'serviceId'           => (string)env('IMOJE_SERVICE_ID'),
+            'amount'              => (int) ($validated['amount'] * 100), // grosze
+            'currency'            => 'PLN',
+            'customerFirstName'   => $student->name ?? '',
+            'customerLastName'    => $student->surname ?? '',
+            'customerEmail'       => $student->email ?? '',
+            'customerPhone'       => $student->phone ?? '',
+            'orderId'             => (string) $transaction->id,
+            'customerId'          => (string) $studentId,
+            'orderDescription'    => $project->name . ' — ' . now()->translatedFormat('F Y'),
+            'locale'              => 'pl',
+            'urlSuccess'          => url('/father/payment-success'),
+            'urlFailure'          => url('/father/payment-fail'),
+            'urlNotification'     => url('/payments/imoje/webhook'),
+        ];
+
+        $imojeService = app(ImojePaymentService::class);
+        $signature    = $imojeService->createSignature($fields, $serviceKey, $hashMethod) . ';' . $hashMethod;
+        $fields['signature'] = $signature;
+
+        $payUrl = env('IMOJE_PAY_URL', 'https://sandbox.paywall.imoje.pl/payment');
+
+        return view('father.payment_redirect', [
+            'fields' => $fields,
+            'payUrl' => $payUrl,
+        ]);
     }
 
     public function process(Request $request): View

@@ -123,6 +123,8 @@ Route::prefix('father')->middleware('is_auth')->group(function () {
         ->name('father.payment-success');
     Route::get('/payment-fail', [\App\Http\Controllers\Father\PaymentController::class, 'fail'])
         ->name('father.payment-fail');
+    Route::post('/father/payment/create-order', [\App\Http\Controllers\Father\PaymentController::class, 'createOrder'])
+        ->name('father.payment.create-order');
     Route::get('/payment/download-invoice/{id}', [\App\Http\Controllers\Father\PaymentController::class, 'downloadInvoice'])
         ->name('father.download-invoice');
 
