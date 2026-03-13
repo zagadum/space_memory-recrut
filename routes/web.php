@@ -144,6 +144,10 @@ Route::get('/cabinet', [StudentCabinetController::class , 'showCabinetPage']);
 // Recruiting
 Route::get('/register/invite/{token}', [\App\Http\Controllers\RecruitingInviteController::class, 'accept'])
     ->name('recruiting.invite');
+Route::get('/register/complete/{token}', [\App\Http\Controllers\RegistrationCompletionController::class, 'index'])
+    ->name('registration.complete');
+Route::post('/register/complete/{token}', [\App\Http\Controllers\RegistrationCompletionController::class, 'store'])
+    ->name('registration.complete.store');
 
 /*
 |--------------------------------------------------------------------------

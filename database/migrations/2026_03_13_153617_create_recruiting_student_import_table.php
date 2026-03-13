@@ -19,6 +19,10 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->string('subject')->nullable();           // предмет
             $table->string('source')->nullable();             // откуда: 'csv_import', 'manual', 'landing'
+            $table->string('country')->nullable();
+            $table->string('city')->nullable();
+            $table->string('address')->nullable();
+            $table->string('zip')->nullable();
             $table->string('campaign_id')->nullable()->index('idx_rsi_camp_id'); // ID кампании рассылки
             $table->string('token', 64)->unique('uni_rsi_token');            // уникальный токен для ссылки
             $table->string('status')->default('pending');     // pending | sent | delivered | clicked | converted | failed
