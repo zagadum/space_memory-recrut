@@ -141,7 +141,9 @@ Route::middleware(['is_student'])->group(static function () {
 
 Route::get('/verify', [StudentCabinetController::class , 'showVerifyPage']);
 Route::get('/cabinet', [StudentCabinetController::class , 'showCabinetPage']);
-//------ END STUDENT -----------------------------------------------------
+// Recruiting
+Route::get('/register/invite/{token}', [\App\Http\Controllers\RecruitingInviteController::class, 'accept'])
+    ->name('recruiting.invite');
 
 /*
 |--------------------------------------------------------------------------

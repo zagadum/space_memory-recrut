@@ -125,6 +125,12 @@ return [
             'path' => storage_path('logs/sql-errors.log'),
             'level' => 'error',
         ],
+        'recruiting' => [
+            'driver' => 'daily',
+            'path'   => storage_path('logs/recruiting.log'),
+            'level'  => 'info',
+            'days'   => 90,
+        ],
 
     ],
 
