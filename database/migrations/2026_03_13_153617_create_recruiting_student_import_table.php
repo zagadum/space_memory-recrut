@@ -11,6 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if (Schema::hasTable('recruiting_student_import')) {
+            return;
+        }
+
         Schema::create('recruiting_student_import', function (Blueprint $table) {
             $table->id();
             $table->string('email');
