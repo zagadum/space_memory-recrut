@@ -240,6 +240,35 @@ class ImojeController extends Controller
                 ->update(['is_pay'=>1]);
 
         }
+
+        // --- GLS Invoice: auto-generate faktura for subscription payments ---
+        if ($txStatus === 'ok' || $txStatus === 'settled') {
+            $glsTransaction = \App\Models\GlsPaymentTransaction::query()
+                ->where('provider_transaction_id', $transaction_id)
+                ->first();
+
+            if ($glsTransaction === null) {
+                $glsTransaction = \App\Models\GlsPaymentTransaction::query()
+                    ->where('id', $orderId)
+                    ->whereNull('paid_at')
+                    ->first();
+            }
+
+            if ($glsTransaction !== null) {
+                $glsTransaction->update([
+                    'status'  => 'completed',
+                    'paid_at' => now(),
+                ]);
+
+                \App\Events\PaymentConfirmedEvent::dispatch($glsTransaction);
+
+                Log::channel('imoje')->info('GLS payment confirmed, invoice event dispatched', [
+                    'gls_transaction_id' => $glsTransaction->id,
+                ]);
+            }
+        }
+        // --- END GLS Invoice block ---
+
         // ВАЖНО: вернуть 200 OK и {"status":"ok"}, чтобы iMoje прекратил ретраи
         return response()->json(['status' => 'ok']);
     }

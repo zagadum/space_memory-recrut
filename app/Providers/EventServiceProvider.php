@@ -37,6 +37,9 @@ class EventServiceProvider extends ServiceProvider
         \App\Events\StudentArchivedEvent::class => [
             \App\Listeners\LogStudentHistoryListener::class,
         ],
+        \App\Events\PaymentConfirmedEvent::class => [
+            \App\Listeners\GenerateInvoiceForPayment::class,
+        ],
     ];
 
     /**
