@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Http\Requests\RegisterStudentRequest;
+use App\Http\Requests\StoreStudentRequest;
+use App\Http\Requests\UpdateStudentRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 use App\Events\StudentCreatedEvent;
 use App\Events\StudentUpdatedEvent;
 use App\Events\StudentArchivedEvent;
@@ -29,16 +31,16 @@ class NewStudentsController extends Controller
                     'dob', 'country', 'city', 'address', 'zip', 'apartment',
                     'photo_consent', 'terms_accepted', 'privacy_accepted', 'reg_comment'
                 )
-                ->get();
+                ->paginate(20);
 
             return response()->json([
                 'success' => true,
-                'data' => $students
+                'data'    => $students,
             ]);
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => $e->getMessage()
+                'message' => $e->getMessage(),
             ], 500);
         }
     }
@@ -64,42 +66,20 @@ class NewStudentsController extends Controller
         return response()->json(['success' => true, 'data' => $student]);
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateStudentRequest $request, $id)
     {
-        $validated = $request->validate([
-            'name'            => 'nullable|string|max:100',
-            'surname'         => 'nullable|string|max:100',
-            'email'           => 'nullable|email|max:150|unique:recruting_student,email,' . $id,
-            'phone'           => 'nullable|string|max:20',
-            'subject'         => 'nullable|string|max:100',
-            'status'          => 'nullable|string',
-            'group_id'        => 'nullable|integer',
-            'teacher_id'      => 'nullable|integer',
-            'parent_name'     => 'nullable|string|max:100',
-            'parent_surname'  => 'nullable|string|max:100',
-            'parent_phone'    => 'nullable|string|max:20',
-            'parent_passport' => 'nullable|string|max:50',
-            'city'            => 'nullable|string|max:100',
-            'country'         => 'nullable|string|max:100',
-            'address'         => 'nullable|string|max:200',
-            'apartment'       => 'nullable|string|max:20',
-            'zip'             => 'nullable|string|max:20',
-            'dob'             => 'nullable|date',
-            'reg_comment'     => 'nullable|string',
-            'photo_consent'   => 'nullable|boolean',
-        ]);
+        $validated = $request->validated();
 
         $student = DB::table('recruting_student')->where('id', $id)->first();
 
         if (!$student) {
-            return response()->json(['message' => 'Student not found'], 404);
+            return response()->json(['success' => false, 'message' => 'Student not found'], 404);
         }
 
         DB::table('recruting_student')
             ->where('id', $id)
-            ->update($validated);
+            ->update(array_merge($validated, ['updated_at' => now()]));
 
-        // Записать в историю что данные были изменены
         event(new StudentUpdatedEvent(
             $id,
             'Данные обновлены менеджером',
@@ -110,35 +90,28 @@ class NewStudentsController extends Controller
         return response()->json(['success' => true]);
     }
 
-    public function store(Request $request)
+    public function store(StoreStudentRequest $request)
     {
         try {
-            $request->validate([
-                'name' => 'nullable|string|max:255',
-                'surname' => 'nullable|string|max:255',
-                'lastname' => 'nullable|string|max:255',
-                'email' => 'required|email|unique:recruting_student,email',
-                'group_id' => 'nullable|integer',
-                'teacher_id' => 'nullable|integer',
-            ]);
+            $validated = $request->validated();
+            $now       = now();
 
-            $now = now();
             $id = DB::table('recruting_student')->insertGetId([
-                'name' => $request->name,
-                'surname' => $request->surname,
-                'lastname' => $request->lastname,
-                'email' => $request->email,
-                'status' => 'new',
-                'group_id' => $request->group_id,
-                'teacher_id' => $request->teacher_id,
-                'password' => Hash::make(Str::random(12)),
-                'enabled' => 1,
-                'blocked' => 0,
-                'deleted' => 0,
+                'name'       => $validated['name']       ?? null,
+                'surname'    => $validated['surname']    ?? null,
+                'lastname'   => $validated['lastname']   ?? null,
+                'email'      => $validated['email'],
+                'status'     => 'new',
+                'group_id'   => $validated['group_id']   ?? null,
+                'teacher_id' => $validated['teacher_id'] ?? null,
+                'password'   => Hash::make(Str::random(12)),
+                'enabled'    => 1,
+                'blocked'    => 0,
+                'deleted'    => 0,
                 'created_at' => $now,
                 'updated_at' => $now,
             ]);
-            
+
             $student = DB::table('recruting_student')
                 ->where('id', $id)
                 ->select('id', 'name', 'surname', 'lastname', 'email', 'group_id', 'teacher_id', 'created_at')
@@ -146,23 +119,16 @@ class NewStudentsController extends Controller
 
             event(new StudentCreatedEvent(
                 studentId: $id,
-                detail: 'Создан администратором',
-                changedBy: $request->input('manager') ?? 'Admin'
+                detail:    'Создан администратором',
+                changedBy: $validated['manager'] ?? 'Admin'
             ));
 
-            return response()->json([
-                'success' => true,
-                'data' => $student
-            ]);
-        } catch (\Illuminate\Validation\ValidationException $e) {
-            return response()->json([
-                'success' => false,
-                'message' => $e->validator->errors()->first()
-            ], 422);
+            return response()->json(['success' => true, 'data' => $student], 201);
+
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => $e->getMessage()
+                'message' => $e->getMessage(),
             ], 500);
         }
     }
@@ -173,95 +139,86 @@ class NewStudentsController extends Controller
             $updated = DB::table('recruting_student')
                 ->where('id', $id)
                 ->update([
-                    'deleted' => 1,
+                    'deleted'    => 1,
                     'updated_at' => now(),
                 ]);
 
             if (!$updated) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Student not found'
-                ], 404);
+                return response()->json(['success' => false, 'message' => 'Student not found'], 404);
             }
 
             event(new StudentArchivedEvent(
                 studentId: $id,
-                detail: 'Студент перемещён в архив',
+                detail:    'Студент перемещён в архив',
                 changedBy: null
             ));
 
-            return response()->json([
-                'success' => true,
-                'data' => ['id' => $id]
-            ]);
+            return response()->json(['success' => true, 'data' => ['id' => $id]]);
+
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => $e->getMessage()
+                'message' => $e->getMessage(),
             ], 500);
         }
     }
 
-    public function register(Request $request)
+    public function register(RegisterStudentRequest $request)
     {
-        $validated = $request->validate([
-            'email'    => 'required|email|unique:recruting_student,email',
-            'password' => 'required|min:6',
-        ]);
+        $validated = $request->validated();
+        $code      = (string) rand(1000, 9999);
 
         $data = [
-            'email'            => $request->email,
-            'password'         => bcrypt($request->password),
-            'status'           => 'registered',
-            'name'             => $request->name ?? '',
-            'surname'          => $request->surname ?? '',
-            'lastname'         => $request->lastname ?? '',
-            'parent_name'      => $request->parent_name ?? '',
-            'parent_surname'   => $request->parent_surname ?? '',
-            'parent_phone'     => $request->parent_phone ?? '',
-            'parent_passport'  => $request->parent_passport ?? '',
-            'dob'              => $request->dob ?? null,
-            'country'          => $request->country ?? '',
-            'city'             => $request->city ?? '',
-            'address'          => $request->address ?? '',
-            'zip'              => $request->zip ?? '',
-            'apartment'        => $request->apartment ?? '',
-            'photo_consent'    => $request->photo_consent ?? 0,
-            'terms_accepted'   => $request->terms_accepted ?? 0,
-            'privacy_accepted' => $request->privacy_accepted ?? 0,
-            'reg_comment'      => $request->reg_comment ?? '',
-            'verification_code' => $code = (string)rand(1000, 9999),
-            'enabled'          => 0,
-            'blocked'          => 0,
-            'deleted'          => 0,
-            'created_at'       => now(),
-            'updated_at'       => now(),
+            'email'             => $validated['email'],
+            'password'          => bcrypt($validated['password']),
+            'status'            => 'registered',
+            'name'              => $validated['name']             ?? '',
+            'surname'           => $validated['surname']          ?? '',
+            'lastname'          => $validated['lastname']         ?? '',
+            'parent_name'       => $validated['parent_name']      ?? '',
+            'parent_surname'    => $validated['parent_surname']   ?? '',
+            'parent_phone'      => $validated['parent_phone']     ?? '',
+            'parent_passport'   => $validated['parent_passport']  ?? '',
+            'dob'               => $validated['dob']              ?? null,
+            'country'           => $validated['country']          ?? '',
+            'city'              => $validated['city']             ?? '',
+            'address'           => $validated['address']          ?? '',
+            'zip'               => $validated['zip']              ?? '',
+            'apartment'         => $validated['apartment']        ?? '',
+            'photo_consent'     => $validated['photo_consent']    ?? 0,
+            'terms_accepted'    => $validated['terms_accepted']   ?? 0,
+            'privacy_accepted'  => $validated['privacy_accepted'] ?? 0,
+            'reg_comment'       => $validated['reg_comment']      ?? '',
+            'verification_code' => $code,
+            'enabled'           => 0,
+            'blocked'           => 0,
+            'deleted'           => 0,
+            'created_at'        => now(),
+            'updated_at'        => now(),
         ];
 
         try {
             $id = DB::table('recruting_student')->insertGetId($data);
 
-            Log::info("Student registered: {$request->email}, ID: {$id}");
+            Log::info("Student registered: {$validated['email']}, ID: {$id}");
 
-            SendVerificationCodeJob::dispatch($request->email, $code);
+            SendVerificationCodeJob::dispatch($validated['email'], $code);
 
             event(new StudentCreatedEvent(
                 studentId: $id,
-                detail: 'Зарегистрирован через форму',
+                detail:    'Зарегистрирован через форму',
                 changedBy: 'System'
             ));
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Регистрация успешна'
-            ], 201);
+            return response()->json(['success' => true, 'message' => 'Регистрация успешна'], 201);
+
         } catch (\Exception $e) {
-            Log::error("Registration error for {$request->email}: " . $e->getMessage());
+            Log::error("Registration error for {$validated['email']}: " . $e->getMessage());
             Log::error($e->getTraceAsString());
-            
+
             return response()->json([
                 'success' => false,
-                'message' => 'Ошибка при регистрации: ' . $e->getMessage()
+                'message' => 'Ошибка при регистрации: ' . $e->getMessage(),
             ], 500);
         }
     }

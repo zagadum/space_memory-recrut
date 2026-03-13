@@ -4,45 +4,53 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Api\FallbackController;
-
+use App\Http\Controllers\Api\NewStudentsController;
+use App\Http\Controllers\Api\LeadsController;
+use App\Http\Controllers\Api\ExpelledStudentsController;
+use App\Http\Controllers\Api\StudentCabinetController;
 
 /*
 |--------------------------------------------------------------------------
 | API Routes
 |--------------------------------------------------------------------------
 |
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
+| Public routes: registration and email verification (no token required).
+| Protected routes: all recruitment management endpoints (JWT required).
 |
 */
 
-use App\Http\Controllers\Api\NewStudentsController;
-use App\Http\Controllers\Api\LeadsController;
-use App\Http\Controllers\Api\ExpelledStudentsController;
-use App\Http\Controllers\Api\StudentCabinetController;
+// ─── Public ───────────────────────────────────────────────────────────────────
+// Ученик регистрируется и верифицирует email без токена
 
 Route::post('/v1/register', [NewStudentsController::class, 'register']);
 
-Route::prefix('v1')->group(function () {
-    Route::get('/recruitment/new-students', [NewStudentsController::class, 'index']);
-    Route::get('/recruitment/new-students/{id}', [NewStudentsController::class, 'show']);
-    Route::get('/recruitment/new-students/{id}/history', [NewStudentsController::class, 'history']);
-    Route::post('/recruitment/new-students', [NewStudentsController::class, 'store']);
-    Route::patch('/recruitment/new-students/{id}', [NewStudentsController::class, 'update']);
-    Route::post('/recruitment/new-students/{id}/archive', [NewStudentsController::class, 'archive']);
-    
-    Route::post('/recruitment/verify-code', [StudentCabinetController::class, 'verifyCode']);
-    Route::post('/recruitment/resend-code', [StudentCabinetController::class, 'resendCode']);
-    
-    Route::get('/recruitment/leads', [LeadsController::class, 'index']);
-    Route::post('/recruitment/leads', [LeadsController::class, 'store']);
-    Route::patch('/recruitment/leads/{id}', [LeadsController::class, 'update']);
+Route::prefix('v1/recruitment')->group(function () {
+    Route::post('/verify-code', [StudentCabinetController::class, 'verifyCode']);
+    Route::post('/resend-code', [StudentCabinetController::class, 'resendCode']);
+});
 
-    Route::get('/expelled-students', [ExpelledStudentsController::class, 'index']);
-    Route::patch('/expelled-students/{id}', [ExpelledStudentsController::class, 'update']);
-    Route::post('/expelled-students/{id}/archive', [ExpelledStudentsController::class, 'archive']);
+// ─── Protected (JWT) ──────────────────────────────────────────────────────────
+// Все эндпоинты управления учениками доступны только с валидным JWT
+
+Route::middleware('verify.jwt')->prefix('v1')->group(function () {
+
+    // Новые ученики
+    Route::get('/recruitment/new-students',             [NewStudentsController::class, 'index']);
+    Route::get('/recruitment/new-students/{id}',        [NewStudentsController::class, 'show']);
+    Route::get('/recruitment/new-students/{id}/history',[NewStudentsController::class, 'history']);
+    Route::post('/recruitment/new-students',            [NewStudentsController::class, 'store']);
+    Route::patch('/recruitment/new-students/{id}',      [NewStudentsController::class, 'update']);
+    Route::post('/recruitment/new-students/{id}/archive',[NewStudentsController::class, 'archive']);
+
+    // Лиды
+    Route::get('/recruitment/leads',         [LeadsController::class, 'index']);
+    Route::post('/recruitment/leads',        [LeadsController::class, 'store']);
+    Route::patch('/recruitment/leads/{id}',  [LeadsController::class, 'update']);
+
+    // Выписанные ученики
+    Route::get('/expelled-students',                    [ExpelledStudentsController::class, 'index']);
+    Route::patch('/expelled-students/{id}',             [ExpelledStudentsController::class, 'update']);
+    Route::post('/expelled-students/{id}/archive',      [ExpelledStudentsController::class, 'archive']);
 });
 
 Route::fallback(FallbackController::class);
-

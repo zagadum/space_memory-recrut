@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Http\Requests\StoreLeadRequest;
+use App\Http\Requests\UpdateLeadRequest;
+use App\Events\StudentCreatedEvent;
+use App\Events\StudentUpdatedEvent;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -17,45 +20,38 @@ class LeadsController extends Controller
                 ->where('deleted', 0)
                 ->whereNotIn('status', ['archived', 'transferred'])
                 ->select('id', 'name', 'surname', 'lastname', 'email', 'status', 'phone', 'subject', 'created_at')
-                ->get();
+                ->paginate(20);
 
             return response()->json([
                 'success' => true,
-                'data' => $leads
+                'data'    => $leads,
             ]);
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => $e->getMessage()
+                'message' => $e->getMessage(),
             ], 500);
         }
     }
 
-    public function store(Request $request)
+    public function store(StoreLeadRequest $request)
     {
         try {
-            $request->validate([
-                'name' => 'nullable|string|max:255',
-                'surname' => 'nullable|string|max:255',
-                'lastname' => 'nullable|string|max:255',
-                'email' => 'required|email|unique:recruting_student,email',
-                'phone' => 'nullable|string|max:20',
-                'subject' => 'nullable|string|max:100',
-            ]);
+            $validated = $request->validated();
+            $now       = now();
 
-            $now = now();
             $id = DB::table('recruting_student')->insertGetId([
-                'name' => $request->name,
-                'surname' => $request->surname,
-                'lastname' => $request->lastname,
-                'email' => $request->email,
-                'status' => 'new',
-                'phone' => $request->phone ?? null,
-                'subject' => $request->subject ?? null,
-                'password' => Hash::make(Str::random(12)),
-                'enabled' => 0,
-                'blocked' => 0,
-                'deleted' => 0,
+                'name'       => $validated['name']     ?? null,
+                'surname'    => $validated['surname']   ?? null,
+                'lastname'   => $validated['lastname']  ?? null,
+                'email'      => $validated['email'],
+                'status'     => 'new',
+                'phone'      => $validated['phone']    ?? null,
+                'subject'    => $validated['subject']  ?? null,
+                'password'   => Hash::make(Str::random(12)),
+                'enabled'    => 0,
+                'blocked'    => 0,
+                'deleted'    => 0,
                 'created_at' => $now,
                 'updated_at' => $now,
             ]);
@@ -65,58 +61,45 @@ class LeadsController extends Controller
                 ->select('id', 'name', 'surname', 'lastname', 'email', 'status', 'phone', 'subject', 'created_at')
                 ->first();
 
-            return response()->json([
-                'success' => true,
-                'data' => $lead
-            ]);
-        } catch (\Illuminate\Validation\ValidationException $e) {
-            return response()->json([
-                'success' => false,
-                'message' => $e->validator->errors()->first()
-            ], 422);
+            event(new StudentCreatedEvent(
+                studentId: $id,
+                detail:    'Лид создан администратором',
+                changedBy: 'Admin'
+            ));
+
+            return response()->json(['success' => true, 'data' => $lead], 201);
+
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => $e->getMessage()
+                'message' => $e->getMessage(),
             ], 500);
         }
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateLeadRequest $request, $id)
     {
         try {
-            $request->validate([
-                'name' => 'nullable|string|max:255',
-                'surname' => 'nullable|string|max:255',
-                'lastname' => 'nullable|string|max:255',
-                'email' => 'nullable|email|unique:recruting_student,email,' . $id,
-                'phone' => 'nullable|string|max:20',
-                'subject' => 'nullable|string|max:100',
-                'status' => 'nullable|in:new,registered,paid,expelled,transferred,archived',
-                'group_id' => 'nullable|integer',
-                'teacher_id' => 'nullable|integer',
-                'enabled' => 'nullable|boolean',
-            ]);
+            $validated = $request->validated();
 
-            $updateData = $request->only(['name', 'surname', 'lastname', 'email', 'phone', 'subject', 'status', 'group_id', 'teacher_id']);
-
-            if ($request->has('enabled')) {
-                $updateData['enabled'] = $request->enabled ? 1 : 0;
-            }
+            $updateData = array_filter(
+                $validated,
+                fn($value) => $value !== null
+            );
 
             if (!empty($updateData)) {
                 $updateData['updated_at'] = now();
 
-                $updated = DB::table('recruting_student')
+                DB::table('recruting_student')
                     ->where('id', $id)
                     ->update($updateData);
 
-                if (!$updated && empty($updateData)) {
-                    return response()->json([
-                        'success' => false,
-                        'message' => 'Lead not found or no changes provided'
-                    ], 404);
-                }
+                event(new StudentUpdatedEvent(
+                    $id,
+                    'Данные лида обновлены',
+                    'Admin',
+                    ['fields' => array_keys($updateData)]
+                ));
             }
 
             $lead = DB::table('recruting_student')
@@ -125,25 +108,15 @@ class LeadsController extends Controller
                 ->first();
 
             if (!$lead) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Lead not found'
-                ], 404);
+                return response()->json(['success' => false, 'message' => 'Lead not found'], 404);
             }
 
-            return response()->json([
-                'success' => true,
-                'data' => $lead
-            ]);
-        } catch (\Illuminate\Validation\ValidationException $e) {
-            return response()->json([
-                'success' => false,
-                'message' => $e->validator->errors()->first()
-            ], 422);
+            return response()->json(['success' => true, 'data' => $lead]);
+
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => $e->getMessage()
+                'message' => $e->getMessage(),
             ], 500);
         }
     }
