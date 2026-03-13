@@ -20,7 +20,7 @@ class RecruitingInviteController extends Controller
     public function accept(string $token): RedirectResponse
     {
         $import = RecruitingStudentImport::query()
-            ->where('token', $token)
+            ->where('token', '=', $token)
             ->firstOrFail();
 
         // Track click

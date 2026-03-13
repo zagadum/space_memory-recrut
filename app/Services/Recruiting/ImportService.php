@@ -37,8 +37,8 @@ final class ImportService
 
             // Skip duplicates within same campaign
             $exists = RecruitingStudentImport::query()
-                ->where('campaign_id', $campaign->id)
-                ->where('email', $email)
+                ->where('campaign_id', '=', $campaign->id)
+                ->where('email', '=', $email)
                 ->exists();
 
             if ($exists) {

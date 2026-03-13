@@ -23,7 +23,7 @@ final class MassMailService
         ]);
 
         $pending = $campaign->imports()
-            ->where('status', 'pending')
+            ->where('status', '=', 'pending')
             ->get();
 
         foreach ($pending as $import) {

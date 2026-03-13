@@ -23,7 +23,7 @@ class PaymentController extends Controller
         $studentId = \Illuminate\Support\Facades\Auth::guard('student')->id();
 
         $transactions = GlsPaymentTransaction::query()
-            ->where('student_id', $studentId)
+            ->where('student_id', '=', $studentId)
             ->orderByDesc('paid_at')
             ->get();
 
@@ -57,8 +57,8 @@ class PaymentController extends Controller
         $studentId = \Illuminate\Support\Facades\Auth::guard('student')->id();
 
         $document = GlsInvoiceDocument::query()
-            ->where('id', $id)
-            ->where('student_id', $studentId) // Security: only own invoices
+            ->where('id', '=', $id)
+            ->where('student_id', '=', $studentId) // Security: only own invoices
             ->firstOrFail();
 
         // Case 1: PDF already generated and stored

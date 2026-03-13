@@ -16,7 +16,7 @@ class DocumentController extends Controller
         $studentId = \Illuminate\Support\Facades\Auth::guard('student')->id();
 
         $documents = GlsInvoiceDocument::query()
-            ->where('student_id', $studentId)
+            ->where('student_id', '=', $studentId)
             ->orderByDesc('issue_date')
             ->get();
 
