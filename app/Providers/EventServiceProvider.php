@@ -40,6 +40,9 @@ class EventServiceProvider extends ServiceProvider
         \App\Events\PaymentConfirmedEvent::class => [
             \App\Listeners\GenerateInvoiceForPayment::class,
         ],
+        \App\Events\InvoiceGeneratedEvent::class => [
+            \App\Listeners\SendInvoiceEmailListener::class,
+        ],
     ];
 
     /**
