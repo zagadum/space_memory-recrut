@@ -39,6 +39,31 @@ class RegistrationCompletionController extends Controller
             ->where('status', '!=', 'converted')
             ->firstOrFail();
 
+        $email = $import->email;
+        $existing = DB::table('recruting_student')->where('email', $email)->first();
+
+        if ($existing) {
+            $status = $existing->status ?? 'unknown';
+            
+            return match ($status) {
+                'registered', 'paid' => back()->withErrors([
+                    'email' => __('recruiting.email_exists_registered'),
+                ])->with('show_login_link', true),
+                
+                'new' => back()->withErrors([
+                    'email' => __('recruiting.email_exists_incomplete'),
+                ])->with('show_resend_link', true)->with('student_email', $email),
+                
+                'archived', 'expelled' => back()->withErrors([
+                    'email' => __('recruiting.email_exists_archived'),
+                ]),
+                
+                default => back()->withErrors([
+                    'email' => __('recruiting.email_exists_generic'),
+                ]),
+            };
+        }
+
         $request->validate([
             'password' => ['required', 'confirmed', Password::min(8)],
             'consent_data' => ['required', 'accepted'],

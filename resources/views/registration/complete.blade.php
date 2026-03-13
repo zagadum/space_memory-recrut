@@ -186,7 +186,21 @@
             @if ($errors->any())
                 <ul class="error-list">
                     @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
+                        <li>
+                            {{ $error }}
+                            @if($errors->has('email'))
+                                @if(session('show_login_link'))
+                                    <a href="{{ route('login') }}" class="legal-link" style="display:block; margin-top:5px; color: var(--primary-accent);">
+                                        → Zaloguj się
+                                    </a>
+                                @endif
+                                @if(session('show_resend_link'))
+                                    <a href="{{ route('recruiting.invite', ['token' => $token]) }}" class="legal-link" style="display:block; margin-top:5px; color: var(--primary-accent);">
+                                        → Wyślij link ponownie
+                                    </a>
+                                @endif
+                            @endif
+                        </li>
                     @endforeach
                 </ul>
             @endif
@@ -206,17 +220,32 @@
 
                 <label class="consent-group">
                     <input type="checkbox" name="consent_data" value="1" required>
-                    <span class="consent-text">{{ __('recruiting.registration.consent_data') }}</span>
+                    <span class="consent-text">
+                        Potwierdzam 
+                        <a href="#" onclick="openLegalModal('terms'); return false;" class="legal-link">
+                            warunki i regulamin
+                        </a>
+                    </span>
                 </label>
 
                 <label class="consent-group">
                     <input type="checkbox" name="consent_policy" value="1" required>
-                    <span class="consent-text">{{ __('recruiting.registration.consent_policy') }}</span>
+                    <span class="consent-text">
+                        Akceptuję 
+                        <a href="#" onclick="openLegalModal('privacy'); return false;" class="legal-link">
+                            politykę prywatności
+                        </a>
+                    </span>
                 </label>
 
                 <label class="consent-group">
                     <input type="checkbox" name="consent_photo" value="1" required>
-                    <span class="consent-text">{{ __('recruiting.registration.consent_photo') }}</span>
+                    <span class="consent-text">
+                        Wyrażam 
+                        <a href="#" onclick="openLegalModal('photo'); return false;" class="legal-link">
+                            zgodę na wizerunek
+                        </a>
+                    </span>
                 </label>
 
                 <button type="submit" class="submit-btn">{{ __('recruiting.registration.submit') }}</button>
@@ -224,5 +253,38 @@
         </div>
     </div>
 
+    <!-- Legal Modals -->
+    <div class="legal-overlay" id="legal-overlay" style="display:none;">
+        <div class="legal-modal">
+            <div class="legal-modal__header">
+                <h3 class="legal-modal__title" id="legal-title"></h3>
+                <button class="legal-modal__close" onclick="closeLegalModal()">✕</button>
+            </div>
+            <div class="legal-modal__body" id="legal-body"></div>
+            <div class="legal-modal__footer">
+                <button class="legal-modal__btn" onclick="closeLegalModal()">Zamknij</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openLegalModal(type) {
+            fetch('/legal/' + type)
+                .then(r => r.text())
+                .then(html => {
+                    document.getElementById('legal-body').innerHTML = html;
+                    document.getElementById('legal-title').textContent = {
+                        'terms': 'Regulamin',
+                        'privacy': 'Polityka prywatności', 
+                        'photo': 'Zgoda na wizerunek'
+                    }[type];
+                    document.getElementById('legal-overlay').style.display = 'flex';
+                });
+        }
+
+        function closeLegalModal() {
+            document.getElementById('legal-overlay').style.display = 'none';
+        }
+    </script>
 </body>
 </html>

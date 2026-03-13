@@ -124,6 +124,10 @@ Route::prefix('father')->middleware('is_auth')->group(function () {
         ->name('father.learn');
 });
 
+Route::get('/legal/terms', fn() => view('legal.terms'))->name('legal.terms');
+Route::get('/legal/privacy', fn() => view('legal.privacy'))->name('legal.privacy');
+Route::get('/legal/photo', fn() => view('legal.photo_consent'))->name('legal.photo');
+
 Route::fallback(function () {
     abort(404);
 });
