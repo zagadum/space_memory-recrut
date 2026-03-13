@@ -41,39 +41,7 @@ Route::any('/payments/imoje/success', 'App\Http\Controllers\ImojeController@payS
 Route::any('/payments/imoje/webhook', 'App\Http\Controllers\ImojeController@webhook')->name('imoje.webhook');
 Route::post('/payments/imoje/return', 'App\Http\Controllers\ImojeController@return')->name('imoje.return');
 
-
-
-
 //-------------- Admin part end ----
-
-
-
-/**
- * Routes File manager
- */
-/*
- Route::group(array('middleware' => ['isadmin', 'active'],'prefix' =>'fileman' ,'before' => \Config::get('roxy-fileman-laravel::base_auth_filters')), function()
- {
- Route::get('/', ['as' => 'fileman_index', 'before' => [], function(){return View::make('roxy-fileman.index', ['assets_path' => '/css/fileman/']);}]);
- Route::any('/dirtree', '\App\Http\Controllers\Fileman\FilemanController@DirTreeAction');
- Route::any('/fileslist', '\App\Http\Controllers\Fileman\FilemanController@FilesListAction');
- Route::any('/createdir', '\App\Http\Controllers\Fileman\FilemanController@CreateDirAction');
- Route::any('/deletedir', '\App\Http\Controllers\Fileman\FilemanController@DeleteDirAction');
- Route::any('/movedir', '\App\Http\Controllers\Fileman\FilemanController@MoveDirAction');
- Route::any('/copydir', '\App\Http\Controllers\Fileman\FilemanController@CopyDirAction');
- Route::any('/renamedir', '\App\Http\Controllers\Fileman\FilemanController@RenameDirAction');
- Route::any('/upload', '\App\Http\Controllers\Fileman\FilemanController@UploadAction');
- Route::any('/download', '\App\Http\Controllers\Fileman\FilemanController@DownloadAction');
- Route::any('/downloaddir', '\App\Http\Controllers\Fileman\FilemanController@DownloadDirAction');
- Route::any('/deletefile', '\App\Http\Controllers\Fileman\FilemanController@DeleteFileAction');
- Route::any('/movefile', '\App\Http\Controllers\Fileman\FilemanController@MoveFileAction');
- Route::any('/copyfile', '\App\Http\Controllers\Fileman\FilemanController@CopyFileAction');
- Route::any('/renamefile', '\App\Http\Controllers\Fileman\FilemanController@RenameFileAction');
- Route::any('/thumb', '\App\Http\Controllers\Fileman\FilemanController@ThumbAction');
- });
- */
-
-//---- Файловый менеджер ----
 
 Route::get('/admin', function () {
 
