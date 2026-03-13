@@ -51,6 +51,12 @@ return [
             'path' => storage_path('logs/imoje.log'),
             'level' => 'info',
         ],
+        'invoice' => [
+            'driver' => 'daily',
+            'path'   => storage_path('logs/invoice.log'),
+            'level'  => 'info',
+            'days'   => 90,
+        ],
         'daily' => [
             'driver' => 'daily',
             'path' => storage_path('logs/laravel.log'),
@@ -118,6 +124,12 @@ return [
             'driver' => 'single',
             'path' => storage_path('logs/sql-errors.log'),
             'level' => 'error',
+        ],
+        'recruiting' => [
+            'driver' => 'daily',
+            'path'   => storage_path('logs/recruiting.log'),
+            'level'  => 'info',
+            'days'   => 90,
         ],
 
     ],

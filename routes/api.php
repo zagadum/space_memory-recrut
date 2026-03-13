@@ -51,6 +51,19 @@ Route::middleware('verify.jwt')->prefix('v1')->group(function () {
     Route::get('/expelled-students',                    [ExpelledStudentsController::class, 'index']);
     Route::patch('/expelled-students/{id}',             [ExpelledStudentsController::class, 'update']);
     Route::post('/expelled-students/{id}/archive',      [ExpelledStudentsController::class, 'archive']);
+
+    // Платежи (GLS)
+    Route::get('/payments/student/{id}',            [\App\Http\Controllers\Api\Payments\PaymentController::class, 'getStudentPayments']);
+    Route::get('/payments/projects/{id}/transactions', [\App\Http\Controllers\Api\Payments\PaymentController::class, 'getStudentProjectTransactions']);
+    Route::get('/payments/documents/{id}/pdf',      [\App\Http\Controllers\Api\Payments\DocumentController::class, 'downloadPdf']);
+
+    // Массовые рассылки и импорт
+    Route::get('/recruiting/campaigns',                [\App\Http\Controllers\Api\RecruitingCampaignController::class, 'index']);
+    Route::post('/recruiting/campaigns',               [\App\Http\Controllers\Api\RecruitingCampaignController::class, 'store']);
+    Route::post('/recruiting/campaigns/{id}/import',    [\App\Http\Controllers\Api\RecruitingCampaignController::class, 'import']);
+    Route::post('/recruiting/campaigns/{id}/dry-run',   [\App\Http\Controllers\Api\RecruitingCampaignController::class, 'dryRun']);
+    Route::post('/recruiting/campaigns/{id}/start',     [\App\Http\Controllers\Api\RecruitingCampaignController::class, 'start']);
+    Route::get('/recruiting/campaigns/{id}/stats',      [\App\Http\Controllers\Api\RecruitingCampaignController::class, 'stats']);
 });
 
 Route::fallback(FallbackController::class);

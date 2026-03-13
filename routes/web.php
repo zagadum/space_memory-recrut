@@ -138,46 +138,45 @@ Route::middleware(['is_student'])->group(static function () {
 // Any specific student middleware routes can go here
 });
 
+
 Route::get('/verify', [StudentCabinetController::class , 'showVerifyPage']);
 Route::get('/cabinet', [StudentCabinetController::class , 'showCabinetPage']);
-//------ END STUDENT -----------------------------------------------------
+// Recruiting
+Route::get('/register/invite/{token}', [\App\Http\Controllers\RecruitingInviteController::class, 'accept'])
+    ->name('recruiting.invite');
+Route::get('/register/complete/{token}', [\App\Http\Controllers\RegistrationCompletionController::class, 'index'])
+    ->name('registration.complete');
+Route::post('/register/complete/{token}', [\App\Http\Controllers\RegistrationCompletionController::class, 'store'])
+    ->name('registration.complete.store');
 
+/*
+|--------------------------------------------------------------------------
+| Father Portal (Кабинет Родителя)
+|--------------------------------------------------------------------------
+*/
+Route::prefix('father')->middleware('is_auth')->group(function () {
+    // Documents
+    Route::get('/document', [\App\Http\Controllers\Father\DocumentController::class, 'index'])
+        ->name('father.document');
+    Route::get('/document-sign', [\App\Http\Controllers\Father\DocumentController::class, 'sign'])
+        ->name('father.document-sign');
 
-Route::get('/test-parent-portal', function () {
-    return view('student.home.parent_portal');
+    // Payments
+    Route::get('/payment', [\App\Http\Controllers\Father\PaymentController::class, 'index'])
+        ->name('father.payment');
+    Route::get('/payment-process', [\App\Http\Controllers\Father\PaymentController::class, 'process'])
+        ->name('father.payment-process');
+    Route::get('/payment-success', [\App\Http\Controllers\Father\PaymentController::class, 'success'])
+        ->name('father.payment-success');
+    Route::get('/payment-fail', [\App\Http\Controllers\Father\PaymentController::class, 'fail'])
+        ->name('father.payment-fail');
+    Route::get('/payment/download-invoice/{id}', [\App\Http\Controllers\Father\PaymentController::class, 'downloadInvoice'])
+        ->name('father.download-invoice');
+
+    // Learn
+    Route::get('/learn', [\App\Http\Controllers\Father\LearnController::class, 'index'])
+        ->name('father.learn');
 });
-
-Route::get('/test-documents', function () {
-    return view('student.home.documents');
-})->name('student.documents');
-
-Route::get('/test-document-view', function () {
-    return view('student.home.document_view', [
-    'parent' => (object)['full_name' => 'Иванова Мария', 'email' => 'test@mail.com', 'phone' => '+48 123 456 789'],
-    'student' => (object)['full_name' => 'Иванов Артём', 'age' => 9, 'group' => (object)['name' => 'Группа A · Вторник 17:00']],
-    'contract' => (object)['id' => 1, 'number' => 'GLS-2026-001', 'subscription_amount' => 350, 'class_type' => 'Stacjonarne', 'created_at' => now()],
-    'document' => (object)['id' => 1, 'name' => 'Договор 2026 Групповые занятия', 'pdf_url' => '#'],
-    ]);
-});
-
-Route::get('/test-payment', function () {
-    return view('student.home.payment', [
-    'student' => (object)['id' => 1, 'full_name' => 'Иванов Артём', 'group' => (object)['name' => 'Группа A · Вторник 17:00']],
-    ]);
-});
-
-Route::get('/test-payment-success', function () {
-    return view('student.home.payment_success', [
-    'student' => (object)['group' => (object)['name' => 'Группа A · Вторник 17:00']],
-    'payment' => (object)['period_label' => '1 месяц', 'lessons' => 4, 'amount' => 440],
-    ]);
-});
-
-Route::post('/payments/create', fn() => response()->json(['redirect_url' => null]))->name('student.payment.create');
-
-Route::post('/documents/send-otp', fn() => response()->json(['success' => true]))->name('student.documents.send-otp');
-Route::post('/documents/sign', fn() => response()->json(['success' => true]))->name('student.documents.sign');
-
 
 Route::fallback(function () {
     abort(404);
