@@ -15,59 +15,15 @@ final class InvoiceGeneratorService
      */
     public function generateForTransaction(\App\Models\GlsPaymentTransaction $transaction): \App\Models\GlsInvoiceDocument
     {
-        $project = $transaction->project;
-        $student = $transaction->student;
-
-        return DB::transaction(function () use ($transaction, $project, $student) {
-            /** @var \App\Models\GlsInvoiceDocument \$document */
-            $document = \App\Models\GlsInvoiceDocument::firstOrNew([
-                'transaction_id' => $transaction->id,
-            ]);
-
-            if (!$document->exists) {
-                $document->fill([
-                    'student_id'   => $student->id,
-                    'project_id'   => $project->id,
-                    'document_type' => 'invoice',
-                    'issue_date'    => now()->format('Y-m-d'),
-                    'sale_date'     => $transaction->paid_at?->format('Y-m-d') ?? now()->format('Y-m-d'),
-                    'currency'      => $transaction->currency,
-                    'amount_gross'  => $transaction->amount,
-                    'amount_net'    => round((float) $transaction->amount / 1.23, 2), // Example: assume 23% VAT
-                ]);
-            }
-
+        return DB::transaction(function () use ($transaction) {
+            $document = $this->createOrUpdateDocument($transaction);
+            
             if (!$document->number) {
-                $document->number = $this->getNextInvoiceNumber($project, (string) $document->issue_date);
+                $document->number = $this->getNextInvoiceNumber($document->project, (string) $document->issue_date);
+                $document->save();
             }
 
-            $document->save();
-
-            // Prepare InvoiceData for PDF rendering
-            $items = [
-                new InvoiceLineItem(
-                    lp: 1,
-                    nazwa: 'Usługa edukacyjna - pakiet zajęć',
-                    quantity: 1,
-                    unit: 'szt.',
-                    unitPrice: (float) $document->amount_net,
-                    vatRate: '23%',
-                    vatAmount: (float) ($document->amount_gross - $document->amount_net),
-                    totalNet: (float) $document->amount_net,
-                    totalGross: (float) $document->amount_gross
-                ),
-            ];
-
-            $invoiceData = new InvoiceData(
-                documentNumber: $document->number,
-                issueDate: (string) $document->issue_date,
-                saleDate: (string) $document->sale_date,
-                buyerName: trim($student->lastname . ' ' . $student->surname),
-                buyerAddress: $student->locality ?? 'Warszawa', // Fallback if missing
-                buyerNip: null,
-                items: $items,
-                currency: $document->currency
-            );
+            $invoiceData = $this->prepareInvoiceData($document);
 
             // Render and store PDF
             $renderer = new InvoicePdfRenderer();
@@ -77,6 +33,72 @@ final class InvoiceGeneratorService
 
             return $document;
         });
+    }
+
+    /**
+     * Helper to create/update document without full generation.
+     */
+    public function createOrUpdateDocument(\App\Models\GlsPaymentTransaction $transaction): \App\Models\GlsInvoiceDocument
+    {
+        $project = $transaction->project;
+        $student = $transaction->student;
+
+        /** @var \App\Models\GlsInvoiceDocument $document */
+        $document = \App\Models\GlsInvoiceDocument::firstOrNew([
+            'transaction_id' => $transaction->id,
+        ]);
+
+        if (!$document->exists) {
+            $document->fill([
+                'student_id'   => $student->id,
+                'project_id'   => $project->id,
+                'document_type' => 'invoice',
+                'issue_date'    => now()->format('Y-m-d'),
+                'sale_date'     => $transaction->paid_at?->format('Y-m-d') ?? now()->format('Y-m-d'),
+                'currency'      => $transaction->currency,
+                'amount_gross'  => $transaction->amount,
+                'amount_net'    => round((float) $transaction->amount / 1.23, 2),
+            ]);
+            $document->save();
+        }
+
+        return $document;
+    }
+
+    /**
+     * Prepare data structure for PDF rendering.
+     */
+    public function prepareInvoiceData(\App\Models\GlsInvoiceDocument $document): InvoiceData
+    {
+        $student = $document->student;
+
+        $items = [
+            new InvoiceLineItem(
+                lp: 1,
+                nazwa: 'Usługa edukacyjna - pakiet zajęć',
+                quantity: 1,
+                unit: 'szt.',
+                unitPrice: (float) $document->amount_net,
+                vatRate: '23%',
+                vatAmount: (float) ($document->amount_gross - $document->amount_net),
+                totalNet: (float) $document->amount_net,
+                totalGross: (float) $document->amount_gross
+            ),
+        ];
+
+        $buyerName = trim(($student->parent1_surname ?? $student->surname ?? '') . ' ' . ($student->parent1_lastname ?? $student->lastname ?? ''));
+        $buyerAddress = $student->locality ?? 'Warszawa';
+
+        return new InvoiceData(
+            documentNumber: $document->number ?? 'DRAFT',
+            issueDate: (string) $document->issue_date,
+            saleDate: (string) $document->sale_date,
+            buyerName: $buyerName,
+            buyerAddress: $buyerAddress,
+            buyerNip: null,
+            items: $items,
+            currency: $document->currency
+        );
     }
 
     /**

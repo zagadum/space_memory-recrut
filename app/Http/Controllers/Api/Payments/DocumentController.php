@@ -100,57 +100,31 @@ class DocumentController extends Controller
      * Download invoice PDF for admin panel.
      * GET /api/v1/payments/documents/{id}/pdf
      */
+    /**
+     * Download invoice PDF for admin panel.
+     * GET /api/v1/payments/documents/{id}/pdf
+     */
     public function downloadPdf(int $id): \Symfony\Component\HttpFoundation\StreamedResponse|\Illuminate\Http\Response
     {
+        /** @var GlsInvoiceDocument $document */
         $document = GlsInvoiceDocument::query()->findOrFail($id);
 
         // Case 1: Pre-generated PDF exists
         if ($document->pdf_path && \Storage::disk('private')->exists($document->pdf_path)) {
-            $filename = 'Faktura-' . str_replace('/', '-', $document->number ?? $id) . '.pdf';
+            $filename = 'Faktura-' . str_replace('/', '-', $document->number ?? (string)$id) . '.pdf';
             return \Storage::disk('private')->download($document->pdf_path, $filename);
         }
 
-        // Case 2: Generate on-the-fly
-        $student = $document->student;
+        // Case 2: Generate on-the-fly (Spec: do NOT save to disk)
+        $generator = new \App\Services\Invoice\InvoiceGeneratorService();
+        $invoiceData = $generator->prepareInvoiceData($document);
+        
+        $renderer = new \App\Services\Invoice\InvoicePdfRenderer();
+        $pdfContent = $renderer->renderBinary($invoiceData);
 
-        $lineItem = new \App\Services\Invoice\InvoiceLineItem(
-            lp:         1,
-            nazwa:      $document->title ?? 'Usługa edukacyjna',
-            quantity:   1,
-            unit:       'szt.',
-            unitPrice:  (float) $document->amount_gross,
-            vatRate:    'zw.',
-            vatAmount:  0.0,
-            totalNet:   (float) ($document->amount_net ?: $document->amount_gross),
-            totalGross: (float) $document->amount_gross,
-        );
+        $filename = 'Faktura-' . str_replace('/', '-', $document->number ?? (string)$id) . '.pdf';
 
-        $buyerName = '';
-        $buyerAddress = '';
-        if ($student) {
-            $buyerName = trim(($student->parent1_surname ?? $student->surname ?? '') . ' ' . ($student->parent1_lastname ?? $student->lastname ?? ''));
-            $buyerAddress = trim(($student->address ?? '') . ', ' . ($student->zip ?? '') . ' ' . ($student->city ?? ''));
-        }
-
-        $invoiceData = new \App\Services\Invoice\InvoiceData(
-            documentNumber: $document->number ?? 'DRAFT',
-            issueDate:      $document->issue_date?->format('Y-m-d') ?? now()->format('Y-m-d'),
-            saleDate:       $document->service_date_from?->format('Y-m-d') ?? $document->issue_date?->format('Y-m-d') ?? now()->format('Y-m-d'),
-            buyerName:      $buyerName,
-            buyerAddress:   $buyerAddress,
-            buyerNip:       $student->nip ?? null,
-            items:          [$lineItem],
-            currency:       $document->currency ?? 'PLN',
-            bankAccount:    'PL 00 0000 0000 0000 0000 0000 0000',
-        );
-
-        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('pdf.invoice.faktura', ['invoice' => $invoiceData])
-            ->setPaper('a4')
-            ->setOption('defaultFont', 'DejaVu Sans');
-
-        $filename = 'Faktura-' . str_replace('/', '-', $document->number ?? $id) . '.pdf';
-
-        return new \Illuminate\Http\Response($pdf->output(), 200, [
+        return response($pdfContent, 200, [
             'Content-Type'        => 'application/pdf',
             'Content-Disposition' => 'attachment; filename="' . $filename . '"',
         ]);
