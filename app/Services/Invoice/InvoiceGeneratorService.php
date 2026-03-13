@@ -64,19 +64,24 @@ final readonly class InvoiceGeneratorService
 
         $pdfPath = $this->pdfRenderer->renderAndStore($invoiceData);
 
+        // --- Persist document ---
+        $lastDay = (clone $now)->endOfMonth();
+
         $document = GlsInvoiceDocument::query()->create([
-            'student_id'    => $transaction->student_id,
-            'transaction_id'=> $transaction->id,
-            'project_id'    => $transaction->project_id,
-            'document_type' => 'invoice',
-            'number'        => $docNumber,
-            'issue_date'    => $now->toDateString(),
-            'sale_date'     => $invoiceData->saleDate,
-            'amount_net'    => $lineItem->totalNet,
-            'amount_gross'  => $lineItem->totalGross,
-            'currency'      => $invoiceData->currency,
-            'ksef_status'   => 'pending',
-            'pdf_path'      => $pdfPath,
+            'student_id'        => $transaction->student_id,
+            'transaction_id'    => $transaction->id,
+            'project_id'        => $transaction->project_id,
+            'document_type'     => 'invoice',
+            'number'            => $docNumber,
+            'title'             => $lineItem->nazwa,
+            'issue_date'        => $now->toDateString(),
+            'service_date_from' => $now->copy()->startOfMonth()->toDateString(),
+            'service_date_to'   => $lastDay->toDateString(),
+            'amount_net'        => $lineItem->totalNet,
+            'amount_gross'      => $lineItem->totalGross,
+            'currency'          => $invoiceData->currency,
+            'ksef_status'       => 'pending',
+            'pdf_path'          => $pdfPath,
         ]);
 
         Log::channel('invoice')->info('Invoice generated', [

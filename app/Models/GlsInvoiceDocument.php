@@ -37,10 +37,10 @@ class GlsInvoiceDocument extends Model
         return [
             'issue_date'        => 'date:Y-m-d',
             'sale_date'         => 'date:Y-m-d',
-            'service_date_from' => 'date',
-            'service_date_to'   => 'date',
-            'amount_net'        => 'decimal:2',
-            'amount_gross'      => 'decimal:2',
+            'service_date_from' => 'date:Y-m-d',
+            'service_date_to'   => 'date:Y-m-d',
+            'amount_net'        => 'float',
+            'amount_gross'      => 'float',
             'meta'              => 'array',
         ];
     }
