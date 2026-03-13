@@ -20,9 +20,7 @@ class DocumentController extends Controller
             ->orderByDesc('issue_date')
             ->get();
 
-        return view('father.document', [
-            'documents' => $documents,
-        ]);
+        return view('father.document', ['documents' => $documents,]);
     }
 
     public function sign(Request $request): View

@@ -27,9 +27,7 @@ class PaymentController extends Controller
             ->orderByDesc('paid_at')
             ->get();
 
-        return view('father.payment', [
-            'transactions' => $transactions,
-        ]);
+        return view('father.payment', ['transactions' => $transactions,]);
     }
 
     public function process(Request $request): View

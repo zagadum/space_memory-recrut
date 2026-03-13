@@ -16,9 +16,7 @@ class RecruitingInviteController extends Controller
      */
     public function accept(string $token): RedirectResponse
     {
-        $import = RecruitingStudentImport::query()
-            ->where('token', '=', $token)
-            ->firstOrFail();
+        $import = RecruitingStudentImport::query()->where('token', '=', $token)->firstOrFail();
 
         // Track click
         if (!$import->link_clicked_at) {
