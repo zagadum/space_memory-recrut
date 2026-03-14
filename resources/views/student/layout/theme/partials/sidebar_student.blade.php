@@ -68,9 +68,16 @@
     </nav>
 
     <div class="mt-4">
-        <a href="{{ url('/logout') }}" class="nav-link btn btn-outline-secondary btn-block">
-            <div class="nav-icon icon-exit"></div>
-            <span>{{ trans('student.main_menu.exit') }}</span>
-        </a>
+        @if(Auth::guard('student')->check())
+            <a href="{{ route('father.logout') }}" class="nav-link btn btn-outline-secondary btn-block">
+                <div class="nav-icon icon-exit"></div>
+                <span>{{ trans('student.main_menu.exit') }}</span>
+            </a>
+        @else
+            <a href="{{ url('/logout') }}" class="nav-link btn btn-outline-secondary btn-block">
+                <div class="nav-icon icon-exit"></div>
+                <span>{{ trans('student.main_menu.exit') }}</span>
+            </a>
+        @endif
     </div>
 </aside>

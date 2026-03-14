@@ -128,7 +128,7 @@ class DocumentController extends Controller
         $buyerName = '';
         $buyerAddress = '';
         if ($student) {
-            $buyerName = trim(($student->parent1_surname ?? $student->surname ?? '') . ' ' . ($student->parent1_lastname ?? $student->lastname ?? ''));
+            $buyerName = trim(($student->parent_surname ?? $student->surname ?? '') . ' ' . ($student->parent_name ?? $student->lastname ?? ''));
             $buyerAddress = trim(($student->address ?? '') . ', ' . ($student->zip ?? '') . ' ' . ($student->city ?? ''));
         }
 

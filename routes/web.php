@@ -90,7 +90,7 @@ Route::middleware(['is_student'])->group(static function () {
 
 
 Route::get('/verify', [StudentCabinetController::class , 'showVerifyPage'])->name('verification.show');
-Route::post('/recruitment/verify-code', [StudentCabinetController::class, 'verifyCode'])->name('verification.verify');
+Route::post('/recruitment/verify-code', [StudentCabinetController::class, 'verifyCode'])->middleware('api.locale')->name('verification.verify');
 Route::post('/recruitment/resend-code', [StudentCabinetController::class, 'resendCode'])->name('verification.resend');
 Route::get('/cabinet', [StudentCabinetController::class , 'showCabinetPage']);
 // Recruiting
@@ -107,7 +107,7 @@ Route::get('/father/login', [\App\Http\Controllers\Father\AuthController::class 
     ->name('father.login');
 Route::post('/father/login', [\App\Http\Controllers\Father\AuthController::class , 'login'])
     ->name('father.login.submit');
-Route::post('/father/logout', [\App\Http\Controllers\Father\AuthController::class , 'logout'])
+Route::get('/father/logout', [\App\Http\Controllers\Father\AuthController::class , 'logout'])
     ->name('father.logout');
 
 Route::prefix('father')
@@ -118,6 +118,11 @@ Route::prefix('father')
 
         Route::get('/documents', [\App\Http\Controllers\Father\FatherDocumentController::class, 'index'])
             ->name('father.documents');
+        
+        // Fallbacks for 404s
+        Route::get('/document', fn() => redirect()->route('father.documents'));
+        Route::get('/document-view', fn() => redirect()->route('father.documents'));
+
         Route::get('/document-view/{document}', [\App\Http\Controllers\Father\FatherDocumentController::class, 'show'])
             ->name('father.document.view');
         Route::post('/documents/sign', [\App\Http\Controllers\Father\FatherDocumentController::class, 'sign'])

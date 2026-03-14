@@ -105,7 +105,7 @@ return [
             'member_task_enter' => 'Wpisz odpowiednią liczbę po prawej stronie',
             'congrats_you' => 'Super! Udało Ci się!',
             'congrats_you2' => ' Gratulacje!',
-            'error_reply' => 'Niepoprawnie! Spróbuj jeszcze raz!',
+            'error_reply' => 'Niepoprawnie. Spróbuj jeszcze raz.',
             'memory_ans' => 'Zapamiętaj poprawną odpowiedź',
             'you_know' => 'Teraz już znasz odpowiedź',
         ],
@@ -127,7 +127,7 @@ return [
     'words' => [
         'practice' => [
             'name' => 'Szkolenie',
-            'result' => 'Niestety to trochę za mało',
+            'result' => 'Wynik jest trochę za niski. Spróbuj ponownie.',
             'congrats_you' => 'Dobrze! Udało Ci się!',
             'congrats_you2' => 'Gratulacje!',
             'error_reply' => 'Błąd! Spróbuj ponownie!',
@@ -451,7 +451,7 @@ return [
     ],
     'abacus' => [
         'abacus_help' => 'Przylad',
-        'error_reply' => 'Ups! Coś poszło nie tak!',
+        'error_reply' => 'Ups! Spróbuj jeszcze raz.',
         'you_know' => 'Teraz już wiesz odpowiedź!',
         'result' => 'Świetnie! Udało Ci się!',
         'practice' => [

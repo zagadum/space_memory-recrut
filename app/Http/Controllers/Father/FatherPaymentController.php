@@ -30,7 +30,7 @@ class FatherPaymentController extends Controller
             ['months' => 9, 'lessons' => 36, 'price' => 3160, 'old' => 4410, 'popular' => false, 'save' => 1250],
         ];
 
-        return view('student.father.payment_process', compact(
+        return view('father.payment_process', compact(
             'student', 'contract', 'payments', 'periods'
         ));
     }
@@ -109,6 +109,6 @@ class FatherPaymentController extends Controller
             ->orderBy('created_at', 'desc')
             ->first();
         
-        return view('student.father.payment_success', compact('student', 'payment'));
+        return view('father.payment_success', compact('student', 'payment'));
     }
 }

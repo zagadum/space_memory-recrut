@@ -19,7 +19,7 @@
             <div class="father-form-group">
                 <label class="father-label">{{ __('father.login.email') }}</label>
                 <input type="email" name="email" value="{{ old('email', $email) }}" 
-                       required autofocus class="father-input" placeholder="jan@example.pl">
+                       required autofocus class="father-input @error('email') father-input--invalid @enderror" placeholder="jan@example.pl">
                 @error('email')
                     <div class="father-error">{{ $message }}</div>
                 @enderror
@@ -28,7 +28,7 @@
             <div class="father-form-group">
                 <label class="father-label">{{ __('father.login.password') }}</label>
                 <input type="password" name="password" required 
-                       class="father-input" placeholder="••••••••">
+                       class="father-input @error('password') father-input--invalid @enderror" placeholder="••••••••">
                 @error('password')
                     <div class="father-error">{{ $message }}</div>
                 @enderror

@@ -113,7 +113,7 @@ class PaymentController extends Controller
             'customerFirstName'   => $student->name ?? '',
             'customerLastName'    => $student->surname ?? '',
             'customerEmail'       => $student->email ?? '',
-            'customerPhone'       => $student->phone ?? '',
+            'customerPhone'       => $student->parent_phone ?? '',
             'orderId'             => (string) $transaction->id,
             'customerId'          => (string) $studentId,
             'orderDescription'    => $project->name . ' — ' . now()->translatedFormat('F Y'),

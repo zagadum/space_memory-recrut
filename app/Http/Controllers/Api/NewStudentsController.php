@@ -165,40 +165,54 @@ class NewStudentsController extends Controller
 
     public function register(RegisterStudentRequest $request)
     {
-        $validated = $request->validated();
-        $code      = str_pad((string)random_int(0, 999999), 6, '0', STR_PAD_LEFT);
-
-        $data = [
-            'email'             => $validated['email'],
-            'password'          => bcrypt($validated['password']),
-            'status'            => 'registered',
-            'name'              => $validated['name']             ?? '',
-            'surname'           => $validated['surname']          ?? '',
-            'lastname'          => $validated['lastname']         ?? '',
-            'parent_name'       => $validated['parent_name']      ?? '',
-            'parent_surname'    => $validated['parent_surname']   ?? '',
-            'parent_phone'      => $validated['parent_phone']     ?? '',
-            'parent_passport'   => $validated['parent_passport']  ?? '',
-            'dob'               => $validated['dob']              ?? null,
-            'country'           => $validated['country']          ?? '',
-            'city'              => $validated['city']             ?? '',
-            'address'           => $validated['address']          ?? '',
-            'zip'               => $validated['zip']              ?? '',
-            'apartment'         => $validated['apartment']        ?? '',
-            'photo_consent'     => $validated['photo_consent']    ?? 0,
-            'terms_accepted'    => $validated['terms_accepted']   ?? 0,
-            'privacy_accepted'  => $validated['privacy_accepted'] ?? 0,
-            'reg_comment'       => $validated['reg_comment']      ?? '',
-            'verification_code' => $code,
-            'enabled'           => 0,
-            'blocked'           => 0,
-            'deleted'           => 0,
-            'created_at'        => now(),
-            'updated_at'        => now(),
-        ];
-
         try {
-            $id = DB::table('recruting_student')->insertGetId($data);
+            $data = $request->all();
+            
+            // Map empty strings to null for consistent DB storage and validation
+            foreach ($data as $key => $value) {
+                if ($value === '') {
+                    $data[$key] = null;
+                }
+            }
+
+            $validated = $request->validated();
+            
+            $code      = str_pad((string)random_int(0, 999999), 6, '0', STR_PAD_LEFT);
+
+            $dataToInsert = [
+                'email'                        => $validated['email'],
+                'password'                     => bcrypt($validated['password']),
+                'status'                       => 'registered',
+                'name'                         => $validated['name']             ?? '',
+                'surname'                      => $validated['surname']          ?? '',
+                'lastname'                     => $validated['lastname']         ?? '',
+                'parent_name'                  => $validated['parent_name']      ?? '',
+                'parent_surname'               => $validated['parent_surname']   ?? '',
+                'parent_phone'                 => $validated['parent_phone']     ?? '',
+                'parent_passport'              => $validated['parent_passport']  ?? '',
+                'dob'                          => $validated['dob'] && $validated['dob'] !== '' ? $validated['dob'] : null,
+                'country'                      => $validated['country']          ?? '',
+                'city'                         => $validated['city']             ?? '',
+                'address'                      => $validated['address']          ?? '',
+                'zip'                          => $validated['zip']              ?? '',
+                'apartment'                    => $validated['apartment']        ?? '',
+                'photo_consent'                => $validated['photo_consent']    ?? 0,
+                'terms_accepted'               => $validated['terms_accepted']   ?? 0,
+                'privacy_accepted'             => $validated['privacy_accepted'] ?? 0,
+                'data_processing_accepted'     => $validated['data_processing'] ?? 0,
+                'urgent_start_accepted'        => $validated['urgent_start'] ?? 0,
+                'recording_consent_accepted'   => $validated['recording_consent'] ?? 0,
+                'marketing_consent_accepted'   => $validated['marketing_consent'] ?? 0,
+                'reg_comment'                  => $validated['reg_comment']      ?? '',
+                'verification_code'            => $code,
+                'enabled'                      => 0,
+                'blocked'                      => 0,
+                'deleted'                      => 0,
+                'created_at'                   => now(),
+                'updated_at'                   => now(),
+            ];
+
+            $id = DB::table('recruting_student')->insertGetId($dataToInsert);
 
             Log::info("Student registered: {$validated['email']}, ID: {$id}");
 
@@ -210,15 +224,22 @@ class NewStudentsController extends Controller
                 changedBy: 'System'
             ));
 
-            return response()->json(['success' => true, 'message' => 'Регистрация успешна'], 201);
+            return response()->json(['success' => true, 'message' => __('api.registration_success')], 201);
 
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            Log::error("Validation error for registration: ", $e->errors());
+            return response()->json([
+                'success' => false,
+                'message' => __('api.validation_error'),
+                'errors'  => $e->errors()
+            ], 422);
         } catch (\Exception $e) {
-            Log::error("Registration error for {$validated['email']}: " . $e->getMessage());
+            Log::error("Registration error for {$request->email}: " . $e->getMessage());
             Log::error($e->getTraceAsString());
 
             return response()->json([
                 'success' => false,
-                'message' => 'Ошибка при регистрации: ' . $e->getMessage(),
+                'message' => __('Registration error: :message', ['message' => $e->getMessage()]),
             ], 500);
         }
     }

@@ -63,7 +63,7 @@ final class InvoiceGeneratorService
                 issueDate: (string) $document->issue_date,
                 saleDate: (string) $document->sale_date,
                 buyerName: trim($student->lastname . ' ' . $student->surname),
-                buyerAddress: $student->locality ?? 'Warszawa', // Fallback if missing
+                buyerAddress: $student->city ?? 'Warszawa', // Fallback if missing
                 buyerNip: null,
                 items: $items,
                 currency: $document->currency

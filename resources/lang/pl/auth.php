@@ -12,12 +12,12 @@
 */
 
 return [
-    'failed'   => 'Podane dane uwierzytelniające nie pasują do naszych danych.',
-    'deleted_account'   => 'Twoje konto zostało usunięte.',
-    'disable_account'   => 'Twoje konto nie jest aktywne.',
-    'blocked_account'   => 'Konto tymczasowo zablokowane Brak płatności za nowy miesiąc. Kontakt: +48 573 569 807',
+    'failed'   => 'Nieprawidłowy e-mail lub hasło. Spróbuj ponownie.',
+    'deleted_account'   => 'To konto zostało usunięte.',
+    'disable_account'   => 'Twoje konto nie jest jeszcze aktywne. Sprawdź e-mail, aby je aktywować.',
+    'blocked_account'   => 'Konto zostało tymczasowo zablokowane z powodu braku płatności.',
 
-    'password' => 'Podano nieprawidłowe hasło.',
+    'password' => 'Podane hasło jest nieprawidłowe.',
     'throttle' => 'Zbyt wiele prób logowania. Spróbuj ponownie za :seconds sekund.',
     'other_device'=>'Logowanie z innego urządzenia.',
 

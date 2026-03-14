@@ -195,6 +195,8 @@ body.father-portal {
     transition: border-color 0.2s; box-sizing: border-box;
 }
 .father-input:focus { border-color: #4f6ef7; outline: none; box-shadow: 0 0 0 3px rgba(79,110,247,0.1); }
+.father-input--invalid { border-color: #ef4444 !important; }
+.father-input--invalid:focus { box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1); }
 .father-error { color: #ef4444; font-size: 13px; margin-top: 6px; }
 .father-btn--primary {
     background: #4f6ef7; color: #fff; border: none; padding: 14px;

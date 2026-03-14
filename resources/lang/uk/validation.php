@@ -1,19 +1,8 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Validation Language Lines
-|--------------------------------------------------------------------------
-|
-| The following language lines contain the default error messages used by
-| the validator class. Some of these rules have multiple versions such
-| as the size rules. Feel free to tweak each of these messages here.
-|
-*/
-
 return [
-    'accepted'             => 'Ви повинні прийняти :attribute.',
-    'active_url'           => 'Поле :attribute не є правильним URL.',
+    'accepted'             => 'Щоб продовжити, будь ласка, прийміть :attribute.',
+    'active_url'           => 'Будь ласка, введіть коректну адресу сайту (URL).',
     'after'                => 'Поле :attribute має містити дату не раніше :date.',
     'after_or_equal'       => 'Поле :attribute має містити дату не раніше, або дорівнюватися :date.',
     'alpha'                => 'Поле :attribute має містити лише літери.',
@@ -30,7 +19,7 @@ return [
         'string'  => 'Текст у полі :attribute має бути не менше :min та не більше :max символів.',
     ],
     'boolean'              => 'Поле :attribute повинне містити логічний тип.',
-    'confirmed'            => 'Поле :attribute не збігається з підтвердженням.',
+    'confirmed'            => 'Значення не збігаються. Будь ласка, перевірте ще раз.',
     'date'                 => 'Поле :attribute не є датою.',
     'date_equals'          => 'Поле :attribute має бути датою рівною :date.',
     'date_format'          => 'Поле :attribute не відповідає формату :format.',
@@ -39,11 +28,11 @@ return [
     'digits_between'       => 'Довжина цифрового поля :attribute повинна бути від :min до :max.',
     'dimensions'           => 'Поле :attribute містить неприпустимі розміри зображення.',
     'distinct'             => 'Поле :attribute містить значення, яке дублюється.',
-    'email'                => 'Поле :attribute повинне містити коректну електронну адресу.',
+    'email'                => 'Будь ласка, введіть коректну адресу електронної пошти.',
     'ends_with'            => 'Поле :attribute має закінчуватися одним з наступних значень: :values',
     'exists'               => 'Вибране для :attribute значення не коректне.',
     'file'                 => 'Поле :attribute має містити файл.',
-    'filled'               => 'Поле :attribute є обов\'язковим для заповнення.',
+    'filled'               => 'Поле :attribute є обов'язковим для заповнення.',
     'gt'                   => [
         'array'   => 'Поле :attribute має містити більше ніж :value елементів.',
         'file'    => 'Поле :attribute має бути більше ніж :value кілобайт.',
@@ -80,7 +69,7 @@ return [
         'array'   => 'Поле :attribute повинне містити не більше :max елементів.',
         'file'    => 'Файл в полі :attribute має бути не більше :max кілобайт.',
         'numeric' => 'Поле :attribute має бути не більше :max.',
-        'string'  => 'Текст в полі :attribute повинен мати довжину не більшу за :max.',
+        'string'  => 'Будь ласка, введіть не більше :max символів.',
     ],
     'mimes'                => 'Поле :attribute повинне містити файл одного з типів: :values.',
     'mimetypes'            => 'Поле :attribute повинне містити файл одного з типів: :values.',
@@ -88,7 +77,7 @@ return [
         'array'   => 'Поле :attribute повинне містити не менше :min елементів.',
         'file'    => 'Розмір файлу у полі :attribute має бути не меншим :min кілобайт.',
         'numeric' => 'Поле :attribute повинне бути не менше :min.',
-        'string'  => 'Текст у полі :attribute повинен містити не менше :min символів.',
+        'string'  => 'Будь ласка, введіть принаймні :min символів.',
     ],
     'multiple_of'          => 'Поле :attribute повинно містити декілька :value',
     'not_in'               => 'Вибране для :attribute значення не коректне.',
@@ -100,14 +89,14 @@ return [
     'prohibited_if'        => 'Поле :attribute заборонено, коли :other дорівнює :value.',
     'prohibited_unless'    => 'Поле :attribute заборонено, якщо тільки :other не знаходиться в :values.',
     'regex'                => 'Поле :attribute має хибний формат.',
-    'relatable'            => 'Цей :attribute може бути не пов\'язаний з цим ресурсом.',
-    'required'             => 'Поле :attribute є обов\'язковим для заповнення.',
-    'required_if'          => 'Поле :attribute є обов\'язковим для заповнення, коли :other є рівним :value.',
-    'required_unless'      => 'Поле :attribute є обов\'язковим для заповнення, коли :other відрізняється від :values',
-    'required_with'        => 'Поле :attribute є обов\'язковим для заповнення, коли :values вказано.',
-    'required_with_all'    => 'Поле :attribute є обов\'язковим для заповнення, коли :values вказано.',
-    'required_without'     => 'Поле :attribute є обов\'язковим для заповнення, коли :values не вказано.',
-    'required_without_all' => 'Поле :attribute є обов\'язковим для заповнення, коли :values не вказано.',
+    'relatable'            => 'Цей :attribute може бути не пов'язаний з цим ресурсом.',
+    'required'             => 'Поле :attribute є обов'язковим.',
+    'required_if'          => 'Поле :attribute є обов'язковим для заповнення, коли :other є рівним :value.',
+    'required_unless'      => 'Поле :attribute є обов'язковим для заповнення, коли :other відрізняється від :values',
+    'required_with'        => 'Поле :attribute є обов'язковим для заповнення, коли :values вказано.',
+    'required_with_all'    => 'Поле :attribute є обов'язковим для заповнення, коли :values вказано.',
+    'required_without'     => 'Поле :attribute є обов'язковим для заповнення, коли :values не вказано.',
+    'required_without_all' => 'Поле :attribute є обов'язковим для заповнення, коли :values не вказано.',
     'same'                 => 'Поля :attribute та :other мають збігатися.',
     'size'                 => [
         'array'   => 'Поле :attribute повинне містити :size елементів.',
@@ -118,14 +107,13 @@ return [
     'starts_with'          => 'Поле :attribute повинне починатися з одного з наступних значень: :values',
     'string'               => 'Поле :attribute повинне містити текст.',
     'timezone'             => 'Поле :attribute повинне містити коректну часову зону.',
-    'unique'               => 'Вказане значення поля :attribute вже існує.',
+    'unique'               => 'Обліковий запис із цим :attribute вже існує.',
     'uploaded'             => 'Завантаження :attribute не вдалося.',
     'url'                  => 'Формат поля :attribute хибний.',
     'uuid'                 => 'Поле :attribute має бути коректним UUID ідентифікатором.',
     'custom'               => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
-
+        'email' => [
+            'unique' => 'Обліковий запис з цією електронною адресою вже існує. Будь ласка, увійдіть або відновіть пароль.',
         ],
     ],
     'attributes'           => [
@@ -140,7 +128,7 @@ return [
         'description'           => 'Опис',
         'email'                 => 'E-mail адреса',
         'excerpt'               => 'Уривок',
-        'first_name'            => 'Ім\'я',
+        'first_name'            => 'Ім'я',
         'gender'                => 'Стать',
         'hour'                  => 'Година',
         'last_name'             => 'Прізвище',
@@ -158,6 +146,16 @@ return [
         'title'                 => 'Назва',
         'username'              => 'Нікнейм',
         'year'                  => 'Рік',
-        'name'                  =>'Ім`я'
+        'name'                  => 'Ім'я дитини',
+        'surname'               => 'Прізвище дитини',
+        'dob'                   => 'Дата народження',
+        'parent_name'           => 'Ім'я батьків',
+        'parent_surname'        => 'Прізвище батьків',
+        'parent_phone'          => 'Номер телефону',
+        'parent_passport'       => 'Паспорт/ID',
+        'zip'                   => 'Поштовий індекс',
+        'data_processing'       => 'Обробка даних',
+        'terms_accepted'        => 'Регламент',
+        'privacy_accepted'      => 'Політика конфіденційності',
     ],
 ];

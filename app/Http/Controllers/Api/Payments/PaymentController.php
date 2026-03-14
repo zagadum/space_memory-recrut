@@ -101,22 +101,22 @@ class PaymentController extends Controller
             'email' => $student->email ?? '',
             'birthDate' => $dob ? $dob->format('Y-m-d') : '',
             'age' => $dob ? now()->diffInYears($dob) : 0,
-            'phone' => $student->phone ?? '',
-            'parentName' => trim(($student->parent1_surname ?? '') . ' ' . ($student->parent1_lastname ?? '')),
-            'parentFirstName' => $student->parent1_lastname ?? '',
-            'parentLastName' => $student->parent1_surname ?? '',
-            'parentPhone' => $student->parent1_phone ?? '',
-            'country' => $student->parent1_phone_country ?? 'PL',
-            'city' => '',
-            'street' => '',
-            'apartment' => '',
-            'postalCode' => '',
+            'phone' => $student->parent_phone ?? '',
+            'parentName' => trim(($student->parent_surname ?? '') . ' ' . ($student->parent_name ?? '')),
+            'parentFirstName' => $student->parent_name ?? '',
+            'parentLastName' => $student->parent_surname ?? '',
+            'parentPhone' => $student->parent_phone ?? '',
+            'country' => $student->country ?? 'PL',
+            'city' => $student->city ?? '',
+            'street' => $student->address ?? '',
+            'apartment' => $student->apartment ?? '',
+            'postalCode' => $student->zip ?? '',
             'parentRole' => 'родитель',
-            'parentPassport' => '',
+            'parentPassport' => $student->parent_passport ?? '',
             'status' => $student->blocked ? 'inactive' : 'active',
             'statusColor' => $student->blocked ? 'gray' : 'green',
-            'photoConsent' => false,
-            'regComment' => '',
+            'photoConsent' => (bool) ($student->photo_consent ?? false),
+            'regComment' => $student->reg_comment ?? '',
             'totalBalance' => [
                 'value' => number_format($student->balance ?? 0, 2, '.', ''),
                 'label' => ($student->balance ?? 0) >= 0 ? 'active' : 'debt',
@@ -274,7 +274,7 @@ class PaymentController extends Controller
 
         // Тариф
         if ($student->sum_aboniment) {
-            $currency = $student->parent1_phone_country === 'UA' ? 'грн/мес' : 'zł/мес';
+            $currency = $student->country === 'UA' ? 'грн/мес' : 'zł/мес';
             $parts[] = $student->sum_aboniment . ' ' . $currency;
         }
 

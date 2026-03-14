@@ -205,6 +205,22 @@
             box-shadow: 0 0 15px rgba(65, 225, 232, 0.2);
         }
 
+        .input-field.is-invalid {
+            border-color: var(--error-color) !important;
+            box-shadow: 0 0 10px rgba(255, 75, 75, 0.2) !important;
+        }
+
+        .phone-wrapper.is-invalid {
+            border-color: var(--error-color) !important;
+            box-shadow: 0 0 10px rgba(255, 75, 75, 0.2) !important;
+        }
+
+        /* Checkbox error */
+        input[type="checkbox"].is-invalid {
+            outline: 2px solid var(--error-color) !important;
+            outline-offset: 2px;
+        }
+
         /* Чекбоксы */
         .checkbox-group {
             display: flex;
@@ -576,6 +592,10 @@
         <div class="glass-card">
             <h2 class="form-title" id="formTitle">Rejestracja Space Memory</h2>
             <div class="promo-text" id="promoText">-</div>
+
+            <!-- Error Message Block -->
+            <div id="error-block" style="display: none; background: rgba(255, 75, 75, 0.1); border: 1px solid #ff4b4b; color: #ff4b4b; padding: 15px; border-radius: 12px; margin-bottom: 20px; font-size: 14px; text-align: center;">
+            </div>
 
             <form id="regForm">
                 <!-- СЕКЦИЯ: АККАУНТ -->
@@ -1106,6 +1126,7 @@
                 recording_consent: document.getElementById('checkRecord').checked ? 1 : 0,
                 marketing_consent: document.getElementById('checkMarketing').checked ? 1 : 0,
                 reg_comment: document.getElementById('comment').value,
+                locale: document.querySelector('.lang-btn.active').dataset.lang,
             };
 
             try {
@@ -1118,11 +1139,64 @@
                     body: JSON.stringify(payload)
                 });
                 const data = await response.json();
+                
+                const errorBlock = document.getElementById('error-block');
+                errorBlock.style.display = 'none';
+                errorBlock.textContent = '';
+
+                // Clear previous validation styles
+                document.querySelectorAll('.input-field, .phone-wrapper').forEach(el => el.classList.remove('is-invalid'));
+
                 if (data.success) {
                     localStorage.setItem('student_email', payload.email);
                     window.location.href = '/verify';
                 } else {
-                    alert(data.message || 'Ошибка регистрации');
+                    let errorMsg = '';
+                    if (data.errors) {
+                        const fieldMapping = {
+                            'email': 'email',
+                            'password': 'password',
+                            'password_confirmation': 'passwordRep',
+                            'parent_name': 'pName',
+                            'parent_surname': 'pSurname',
+                            'parent_phone': 'phone',
+                            'parent_passport': 'passport',
+                            'name': 'cName',
+                            'surname': 'cSurname',
+                            'dob': 'cDob',
+                            'country': 'country',
+                            'city': 'city',
+                            'address': 'address',
+                            'zip': 'zip',
+                            'terms_accepted': 'checkTermsPriv',
+                            'data_processing': 'checkDataProcess'
+                        };
+
+                        for (const key in data.errors) {
+                            errorMsg += data.errors[key].join('\n') + '\n';
+                            
+                            const fieldId = fieldMapping[key];
+                            if (fieldId) {
+                                const input = document.getElementById(fieldId);
+                                if (input) {
+                                    input.classList.add('is-invalid');
+                                    // Special case for phone wrapper
+                                    if (key === 'parent_phone') {
+                                        const wrapper = input.closest('.phone-wrapper');
+                                        if (wrapper) wrapper.classList.add('is-invalid');
+                                    }
+                                }
+                            }
+                        }
+                    } else {
+                        errorMsg = data.message || 'Ошибка регистрации';
+                    }
+                    
+                    // Show error in block and scroll
+                    errorBlock.textContent = errorMsg;
+                    errorBlock.style.display = 'block';
+                    errorBlock.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
                     btn.disabled = false;
                     btn.textContent = document.querySelector('.lang-btn.active').dataset.lang === 'en' ? 'REGISTER NOW' :
                         document.querySelector('.lang-btn.active').dataset.lang === 'pl' ? 'ZAREJESTRUJ SIĘ' :
@@ -1130,8 +1204,13 @@
                                 'ЗАРЕГИСТРИРОВАТЬСЯ';
                 }
             } catch (err) {
-                alert('Ошибка соединения с сервером');
+                console.error(err);
+                const errorBlock = document.getElementById('error-block');
+                errorBlock.textContent = 'Ошибка соединения с сервером';
+                errorBlock.style.display = 'block';
+                
                 btn.disabled = false;
+
                 btn.textContent = document.querySelector('.lang-btn.active').dataset.lang === 'en' ? 'REGISTER NOW' :
                     document.querySelector('.lang-btn.active').dataset.lang === 'pl' ? 'ZAREJESTRUJ SIĘ' :
                         document.querySelector('.lang-btn.active').dataset.lang === 'ua' ? 'ЗАРЕЄСТРУВАТИСЯ' :

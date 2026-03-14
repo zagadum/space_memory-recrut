@@ -104,7 +104,7 @@ return [
             'member_task_enter' => 'Enter the appropriate number on the right',
             'congrats_you' => 'Great! You did it!',
             'congrats_you2' => ' Congratulations!',
-            'error_reply' => 'Incorrect! Try again!',
+            'error_reply' => 'Incorrect. Please try again.',
             'memory_ans' => 'Memorize correct answer',
             'you_know' => 'Now you know the answer!',
         ],
@@ -126,7 +126,7 @@ return [
     'words' => [
         'practice' => [
             'name' => 'Practice',
-            'result' => 'It is not enough',
+            'result' => 'The score is a bit too low. Please try again.',
             'congrats_you' => 'Congratulations! You did it!',
             'congrats_you2' => 'Congratulations!',
             'error_reply' => 'Incorrect, try again!',
@@ -460,7 +460,7 @@ return [
 
     'abacus' => [
         'abacus_help' => 'Expression',
-        'error_reply' => 'Whoops, not this time!',
+        'error_reply' => 'Whoops! Please try again.',
         'you_know' => 'Now you know the answer!',
         'result' => 'Awesome! You did it!',
         'practice' => [

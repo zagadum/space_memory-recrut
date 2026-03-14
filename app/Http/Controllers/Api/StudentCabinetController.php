@@ -28,7 +28,7 @@ class StudentCabinetController extends Controller
         if (!$student) {
             return response()->json([
                 'success' => false,
-                'message' => 'Неверный код или email'
+                'message' => __('api.invalid_code_or_email')
             ], 422);
         }
 
@@ -52,7 +52,7 @@ class StudentCabinetController extends Controller
         return response()->json([
             'success'   => true,
             'api_token' => $apiToken,
-            'message'   => 'Почта успешно подтверждена'
+            'message'   => __('api.email_successfully_verified')
         ]);
     }
 
@@ -69,7 +69,7 @@ class StudentCabinetController extends Controller
         if (!$student) {
             return response()->json([
                 'success' => false,
-                'message' => 'Студент не найден'
+                'message' => __('api.student_not_found')
             ], 404);
         }
 
@@ -86,7 +86,7 @@ class StudentCabinetController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Новый код отправлен'
+            'message' => __('api.new_code_sent')
         ]);
     }
 

@@ -14,7 +14,7 @@ class FatherDocumentController extends Controller
         
         $documents = GlsInvoiceDocument::where('student_id', $student->id)->get();
         
-        return view('student.father.documents', compact('student', 'documents'));
+        return view('father.documents', compact('student', 'documents'));
     }
 
     public function show(Request $request, int $document)
@@ -33,7 +33,7 @@ class FatherDocumentController extends Controller
             'subscription_amount' => $document->amount_gross,
         ];
         
-        return view('student.father.document_view', compact(
+        return view('father.document_view', compact(
             'student', 'document', 'parent', 'contract'
         ));
     }

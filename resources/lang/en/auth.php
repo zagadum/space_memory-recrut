@@ -13,13 +13,13 @@
     */
 
 return [
-    'failed'   => 'The credentials provided do not match our records.',
-    'password' => 'Incorrect password entered.',
-    'throttle' => 'Too many login attempts. Please try again after :seconds seconds.',
+    'failed'   => 'Invalid email or password. Please try again.',
+    'password' => 'The provided password is incorrect.',
+    'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
 
     'deleted_account'   => 'Your account has been deleted.',
-    'disable_account'   => 'Your account is not active.',
-    'blocked_account'   => 'Temporary Account Hold. Payment for this month hasn’t been received yet.',
+    'disable_account'   => 'Your account is not active yet. Please check your email to activate it.',
+    'blocked_account'   => 'The account has been temporarily blocked due to lack of payment.',
     'session_expired'   => 'Your session has expired, please log in again.',
      'other_device'=>'Sign in from another device.',
 

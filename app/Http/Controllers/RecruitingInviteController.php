@@ -35,7 +35,7 @@ class RecruitingInviteController extends Controller
 
         // If already converted, redirect to login or dashboard
         if ($import->isConverted()) {
-            return redirect('/father/document');
+            return redirect('/father/documents');
         }
 
         // Redirect to public registration completion page

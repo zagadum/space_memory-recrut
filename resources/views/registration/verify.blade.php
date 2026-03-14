@@ -348,6 +348,99 @@
     </footer>
 
     <script>
+        const translations = {
+            en: {
+                title: "Enter Code",
+                message: "We sent a 6-digit confirmation code to your email.",
+                emailLabel: "Email Address",
+                confirm: "Confirm",
+                resend: "Resend code",
+                wait: "Resend in ",
+                sec: "s",
+                error: "Invalid code. Try again.",
+                emailError: "Please provide a valid email",
+                codeError: "Enter 6-digit code",
+                successTitle: "Success!",
+                successMsg: "Your email is verified. Welcome to Space Memory!",
+                startBtn: "Start working"
+            },
+            pl: {
+                title: "Wprowadź kod",
+                message: "Wysłaliśmy 6-cyfrowy kod potwierdzający na Twój e-mail.",
+                emailLabel: "Adres email",
+                confirm: "Potwierdź",
+                resend: "Wyślij kod ponownie",
+                wait: "Wyślij ponownie za ",
+                sec: "s",
+                error: "Nieprawidłowy kod. Spróbuj ponownie.",
+                emailError: "Proszę podać poprawny adres email",
+                codeError: "Wprowadź 6-cyfrowy kod",
+                successTitle: "Sukces!",
+                successMsg: "Twój e-mail został zweryfikowany. Witamy w Space Memory!",
+                startBtn: "Rozpocznij pracę"
+            },
+            ua: {
+                title: "Введіть код",
+                message: "Ми надіслали 6-значний код підтвердження на вашу електронну пошту.",
+                emailLabel: "Електронна пошта",
+                confirm: "Підтвердити",
+                resend: "Надіслати код ще раз",
+                wait: "Надіслати ще раз через ",
+                sec: "с",
+                error: "Невірний код. Спробуйте ще раз.",
+                emailError: "Будь ласка, введіть коректну електронну пошту",
+                codeError: "Введіть 6-значний код",
+                successTitle: "Успішно!",
+                successMsg: "Вашу пошту підтверджено. Ласкаво просимо до Space Memory!",
+                startBtn: "Почати роботу"
+            },
+            ru: {
+                title: "Введите код",
+                message: "Мы отправили 6-значный код подтверждения на ваш имейл.",
+                emailLabel: "Электронная почта",
+                confirm: "Подтвердить",
+                resend: "Отправить код еще раз",
+                wait: "Отправить заново через ",
+                sec: "с",
+                error: "Неверный код. Попробуйте еще раз.",
+                emailError: "Пожалуйста, введите корректный имейл",
+                codeError: "Введите 6-значный код",
+                successTitle: "Успешно!",
+                successMsg: "Ваша почта подтверждена. Добро пожаловать в Space Memory!",
+                startBtn: "Начать работу"
+            }
+        };
+
+        let currentLang = 'pl'; // Default or from URL
+
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentLang = btn.dataset.lang;
+                applyTranslations(currentLang);
+            });
+        });
+
+        function applyTranslations(lang) {
+            const t = translations[lang];
+            document.getElementById('title').textContent = t.title;
+            document.getElementById('message').textContent = t.message;
+            document.getElementById('confirmBtn').textContent = t.confirm;
+            document.getElementById('resendBtn').textContent = t.resend;
+            document.getElementById('title').textContent = t.title;
+            document.querySelector('.father-label').textContent = t.emailLabel;
+        }
+
+        // Auto-detect lang if needed
+        const urlLang = new URLSearchParams(window.location.search).get('lang');
+        if (urlLang && translations[urlLang]) {
+            currentLang = urlLang;
+            document.querySelectorAll('.lang-btn').forEach(b => {
+                b.classList.toggle('active', b.dataset.lang === currentLang);
+            });
+            applyTranslations(currentLang);
+        }
         const inputs = document.querySelectorAll('.code-digit');
         const confirmBtn = document.getElementById('confirmBtn');
         const errorMsg = document.getElementById('error');
@@ -430,7 +523,8 @@
                     },
                     body: JSON.stringify({
                         email: email,
-                        code: code
+                        code: code,
+                        locale: currentLang
                     })
                 });
                 const data = await response.json();
@@ -504,7 +598,10 @@
                         'Accept': 'application/json',
                         'X-CSRF-TOKEN': '{{ csrf_token() }}'
                     },
-                    body: JSON.stringify({ email: email })
+                    body: JSON.stringify({ 
+                        email: email,
+                        locale: currentLang
+                    })
                 });
                 const data = await response.json();
                 if (data.success) {

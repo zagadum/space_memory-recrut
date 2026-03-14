@@ -14,12 +14,12 @@ class LocaleService
     /**
      * Supported locales in database format
      */
-    public const SUPPORTED_LOCALES = ['uk', 'pl', 'en'];
+    public const SUPPORTED_LOCALES = ['uk', 'pl', 'en', 'ru'];
 
     /**
      * Supported locales in display format
      */
-    public const DISPLAY_LOCALES = ['UA', 'PL', 'EN'];
+    public const DISPLAY_LOCALES = ['UA', 'PL', 'EN', 'RU'];
 
     /**
      * Mapping for display to database format
@@ -28,6 +28,7 @@ class LocaleService
         'UA' => 'uk',
         'PL' => 'pl',
         'EN' => 'en',
+        'RU' => 'ru',
     ];
 
     /**
@@ -37,6 +38,7 @@ class LocaleService
         'uk' => 'UA',
         'pl' => 'PL',
         'en' => 'EN',
+        'ru' => 'RU',
     ];
 
     /**
