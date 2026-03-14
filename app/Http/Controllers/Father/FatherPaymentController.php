@@ -75,7 +75,7 @@ class FatherPaymentController extends Controller
             'customerFirstName'   => $student->name ?? '',
             'customerLastName'    => $student->surname ?? '',
             'customerEmail'       => $student->email ?? '',
-            'customerPhone'       => $student->phone ?? '',
+            'customerPhone'       => $student->parent_phone ?? '',
             'orderId'             => (string) $transaction->id,
             'customerId'          => (string) $student->id,
             'orderDescription'    => $project->name . ' — ' . $validated['months'] . ' msc',

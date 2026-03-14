@@ -167,7 +167,7 @@ class MassMailDryRunTest extends TestCase
         $student = DB::table('recruting_student')->where('email', 'complete@test.pl')->first();
         $this->assertNotNull($student);
         $this->assertEquals('John', $student->name);
-        $this->assertEquals('Warsaw', $student->locality);
+        $this->assertEquals('Warsaw', $student->city);
         $this->assertEquals(173, $student->country_id);
         
         // Final state
