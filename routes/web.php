@@ -64,7 +64,8 @@ Route::middleware(['web'])->group(static function () {
                 Route::post('/admin/login', 'LoginController@login')->middleware('throttle:5,1');
                 ; //see app\Http\Traits\AdminAuth\AuthenticatesUsers.php
                 Route::any('/admin/logout', 'LoginController@logout')->name('logoutAdmin');
-                Route::any('/logout', 'LoginController@logout')->name('logoutAny');}
+                Route::any('/logout', 'LoginController@logout')->name('logoutAny');
+            }
             );
         });
 
@@ -88,50 +89,53 @@ Route::middleware(['is_student'])->group(static function () {
 });
 
 
-Route::get('/verify', [StudentCabinetController::class , 'showVerifyPage']);
+Route::get('/verify', [StudentCabinetController::class , 'showVerifyPage'])->name('verification.show');
+Route::post('/recruitment/verify-code', [StudentCabinetController::class, 'verifyCode'])->name('verification.verify');
+Route::post('/recruitment/resend-code', [StudentCabinetController::class, 'resendCode'])->name('verification.resend');
 Route::get('/cabinet', [StudentCabinetController::class , 'showCabinetPage']);
 // Recruiting
-Route::get('/register/invite/{token}', [\App\Http\Controllers\RecruitingInviteController::class, 'accept'])->name('recruiting.invite');
-Route::get('/register/complete/{token}', [\App\Http\Controllers\RegistrationCompletionController::class, 'index'])->name('registration.complete');
-Route::post('/register/complete/{token}', [\App\Http\Controllers\RegistrationCompletionController::class, 'store'])->name('registration.complete.store');
+Route::get('/register/invite/{token}', [\App\Http\Controllers\RecruitingInviteController::class , 'accept'])->name('recruiting.invite');
+Route::get('/register/complete/{token}', [\App\Http\Controllers\RegistrationCompletionController::class , 'index'])->name('registration.complete');
+Route::post('/register/complete/{token}', [\App\Http\Controllers\RegistrationCompletionController::class , 'store'])->name('registration.complete.store');
 
 /*
-|--------------------------------------------------------------------------
-| Father Portal (Кабинет Родителя)
-|--------------------------------------------------------------------------
-*/
-Route::get('/father/login', [\App\Http\Controllers\Father\AuthController::class, 'showLogin'])
+ |--------------------------------------------------------------------------
+ | Father Portal (Кабинет Родителя)
+ |--------------------------------------------------------------------------
+ */
+Route::get('/father/login', [\App\Http\Controllers\Father\AuthController::class , 'showLogin'])
     ->name('father.login');
-Route::post('/father/login', [\App\Http\Controllers\Father\AuthController::class, 'login'])
+Route::post('/father/login', [\App\Http\Controllers\Father\AuthController::class , 'login'])
     ->name('father.login.submit');
-Route::post('/father/logout', [\App\Http\Controllers\Father\AuthController::class, 'logout'])
+Route::post('/father/logout', [\App\Http\Controllers\Father\AuthController::class , 'logout'])
     ->name('father.logout');
 
-Route::prefix('father')->middleware('is_auth')->group(function () {
-    // Documents
-    Route::get('/document', [\App\Http\Controllers\Father\DocumentController::class, 'index'])
-        ->name('father.document');
-    Route::get('/document-sign', [\App\Http\Controllers\Father\DocumentController::class, 'sign'])
-        ->name('father.document-sign');
+Route::prefix('father')
+    ->middleware('is_student')
+    ->group(function () {
+        Route::get('/parent-portal', [\App\Http\Controllers\Father\FatherPortalController::class, 'index'])
+            ->name('father.portal');
 
-    // Payments
-    Route::get('/payment', [\App\Http\Controllers\Father\PaymentController::class, 'index'])
-        ->name('father.payment');
-    Route::get('/payment-process', [\App\Http\Controllers\Father\PaymentController::class, 'process'])
-        ->name('father.payment-process');
-    Route::get('/payment-success', [\App\Http\Controllers\Father\PaymentController::class, 'success'])
-        ->name('father.payment-success');
-    Route::get('/payment-fail', [\App\Http\Controllers\Father\PaymentController::class, 'fail'])
-        ->name('father.payment-fail');
-    Route::post('/father/payment/create-order', [\App\Http\Controllers\Father\PaymentController::class, 'createOrder'])
-        ->name('father.payment.create-order');
-    Route::get('/payment/download-invoice/{id}', [\App\Http\Controllers\Father\PaymentController::class, 'downloadInvoice'])
-        ->name('father.download-invoice');
+        Route::get('/documents', [\App\Http\Controllers\Father\FatherDocumentController::class, 'index'])
+            ->name('father.documents');
+        Route::get('/document-view/{document}', [\App\Http\Controllers\Father\FatherDocumentController::class, 'show'])
+            ->name('father.document.view');
+        Route::post('/documents/sign', [\App\Http\Controllers\Father\FatherDocumentController::class, 'sign'])
+            ->name('father.documents.sign');
 
-    // Learn
-    Route::get('/learn', [\App\Http\Controllers\Father\LearnController::class, 'index'])
-        ->name('father.learn');
-});
+        Route::get('/payment', [\App\Http\Controllers\Father\FatherPaymentController::class, 'index'])
+            ->name('father.payment');
+        Route::post('/payment/create', [\App\Http\Controllers\Father\FatherPaymentController::class, 'create'])
+            ->name('father.payment.create');
+        Route::get('/payment-success', [\App\Http\Controllers\Father\FatherPaymentController::class, 'success'])
+            ->name('father.payment.success');
+
+        // Legacy / Common
+        Route::get('/payment/download-invoice/{id}', [\App\Http\Controllers\Father\PaymentController::class, 'downloadInvoice'])
+            ->name('father.download-invoice');
+        Route::get('/learn', [\App\Http\Controllers\Father\LearnController::class, 'index'])
+            ->name('father.learn');
+    });
 
 Route::get('/legal/terms', fn() => view('legal.terms'))->name('legal.terms');
 Route::get('/legal/privacy', fn() => view('legal.privacy'))->name('legal.privacy');

@@ -38,7 +38,7 @@ class ImojeController extends Controller
 
     //--- Успешная оплата
     public function paySuccess(){
-        return view('payments.imoje.success');
+        return redirect()->route('father.payment.success');
     }
 
     //--- Не успешная оплата

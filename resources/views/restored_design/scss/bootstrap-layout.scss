@@ -1,0 +1,706 @@
+/* Bootstrap Layout Styles for Student Section */
+
+html,
+body {
+    min-height: 100%;
+    background-color: #04151D;
+}
+
+/* Desktop Sidebar */
+.sidebar-desktop {
+    width: 273px;
+    max-width: 273px;
+    min-width: 273px;
+    height: 100vh;
+    position: sticky;
+    top: 0;
+    overflow-y: auto;
+    flex-shrink: 0;
+    padding: 27px 33px 52px;
+    background: linear-gradient(0deg, #04151D 0%, #193C4D 100%);
+    border-top-right-radius: 24px;
+    border-bottom-right-radius: 24px;
+    box-shadow: 1px -1px 1px 0px #657E8A;
+    z-index: 5;
+}
+
+/* Main Content */
+main.col {
+    z-index: 1;
+}
+
+/* Logo Box */
+.logo-box {
+    & .img {
+        max-width: 100%;
+        height: auto;
+    }
+}
+
+/* Navigation Links */
+.nav-link.btn {
+    color: #ffffff;
+    border-radius: 16px;
+    transition: all 0.3s ease;
+    border: 0;
+    padding: 15px 12px 15px 22px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 15px;
+    line-height: 1;
+    letter-spacing: 0;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.nav-link.btn:hover {
+    background: rgba(23, 56, 73, 1);
+    color: #FFFFFF;
+    border-color: unset;
+}
+
+.nav-link.btn.active {
+    background: linear-gradient(0deg, #1F4258 0%, #24566F 100%);
+    box-shadow: -3px 0px 0px 0px #26F9FF;
+    color: #FFFFFF;
+    border-color: unset;
+    font-weight: 600;
+}
+
+/* Navigation Icons */
+.nav-icon {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    background-color: rgba(255, 255, 255, 0.6);
+    transition: background-color 0.3s ease;
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    mask-position: center;
+    -webkit-mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+
+    &.icon-home {
+        mask-image: $icon-home;
+        -webkit-mask-image: $icon-home;
+    }
+
+    &.icon-homework {
+        mask-image: $icon-homework;
+        -webkit-mask-image: $icon-homework;
+    }
+
+    &.icon-training {
+        mask-image: $icon-training;
+        -webkit-mask-image: $icon-training;
+    }
+
+    &.icon-olympiad {
+        mask-image: $icon-olympiad;
+        -webkit-mask-image: $icon-olympiad;
+    }
+
+    &.icon-parent {
+        mask-image: $icon-parent;
+        -webkit-mask-image: $icon-parent;
+    }
+
+    &.icon-exit {
+        mask-image: $icon-exit;
+        -webkit-mask-image: $icon-exit;
+    }
+}
+
+.nav-link.btn:hover .nav-icon {
+    background-color: #FFFFFF;
+}
+
+.nav-link.btn.active .nav-icon {
+    background-color: #F2F2F2;
+}
+
+/* My Space CTA Button */
+.btn-primary.btn-block {
+    margin-top: 4rem;
+    background: linear-gradient(180deg, #26F9FF 0%, #179599 100%);
+    border: 3px solid #1DBDC2;
+    border-radius: 40px;
+    padding: 12px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 16px;
+    letter-spacing: 0;
+    text-align: center;
+    color: #F2F2F2;
+    transition: all 0.3s ease;
+
+    &:hover {
+        background: linear-gradient(0deg, #26F9FF 0%, #179599 100%);
+        border: 3px solid #1DBDC2;
+        color: #F2F2F2;
+    }
+
+    &:active,
+    &:focus {
+        background: #19A0A3 !important;
+        border: 3px solid #1DBDC2 !important;
+        color: #F2F2F2 !important;
+        box-shadow: none;
+    }
+}
+
+/* Rocket icon in My Space button - hidden by default (full sidebar) */
+.sidebar-myspace-icon {
+    display: none;
+}
+
+/* Mobile Menu Toggle Icon */
+.menu-toggle-btn {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: transparent;
+
+    &:focus {
+        box-shadow: none;
+        outline: none;
+    }
+}
+
+.menu-icon {
+    width: 24px;
+    height: 16px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.menu-line {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: #FFF9E0;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+/* Active state - transform to X */
+.menu-toggle-btn.active {
+    .menu-line:first-child {
+        transform: translateY(8.5px) rotate(45deg);
+    }
+
+    .menu-line:last-child {
+        transform: translateY(-8.5px) rotate(-45deg);
+    }
+}
+
+/* Mobile Menu Close Icon */
+.menu-close-btn {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: transparent;
+
+    &:focus {
+        box-shadow: none;
+        outline: none;
+    }
+}
+
+.close-icon {
+    width: 28px;
+    height: 28px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.close-line {
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: #FFF9E0;
+    border-radius: 2px;
+
+    &:first-child {
+        transform: rotate(45deg);
+    }
+
+    &:last-child {
+        transform: rotate(-45deg);
+    }
+}
+
+
+/* Content Area */
+.content-area {
+    overflow-y: auto;
+}
+
+/* Mobile Menu Overlay */
+#mobile-menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2000;
+    background-color: #04151D;
+    overflow-y: auto;
+
+    >.d-flex {
+        background: #04151D;
+    }
+
+    .nav {
+        padding-top: 48px;
+        padding-left: 49px !important;
+        padding-right: 49px !important;
+
+        + .px-4 {
+            padding-left: 49px !important;
+            padding-right: 49px !important;
+
+            .nav-link {
+                justify-content: center;
+            }
+        }
+    }
+}
+
+/* Bottom Menu CTA Circle */
+.cta-circle {
+    width: 64px;
+    height: 64px;
+    gap: 13px;
+    border-radius: 32px;
+    background: linear-gradient(180deg, #26F9FF 0%, #179599 100%);
+    border: 4px solid #1DBDC2
+}
+
+/* Ensure content doesn't get hidden behind fixed bottom navbar on mobile */
+@media (max-width: 991.98px) {
+    body {
+        padding-bottom: 112px;
+    }
+}
+
+/* Prevent body scroll when mobile menu is open */
+body.overflow-hidden {
+    overflow: hidden;
+}
+
+/* ============================================
+   Collapsed Sidebar for non-dashboard pages
+   On /student → full sidebar (default)
+   On /student/* → collapsed, expand on hover
+   ============================================ */
+@media (min-width: 992px) {
+    body:not(.page-student):not(.no-sidebar) {
+        /* Offset main content for fixed collapsed sidebar */
+        .container-fluid > .row > main.col {
+            margin-left: 169px;
+        }
+
+        .sidebar-desktop {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 169px;
+            min-width: 169px;
+            max-width: 169px;
+            padding: 27px 52px 52px;
+            z-index: 10;
+            transition: width 0.3s ease, min-width 0.3s ease, max-width 0.3s ease, padding 0.3s ease;
+            overflow: hidden;
+
+            /* --- All text spans: hidden via opacity+max-width (animatable) --- */
+            .nav-link.btn span,
+            .sidebar-myspace-btn span,
+            .mt-4 .nav-link span {
+                display: inline-block;
+                opacity: 0;
+                max-width: 0;
+                overflow: hidden;
+                white-space: nowrap;
+                vertical-align: middle;
+                transition: opacity 0.15s ease, max-width 0.25s ease;
+            }
+
+            /* Logo - centered, compact */
+            .logo-area {
+                width: 100%;
+                text-align: center;
+                margin-bottom: 1.5rem !important;
+
+                .logo-box a {
+                    display: inline-block;
+
+                    img {
+                        width: 65px;
+                        transition: width 0.3s ease;
+                    }
+                }
+            }
+
+            /* Nav container */
+            nav.nav {
+                width: 100%;
+                align-items: center;
+            }
+
+            /* Nav links - icons only, centered */
+            .nav-link.btn {
+                justify-content: center;
+                padding: 16px !important;
+                gap: 0 !important;
+                max-width: 64px;
+                margin-left: auto;
+                margin-right: auto;
+                overflow: hidden;
+                white-space: nowrap;
+                transition: max-width 0.3s ease, padding 0.3s ease, margin 0.3s ease, gap 0.3s ease;
+            }
+
+            /* Games/MySpace button → circle with rocket */
+            .sidebar-myspace-btn {
+                --round: 0.75rem;
+                width: 64px !important;
+                max-width: 64px;
+                height: 64px;
+                padding: 5px !important;
+                border-radius: 50% !important;
+                margin-left: auto !important;
+                margin-right: auto !important;
+                margin-top: 40px !important;
+                background: radial-gradient(
+                    65.28% 65.28% at 50% 100%,
+                    rgba(255, 165, 0, 0.8) 0%,
+                    rgba(255, 165, 0, 0) 100%
+                  ),
+                  linear-gradient(0deg, #F5BE30, #FF6B35) !important;
+                border: none !important;
+                overflow: hidden;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                position: relative;
+                transition: width 0.3s ease, max-width 0.3s ease, height 0.3s ease,
+                            padding 0.3s ease, border-radius 0.3s ease, margin 0.3s ease;
+
+                &::before,
+                &::after {
+                  content: "";
+                  position: absolute;
+                  inset: var(--space);
+                  transition: all 0.5s ease-in-out;
+                  border-radius: calc(var(--round) - var(--space));
+                  z-index: 0;
+                }
+
+                &::before {
+                  --space: 1px;
+                  background: linear-gradient(
+                    177.95deg,
+                    rgba(255, 255, 255, 0.19) 0%,
+                    rgba(255, 255, 255, 0) 100%
+                  );
+                }
+
+                &::after {
+                  --space: 2px;
+                  background: radial-gradient(
+                      65.28% 65.28% at 50% 100%,
+                      rgba(255, 165, 0, 0.8) 0%,
+                      rgba(255, 165, 0, 0) 100%
+                    ),
+                    linear-gradient(0deg, #F5BE30, #FF6B35);
+                }
+
+                .fold {
+                  z-index: 1;
+                  position: absolute;
+                  top: 0;
+                  right: 0;
+                  height: 1rem;
+                  width: 1rem;
+                  display: inline-block;
+                  transition: all 0.5s ease-in-out;
+                  background: radial-gradient(
+                    100% 75% at 55%,
+                    rgba(255, 165, 0, 0.9) 0%,
+                    rgba(255, 165, 0, 0) 100%
+                  );
+                  box-shadow: 0 0 3px black;
+                  border-bottom-left-radius: 0.5rem;
+                  border-top-right-radius: 0.75rem;
+
+                  &::after {
+                    content: "";
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    width: 150%;
+                    height: 150%;
+                    transform: rotate(45deg) translateX(0%) translateY(-18px);
+                    background-color: #e8e8e8;
+                    pointer-events: none;
+                  }
+                }
+
+                &:hover .fold {
+                  margin-top: -1rem;
+                  margin-right: -1rem;
+                }
+
+                .points_wrapper {
+                  overflow: hidden;
+                  width: 100%;
+                  height: 100%;
+                  pointer-events: none;
+                  position: absolute;
+                  z-index: 1;
+
+                  .point {
+                    bottom: -10px;
+                    position: absolute;
+                    animation: floating-points infinite ease-in-out;
+                    pointer-events: none;
+                    width: 2px;
+                    height: 2px;
+                    background-color: #fff;
+                    border-radius: 9999px;
+                  }
+                }
+
+                .inner {
+                  z-index: 2;
+                  gap: 6px;
+                  position: relative;
+                  width: 100%;
+                  color: white;
+                  display: inline-flex;
+                  align-items: center;
+                  justify-content: center;
+                  font-size: 16px;
+                  font-weight: 500;
+                  line-height: 1.5;
+                  transition: color 0.2s ease-in-out;
+
+                  svg.icon {
+                    width: 18px;
+                    height: 18px;
+                    transition: fill 0.1s linear;
+                  }
+                }
+
+                &:focus svg.icon {
+                  fill: white;
+                }
+
+                &:hover svg.icon {
+                  fill: transparent;
+                  animation:
+                    dasharray 1s linear forwards,
+                    filled 0.1s linear forwards 0.95s;
+                }
+
+                &:active {
+                  transform: scale(0.95);
+                }
+
+                .sidebar-myspace-icon {
+                    display: block;
+                    width: 36px;
+                    height: 36px;
+                    object-fit: contain;
+                    flex-shrink: 0;
+                    transition: opacity 0.2s ease;
+                }
+            }
+
+            /* Logout section - icon only, centered */
+            .mt-4 {
+                width: 100%;
+
+                .nav-link {
+                    justify-content: center;
+                    max-width: 64px;
+                    margin-left: auto;
+                    margin-right: auto;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    transition: max-width 0.3s ease, margin 0.3s ease;
+                }
+            }
+
+            /* ---- Hover: expand sidebar overlay ---- */
+            &:hover {
+                width: 273px;
+                min-width: 273px;
+                max-width: 273px;
+                padding: 27px 33px 52px;
+                overflow-y: auto;
+
+                .logo-area {
+                    margin-bottom: 3rem !important;
+
+                    .logo-box a img {
+                        width: 100%;
+                    }
+                }
+
+                /* Show all text spans */
+                .nav-link.btn span,
+                .sidebar-myspace-btn span,
+                .mt-4 .nav-link span {
+                    opacity: 1;
+                    max-width: 200px;
+                }
+
+                nav.nav {
+                    align-items: stretch;
+                }
+
+                .nav-link.btn {
+                    justify-content: flex-start;
+                    padding: 15px 12px 15px 22px !important;
+                    gap: 16px !important;
+                    max-width: 100%;
+                    margin-left: 0;
+                    margin-right: 0;
+                }
+
+                .sidebar-myspace-btn {
+                    width: 100% !important;
+                    max-width: 100%;
+                    height: auto;
+                    padding: 12px !important;
+                    border-radius: 40px !important;
+                    margin-left: 0 !important;
+                    margin-right: 0 !important;
+                    margin-top: 4rem !important;
+                    background: linear-gradient(180deg, #26F9FF 0%, #179599 100%);
+                    border: 3px solid #1DBDC2;
+
+                    .sidebar-myspace-icon {
+                        display: none;
+                    }
+                }
+
+                .mt-4 .nav-link {
+                    justify-content: flex-start;
+                    padding: 15px 12px 15px 22px !important;
+                    gap: 16px !important;
+                    max-width: 100%;
+                    margin-left: 0;
+                    margin-right: 0;
+                }
+            }
+        }
+    }
+}
+
+// Keyframes for MySpace button animations
+@keyframes floating-points {
+  0% {
+    transform: translateY(0);
+  }
+  85% {
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(-55px);
+    opacity: 0;
+  }
+}
+
+@keyframes dasharray {
+  from {
+    stroke-dasharray: 0 0 0 0;
+  }
+  to {
+    stroke-dasharray: 68 68 0 0;
+  }
+}
+
+@keyframes filled {
+  to {
+    fill: white;
+  }
+}
+
+// Individual particle animations
+body:not(.page-student):not(.no-sidebar) .sidebar-desktop .points_wrapper {
+  .point:nth-child(1) {
+    left: 10%;
+    opacity: 1;
+    animation-duration: 2.35s;
+    animation-delay: 0.2s;
+  }
+  .point:nth-child(2) {
+    left: 30%;
+    opacity: 0.7;
+    animation-duration: 2.5s;
+    animation-delay: 0.5s;
+  }
+  .point:nth-child(3) {
+    left: 25%;
+    opacity: 0.8;
+    animation-duration: 2.2s;
+    animation-delay: 0.1s;
+  }
+  .point:nth-child(4) {
+    left: 44%;
+    opacity: 0.6;
+    animation-duration: 2.05s;
+  }
+  .point:nth-child(5) {
+    left: 50%;
+    opacity: 1;
+    animation-duration: 1.9s;
+  }
+  .point:nth-child(6) {
+    left: 75%;
+    opacity: 0.5;
+    animation-duration: 1.5s;
+    animation-delay: 1.5s;
+  }
+  .point:nth-child(7) {
+    left: 88%;
+    opacity: 0.9;
+    animation-duration: 2.2s;
+    animation-delay: 0.2s;
+  }
+  .point:nth-child(8) {
+    left: 58%;
+    opacity: 0.8;
+    animation-duration: 2.25s;
+    animation-delay: 0.2s;
+  }
+  .point:nth-child(9) {
+    left: 98%;
+    opacity: 0.6;
+    animation-duration: 2.6s;
+    animation-delay: 0.1s;
+  }
+  .point:nth-child(10) {
+    left: 65%;
+    opacity: 1;
+    animation-duration: 2.5s;
+    animation-delay: 0.2s;
+  }
+}

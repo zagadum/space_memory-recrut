@@ -34,7 +34,7 @@
             <span>{{ trans('student.main_menu.olympiad') }}</span>
         </a>
 
-        <a class="nav-link btn btn-outline-primary mb-3 {{ Request::is('test-parent-portal*') || Request::is('student*') ? 'active' : '' }}" href="{{ url('/test-parent-portal') }}">
+        <a class="nav-link btn btn-outline-primary mb-3 {{ Request::is('father*') || Request::is('student*') ? 'active' : '' }}" href="{{ route('father.portal') }}">
            <div class="nav-icon icon-parent"></div>
             <span>Strefa rodzica</span>
         </a>

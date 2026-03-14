@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="pl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Space Memory - Регистрация</title>
+    <title>Space Memory - Rejestracja</title>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -71,7 +72,10 @@
             transition: all 0.3s ease;
         }
 
-        .lang-btn:hover { color: var(--primary-accent); }
+        .lang-btn:hover {
+            color: var(--primary-accent);
+        }
+
         .lang-btn.active {
             color: #050f14;
             background: var(--primary-accent);
@@ -83,7 +87,8 @@
             position: relative;
             z-index: 10;
             width: 100%;
-            max-width: 650px; /* Шире для формы регистрации */
+            max-width: 650px;
+            /* Шире для формы регистрации */
             padding: 20px;
             display: flex;
             flex-direction: column;
@@ -100,9 +105,17 @@
         }
 
         @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
         }
 
         .glass-card {
@@ -114,7 +127,7 @@
             border-radius: 30px;
             padding: 40px 30px 30px;
             position: relative;
-            box-shadow: 0 25px 60px rgba(0,0,0,0.6);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
         }
 
         h2.form-title {
@@ -125,7 +138,7 @@
             font-size: 22px;
             text-shadow: 0 0 10px rgba(65, 225, 232, 0.3);
         }
-        
+
         .promo-text {
             text-align: center;
             color: var(--secondary-accent);
@@ -137,26 +150,29 @@
 
         .form-section {
             margin-bottom: 20px;
-            border-top: 1px solid rgba(255,255,255,0.1);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
             padding-top: 15px;
         }
 
         .section-label {
             font-size: 12px;
-            color: rgba(255,255,255,0.5);
+            color: rgba(255, 255, 255, 0.5);
             text-transform: uppercase;
             margin-bottom: 10px;
             letter-spacing: 1px;
             font-weight: bold;
         }
 
-        .form-group { margin-bottom: 15px; position: relative; }
+        .form-group {
+            margin-bottom: 15px;
+            position: relative;
+        }
 
         .form-row {
             display: flex;
             gap: 15px;
         }
-        
+
         .form-row .form-group {
             flex: 1;
         }
@@ -172,13 +188,13 @@
             outline: none;
             transition: all 0.3s ease;
         }
-        
+
         /* Стили для даты */
         input[type="date"]::-webkit-calendar-picker-indicator {
             filter: invert(1);
             cursor: pointer;
         }
-        
+
         textarea.input-field {
             resize: vertical;
             min-height: 80px;
@@ -196,7 +212,7 @@
             gap: 10px;
             margin-bottom: 10px;
             font-size: 13px;
-            color: rgba(255,255,255,0.8);
+            color: rgba(255, 255, 255, 0.8);
         }
 
         .checkbox-group input[type="checkbox"] {
@@ -243,8 +259,10 @@
             font-size: 14px;
             font-weight: 600;
         }
-        
-        .login-link:hover { text-decoration: underline; }
+
+        .login-link:hover {
+            text-decoration: underline;
+        }
 
         /* Футер */
         .site-footer {
@@ -278,105 +296,367 @@
             text-transform: uppercase;
             transition: color 0.3s;
         }
-        
-        .footer-links a:hover { color: var(--primary-accent); }
+
+        .footer-links a:hover {
+            color: var(--primary-accent);
+        }
 
         @media (max-width: 600px) {
-            .form-row { flex-direction: column; gap: 0; }
-            .logo { width: 100px; }
-            .main-container { padding-top: 80px; }
-            .glass-card { padding: 30px 20px; }
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+
+            .logo {
+                width: 100px;
+            }
+
+            .main-container {
+                padding-top: 80px;
+            }
+
+            .glass-card {
+                padding: 30px 20px;
+            }
+        }
+
+        /* Звёздочка обязательного поля */
+        .required-star {
+            color: #ff4b4b;
+            margin-left: 3px;
+            font-size: 14px;
+            line-height: 1;
+        }
+
+        /* Ссылка-триггер модалки */
+        .doc-link {
+            color: var(--primary-accent);
+            text-decoration: underline;
+            text-decoration-style: dotted;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0;
+            font-size: inherit;
+            font-family: inherit;
+            transition: color 0.2s, text-shadow 0.2s;
+        }
+
+        .doc-link:hover {
+            color: #fff;
+            text-shadow: 0 0 8px rgba(65, 225, 232, 0.5);
+        }
+
+        /* Оверлей */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(6px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        /* Окно */
+        .modal-window {
+            background: #0c1f2c;
+            border: 1px solid rgba(65, 225, 232, 0.3);
+            border-radius: 20px;
+            width: 100%;
+            max-width: 580px;
+            max-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.8), 0 0 40px rgba(65, 225, 232, 0.06);
+            animation: modalIn 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        @keyframes modalIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(0.97);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 24px 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+            flex-shrink: 0;
+        }
+
+        .modal-title {
+            font-family: 'Nunito', sans-serif;
+            font-size: 15px;
+            font-weight: 800;
+            color: var(--primary-accent);
+            letter-spacing: 0.3px;
+        }
+
+        .modal-close {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+            width: 30px;
+            height: 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            line-height: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.12);
+            color: #fff;
+        }
+
+        .modal-body {
+            padding: 20px 24px 24px;
+            overflow-y: auto;
+            font-size: 13px;
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.72);
+        }
+
+        .modal-body h3 {
+            color: var(--primary-accent);
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 18px 0 8px;
+        }
+
+        .modal-body h3:first-child {
+            margin-top: 0;
+        }
+
+        .modal-body p {
+            margin-bottom: 10px;
+        }
+
+        .modal-body ul {
+            padding-left: 18px;
+            margin-bottom: 10px;
+        }
+
+        .modal-body ul li {
+            margin-bottom: 4px;
+        }
+
+        .modal-body::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .modal-body::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .modal-body::-webkit-scrollbar-thumb {
+            background: rgba(65, 225, 232, 0.25);
+            border-radius: 10px;
+        }
+
+        /* ─── PHONE PREFIX WRAPPER ───────────────────── */
+        .phone-wrapper {
+            display: flex;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-bottom: 1px solid rgba(65, 225, 232, 0.15);
+            overflow: hidden;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .phone-wrapper:focus-within {
+            border-color: rgba(65, 225, 232, 0.3);
+            border-bottom-color: var(--primary-accent);
+            box-shadow: 0 4px 20px rgba(65, 225, 232, 0.08);
+        }
+
+        .dial-select {
+            background: rgba(0, 0, 0, 0.7);
+            border: none;
+            border-right: 1px solid rgba(255, 255, 255, 0.07);
+            color: #fff;
+            font-size: 13px;
+            font-family: 'Nunito', sans-serif;
+            padding: 12px 8px 12px 12px;
+            outline: none;
+            cursor: pointer;
+            flex-shrink: 0;
+            appearance: none;
+            -webkit-appearance: none;
+            width: 100px;
+            letter-spacing: 0.3px;
+        }
+
+        .dial-select option {
+            background: #0c1e2c;
+            color: #dff0f5;
+        }
+
+        .phone-input-field {
+            flex: 1;
+            padding: 12px 14px;
+            background: rgba(0, 0, 0, 0.55);
+            border: none;
+            color: #fff;
+            font-size: 14px;
+            font-family: 'Nunito', sans-serif;
+            outline: none;
+            min-width: 0;
+        }
+
+        .phone-input-field::placeholder {
+            color: rgba(255, 255, 255, 0.25);
+            font-size: 13px;
+        }
+
+        /* ─── STYLED SELECT ──────────────────────────── */
+        select.input-field {
+            appearance: none;
+            -webkit-appearance: none;
+            cursor: pointer;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='7' viewBox='0 0 11 7'%3E%3Cpath d='M1 1l4.5 4.5L10 1' stroke='rgba(65,225,232,0.45)' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+            padding-right: 36px;
+        }
+
+        select.input-field option {
+            background: #0c1e2c;
+            color: #dff0f5;
+        }
+
+        select.input-field:disabled {
+            opacity: 0.38;
+            cursor: not-allowed;
+        }
+
+        select.input-field option[value=""] {
+            color: rgba(223, 240, 245, 0.35);
         }
     </style>
 </head>
+
 <body>
 
     <canvas id="starfield"></canvas>
 
     <div class="lang-switcher">
         <button class="lang-btn" data-lang="en">EN</button>
-        <button class="lang-btn" data-lang="pl">PL</button>
+        <button class="lang-btn active" data-lang="pl">PL</button>
         <button class="lang-btn" data-lang="ua">UA</button>
-        <button class="lang-btn active" data-lang="ru">RU</button>
+        <button class="lang-btn" data-lang="ru">RU</button>
     </div>
 
     <div class="main-container">
-        <img src="http://indigomental-sklep.pl/wp-content/uploads/2026/02/logo_space-memory.png" alt="Logo" class="logo">
+        <img src="http://indigomental-sklep.pl/wp-content/uploads/2026/02/logo_space-memory.png" alt="Logo"
+            class="logo">
 
         <div class="glass-card">
-            <h2 class="form-title" id="formTitle">Регистрация Space Memory</h2>
-            <div class="promo-text" id="promoText">Скидка 5% на групповые занятия!</div>
-            
+            <h2 class="form-title" id="formTitle">Rejestracja Space Memory</h2>
+            <div class="promo-text" id="promoText">-</div>
+
             <form id="regForm">
                 <!-- СЕКЦИЯ: АККАУНТ -->
-                <div class="section-label" id="secAccount">Аккаунт</div>
+                <div class="section-label" id="secAccount">Konto</div>
                 <div class="form-group">
-                    <input type="email" id="email" class="input-field" placeholder="Email (для входа)">
+                    <input type="email" id="email" class="input-field" placeholder="Email (do logowania)">
                 </div>
                 <div class="form-row">
                     <div class="form-group">
-                        <input type="password" id="password" class="input-field" placeholder="Пароль (Space2026)">
+                        <input type="password" id="password" class="input-field" placeholder="Hasło (np. Space2026)">
                     </div>
                     <div class="form-group">
-                        <input type="password" id="passwordRep" class="input-field" placeholder="Повтори пароль">
+                        <input type="password" id="passwordRep" class="input-field" placeholder="Powtórz hasło">
                     </div>
                 </div>
 
                 <!-- СЕКЦИЯ: РОДИТЕЛЬ -->
                 <div class="form-section">
-                    <div class="section-label" id="secParent">Родитель</div>
+                    <div class="section-label" id="secParent">Rodzic / Opiekun</div>
                     <div class="form-row">
                         <div class="form-group">
-                            <input type="text" id="pName" class="input-field" placeholder="Имя">
+                            <input type="text" id="pName" class="input-field" placeholder="Imię (Rodzica)">
                         </div>
                         <div class="form-group">
-                            <input type="text" id="pSurname" class="input-field" placeholder="Фамилия">
+                            <input type="text" id="pSurname" class="input-field" placeholder="Nazwisko (Rodzica)">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group">
-                            <input type="tel" id="phone" class="input-field" placeholder="Номер телефона">
+                            <div class="phone-wrapper">
+                                <select id="dialCode" class="dial-select"></select>
+                                <input type="tel" id="phone" class="phone-input-field" placeholder="Numer telefonu">
+                            </div>
                         </div>
                         <div class="form-group">
-                            <input type="text" id="passport" class="input-field" placeholder="ID / Номер паспорта">
+                            <input type="text" id="passport" class="input-field" placeholder="PESEL / Numer dowodu">
                         </div>
                     </div>
                 </div>
 
                 <!-- СЕКЦИЯ: РЕБЕНОК -->
                 <div class="form-section">
-                    <div class="section-label" id="secChild">Ребёнок (Ученик)</div>
+                    <div class="section-label" id="secChild">Dziecko (Uczeń)</div>
                     <div class="form-row">
                         <div class="form-group">
-                            <input type="text" id="cName" class="input-field" placeholder="Имя ребёнка">
+                            <input type="text" id="cName" class="input-field" placeholder="Imię (Dziecka)">
                         </div>
                         <div class="form-group">
-                            <input type="text" id="cSurname" class="input-field" placeholder="Фамилия ребёнка">
+                            <input type="text" id="cSurname" class="input-field" placeholder="Nazwisko (Dziecka)">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label style="font-size:12px; color:rgba(255,255,255,0.5); display:block; margin-bottom:5px; padding-left:5px;" id="dobLabel">Дата рождения</label>
+                        <label
+                            style="font-size:12px; color:rgba(255,255,255,0.5); display:block; margin-bottom:5px; padding-left:5px;"
+                            id="dobLabel">Data urodzenia</label>
                         <input type="date" id="cDob" class="input-field">
                     </div>
                 </div>
 
                 <!-- СЕКЦИЯ: АДРЕС -->
                 <div class="form-section">
-                    <div class="section-label" id="secAddr">Адрес</div>
+                    <div class="section-label" id="secAddr">Adres zamieszkania</div>
                     <div class="form-row">
                         <div class="form-group">
-                            <input type="text" id="country" class="input-field" placeholder="Страна">
+                            <select id="country" class="input-field">
+                                <option value="">— Kraj —</option>
+                            </select>
                         </div>
                         <div class="form-group">
-                            <input type="text" id="city" class="input-field" placeholder="Город">
+                            <select id="city" class="input-field" disabled>
+                                <option value="">— najpierw wybierz kraj —</option>
+                            </select>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group" style="flex: 2;">
-                            <input type="text" id="address" class="input-field" placeholder="Улица и номер дома">
+                            <input type="text" id="address" class="input-field"
+                                placeholder="Ulica, numer domu/mieszkania">
                         </div>
                         <div class="form-group">
-                            <input type="text" id="zip" class="input-field" placeholder="Почтовый код">
+                            <input type="text" id="zip" class="input-field" placeholder="Kod pocztowy">
                         </div>
                     </div>
                 </div>
@@ -384,61 +664,86 @@
                 <!-- СОГЛАСИЯ -->
                 <div class="form-section">
                     <div class="checkbox-group">
-                        <input type="checkbox" id="checkTerms" required>
-                        <label for="checkTerms" id="lblTerms">Подтверждаю условия и правила</label>
+                        <input type="checkbox" id="checkTermsPriv" required checked>
+                        <label for="checkTermsPriv" id="lblTermsPriv">
+                            <span id="txtTerms1">Akceptuję </span><button type="button" class="doc-link"
+                                onclick="openModal('modalTerms')">Regulamin</button><span id="txtTerms2"> i
+                            </span><button type="button" class="doc-link" onclick="openModal('modalPriv')">Politykę
+                                Prywatności</button><span class="required-star">*</span>
+                        </label>
                     </div>
                     <div class="checkbox-group">
-                        <input type="checkbox" id="checkPriv" required>
-                        <label for="checkPriv" id="lblPriv">Согласен с Политикой приватности</label>
+                        <input type="checkbox" id="checkDataProcess" required checked>
+                        <label for="checkDataProcess">
+                            <span id="lblDataProcess">Zgadzam się na przetwarzanie danych w celu realizacji
+                                usług</span><span class="required-star">*</span>
+                        </label>
                     </div>
                     <div class="checkbox-group">
-                        <input type="checkbox" id="checkPhoto">
-                        <label for="checkPhoto" id="lblPhoto">Разрешаю фото и видео с занятий</label>
+                        <input type="checkbox" id="checkUrgent" required checked>
+                        <label for="checkUrgent">
+                            <span id="lblUrgent">Żądam rozpoczęcia usług przed upływem 14 dni</span><span
+                                class="required-star">*</span>
+                        </label>
+                    </div>
+                    <div class="checkbox-group" style="margin-top: 8px;">
+                        <input type="checkbox" id="checkImage" checked>
+                        <label for="checkImage">
+                            <span id="lblImage1">Zgadzam się na publikację wizerunku dziecka</span>
+                        </label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="checkRecord" checked>
+                        <label for="checkRecord">
+                            <span id="lblRecord">Zgadzam się na nagrywanie zajęć</span>
+                        </label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="checkMarketing" checked>
+                        <label for="checkMarketing">
+                            <span id="lblMarketing">Chcę otrzymywać informacje marketingowe e-mailem</span>
+                        </label>
                     </div>
                 </div>
 
                 <!-- КОММЕНТАРИЙ -->
                 <div class="form-group">
-                    <textarea id="comment" class="input-field" placeholder="Комментарий для учителя (интересы, на что обратить внимание)..."></textarea>
+                    <textarea id="comment" class="input-field"
+                        placeholder="Komentarz dla nauczyciela (zainteresowania)..."></textarea>
                 </div>
 
-                <button type="submit" class="submit-btn" id="regBtn">ЗАРЕГИСТРИРОВАТЬСЯ</button>
+                <button type="submit" class="submit-btn" id="regBtn">ZAREJESTRUJ SIĘ</button>
             </form>
-            
-            <a href="/admin/login" class="login-link" id="haveAccLink">Уже есть аккаунт? Войти</a>
+
+            <a href="/admin/login" class="login-link" id="haveAccLink">Masz już konto? Zaloguj się</a>
         </div>
     </div>
 
     <footer class="site-footer">
         <div class="footer-company" id="footerCompany">
-            SPACE MEMORY ASSOCIATION Sp. z o.o. | Adres: Al. Jerozolimskie 123A, 02-017, Warszawa, Polska.
-        </div>
-        <div class="footer-links" id="footerLinks">
-            <a href="#" data-key="link1">Niezbędnik Space Memory</a>
-            <a href="#" data-key="link2">Standardy Ochrony</a>
-            <a href="#" data-key="link4">Polityka prywatności</a>
-            <a href="#" data-key="link6">Regulamin</a>
+            Global Leaders Skills Sp. z o.o. | NIP: 5252970924 | Biuro obsługi klienta: Al. Jerozolimskie 123A, 02-017
+            Warszawa | Dane rejestrowe: ul. Kabacki Dukt 1, 02-798 Warszawa | KRS: 0001055763, REGON: 526267569
         </div>
     </footer>
 
     <script>
         // Тексты и переводы для всех полей
         const translations = {
-            ru: { 
+            ru: {
                 title: "Регистрация Space Memory",
                 promo: "Скидка 5% на групповые занятия!",
-                
+
                 secAccount: "Аккаунт",
                 email: "Email (для входа)",
                 pass: "Пароль (Space2026)",
                 passRep: "Повтори пароль",
-                
+
                 secParent: "Родитель",
                 pName: "Имя (Родителя)",
                 pSurname: "Фамилия (Родителя)",
                 phone: "Номер телефона",
                 passport: "Идентификационный номер / Паспорт",
-                
+
                 secChild: "Ребёнок (Ученик)",
                 cName: "Имя (Ребёнка)",
                 cSurname: "Фамилия (Ребёнка)",
@@ -447,35 +752,37 @@
                 secAddr: "Адрес проживания",
                 country: "Страна",
                 city: "Город",
-                address: "Улица и номер дома",
+                address: "Улица, номер дома/квартиры",
                 zip: "Почтовый код",
 
-                lblTerms: "Подтверждаю условия и правила",
-                lblPriv: "Согласен с Политикой приватности",
-                lblPhoto: "Разрешаю фото/видео с занятий",
-                
+                lblTermsPriv: "Принимаю| и ",
+                lblDataProcess: "Согласен на обработку данных для оказания услуг",
+                lblUrgent: "Требую начать услуги до истечения 14 дней",
+                lblImage: "Согласен на публикацию ",
+                lblRecord: "Согласен на запись занятий",
+                lblMarketing: "Хочу получать маркетинговые сообщения на email",
+
                 comment: "Комментарий для учителя (интересы, нюансы)...",
                 btn: "ЗАРЕГИСТРИРОВАТЬСЯ",
                 haveAcc: "Уже есть аккаунт? Войти",
-                
-                footerCompany: "SPACE MEMORY ASSOCIATION Sp. z o.o. | Адрес: Al. Jerozolimskie 123A, 02-017, Варшава, Польша.",
-                link1: "Инструментарий", link2: "Защита детей", link4: "Приватность", link6: "Регламент"
+
+                footerCompany: "Global Leaders Skills Sp. z o.o. | NIP: 5252970924 | Biuro obsługi klienta: Al. Jerozolimskie 123A, 02-017 Warszawa | Dane rejestrowe: ul. Kabacki Dukt 1, 02-798 Warszawa | KRS: 0001055763, REGON: 526267569"
             },
-            en: { 
+            en: {
                 title: "Space Memory Registration",
                 promo: "5% Discount for Group Classes!",
-                
+
                 secAccount: "Account Details",
                 email: "Email (for login)",
                 pass: "Password (e.g., Space2026)",
                 passRep: "Repeat Password",
-                
+
                 secParent: "Parent / Guardian",
                 pName: "First Name (Parent)",
                 pSurname: "Last Name (Parent)",
                 phone: "Phone Number",
                 passport: "ID Number / Passport",
-                
+
                 secChild: "Child (Student)",
                 cName: "Child's First Name",
                 cSurname: "Child's Last Name",
@@ -484,35 +791,37 @@
                 secAddr: "Address",
                 country: "Country",
                 city: "City",
-                address: "Street and House Number",
+                address: "Street, house/apartment number",
                 zip: "Zip Code",
 
-                lblTerms: "I accept the Terms & Conditions",
-                lblPriv: "I agree to the Privacy Policy",
-                lblPhoto: "I allow photo/video from classes",
-                
+                lblTermsPriv: "I accept the| and ",
+                lblDataProcess: "I consent to processing of data for service delivery",
+                lblUrgent: "I request services to begin before 14 days have passed",
+                lblImage: "I consent to publication of ",
+                lblRecord: "I consent to recording of classes",
+                lblMarketing: "I want to receive marketing emails",
+
                 comment: "Comment for the teacher (interests, notes)...",
                 btn: "REGISTER NOW",
                 haveAcc: "Already have an account? Login",
 
-                footerCompany: "SPACE MEMORY ASSOCIATION Sp. z o.o. | Address: Al. Jerozolimskie 123A, 02-017, Warsaw, Poland.",
-                link1: "Toolkit", link2: "Child Protection", link4: "Privacy", link6: "Terms"
+                footerCompany: "Global Leaders Skills Sp. z o.o. | NIP: 5252970924 | Customer service: Al. Jerozolimskie 123A, 02-017 Warsaw | Registered address: ul. Kabacki Dukt 1, 02-798 Warsaw | KRS: 0001055763, REGON: 526267569"
             },
-            pl: { 
+            pl: {
                 title: "Rejestracja Space Memory",
                 promo: "Zniżka 5% na zajęcia grupowe!",
-                
+
                 secAccount: "Konto",
                 email: "Email (do logowania)",
                 pass: "Hasło (np. Space2026)",
                 passRep: "Powtórz hasło",
-                
+
                 secParent: "Rodzic / Opiekun",
                 pName: "Imię (Rodzica)",
                 pSurname: "Nazwisko (Rodzica)",
                 phone: "Numer telefonu",
                 passport: "PESEL / Numer dowodu",
-                
+
                 secChild: "Dziecko (Uczeń)",
                 cName: "Imię (Dziecka)",
                 cSurname: "Nazwisko (Dziecka)",
@@ -521,35 +830,37 @@
                 secAddr: "Adres zamieszkania",
                 country: "Kraj",
                 city: "Miasto",
-                address: "Ulica i numer domu",
+                address: "Ulica, numer domu/mieszkania",
                 zip: "Kod pocztowy",
 
-                lblTerms: "Akceptuję regulamin",
-                lblPriv: "Zgadzam się z Polityką Prywatności",
-                lblPhoto: "Zezwalam na zdjęcia/wideo z zajęć",
-                
+                lblTermsPriv: "Akceptuję| i ",
+                lblDataProcess: "Zgadzam się na przetwarzanie danych w celu realizacji usług",
+                lblUrgent: "Żądam rozpoczęcia usług przed upływem 14 dni",
+                lblImage: "Zgadzam się na ",
+                lblRecord: "Zgadzam się na nagrywanie zajęć",
+                lblMarketing: "Chcę otrzymywać informacje marketingowe e-mailem",
+
                 comment: "Komentarz dla nauczyciela (zainteresowania)...",
                 btn: "ZAREJESTRUJ SIĘ",
                 haveAcc: "Masz już konto? Zaloguj się",
 
-                footerCompany: "SPACE MEMORY ASSOCIATION Sp. z o.o. | Adres: Al. Jerozolimskie 123A, 02-017, Warszawa, Polska.",
-                link1: "Niezbędnik", link2: "Standardy Ochrony", link4: "Polityka prywatności", link6: "Regulamin"
+                footerCompany: "Global Leaders Skills Sp. z o.o. | NIP: 5252970924 | Biuro obsługi klienta: Al. Jerozolimskie 123A, 02-017 Warszawa | Dane rejestrowe: ul. Kabacki Dukt 1, 02-798 Warszawa | KRS: 0001055763, REGON: 526267569"
             },
-            ua: { 
+            ua: {
                 title: "Реєстрація Space Memory",
                 promo: "Знижка 5% на групові заняття!",
-                
+
                 secAccount: "Акаунт",
                 email: "Email (для входу)",
                 pass: "Пароль (Space2026)",
                 passRep: "Повтори пароль",
-                
+
                 secParent: "Батьки",
                 pName: "Ім'я (Батьків)",
                 pSurname: "Прізвище (Батьків)",
                 phone: "Номер телефону",
                 passport: "Ідентифікаційний номер / Паспорт",
-                
+
                 secChild: "Дитина (Учень)",
                 cName: "Ім'я (Дитини)",
                 cSurname: "Прізвище (Дитини)",
@@ -558,26 +869,28 @@
                 secAddr: "Адреса",
                 country: "Країна",
                 city: "Місто",
-                address: "Вулиця та номер будинку",
+                address: "Вулиця, номер будинку/квартири",
                 zip: "Поштовий код",
 
-                lblTerms: "Підтверджую умови та правила",
-                lblPriv: "Згоден з Політикою приватності",
-                lblPhoto: "Дозволяю фото/відео із занять",
-                
+                lblTermsPriv: "Приймаю| і ",
+                lblDataProcess: "Згоден на обробку даних для надання послуг",
+                lblUrgent: "Вимагаю розпочати послуги до закінчення 14 днів",
+                lblImage: "Згоден на публікацію ",
+                lblRecord: "Згоден на запис занять",
+                lblMarketing: "Хочу отримувати маркетингові повідомлення на email",
+
                 comment: "Коментар для вчителя (інтереси, нюанси)...",
                 btn: "ЗАРЕЄСТРУВАТИСЯ",
                 haveAcc: "Вже є акаунт? Увійти",
 
-                footerCompany: "SPACE MEMORY ASSOCIATION Sp. z o.o. | Адреса: Al. Jerozolimskie 123A, 02-017, Варшава, Польща.",
-                link1: "Інструментарій", link2: "Захист дітей", link4: "Приватність", link6: "Регламент"
+                footerCompany: "Global Leaders Skills Sp. z o.o. | NIP: 5252970924 | Biuro obsługi klienta: Al. Jerozolimskie 123A, 02-017 Warszawa | Dane rejestrowe: ul. Kabacki Dukt 1, 02-798 Warszawa | KRS: 0001055763, REGON: 526267569"
             }
         };
 
         // --- ЛОГИКА АНИМАЦИИ (ЗВЕЗДЫ И ПЛАНЕТЫ) ---
         const canvas = document.getElementById('starfield');
         const ctx = canvas.getContext('2d');
-        let width, height, stars = [], planets = [];
+        let width, height, stars = [];
 
         function resize() {
             width = canvas.width = window.innerWidth;
@@ -605,85 +918,112 @@
             }
         }
 
-        class Planet {
-            constructor(radius, distance, speed, color, hasRings = false) {
-                this.radius = radius;
-                this.distance = distance;
-                this.speed = speed;
-                this.angle = Math.random() * Math.PI * 2;
-                this.color = color;
-                this.hasRings = hasRings;
-            }
-            update() { this.angle += this.speed; }
-            draw() {
-                const cx = width / 2;
-                const cy = height / 2;
-                
-                ctx.beginPath();
-                ctx.arc(cx, cy, this.distance, 0, Math.PI * 2);
-                ctx.strokeStyle = 'rgba(65, 225, 232, 0.08)';
-                ctx.lineWidth = 1;
-                ctx.stroke();
-
-                const x = cx + Math.cos(this.angle) * this.distance;
-                const y = cy + Math.sin(this.angle) * this.distance;
-
-                if (this.hasRings) {
-                    ctx.beginPath();
-                    ctx.ellipse(x, y, this.radius * 2.2, this.radius * 0.8, this.angle, 0, Math.PI * 2);
-                    ctx.strokeStyle = 'rgba(194, 158, 115, 0.4)';
-                    ctx.lineWidth = 2;
-                    ctx.stroke();
-                }
-
-                ctx.beginPath();
-                ctx.arc(x, y, this.radius, 0, Math.PI * 2);
-                ctx.fillStyle = this.color;
-                ctx.shadowBlur = 10;
-                ctx.shadowColor = this.color;
-                ctx.fill();
-                ctx.shadowBlur = 0;
-            }
-        }
-
         function initObjects() {
-            stars = []; planets = [];
+            stars = [];
             for (let i = 0; i < 300; i++) stars.push(new Star());
-            const baseDist = Math.min(width, height) * 0.15;
-            const distStep = 45;
-            planets.push(new Planet(6, baseDist, 0.008, '#2271B3')); // Earth
-            planets.push(new Planet(4.5, baseDist + distStep, 0.006, '#E27B58')); // Mars
-            planets.push(new Planet(14, baseDist + distStep * 2.5, 0.003, '#D39C7E')); // Jupiter
-            planets.push(new Planet(12, baseDist + distStep * 4.5, 0.002, '#C29E73', true)); // Saturn
         }
 
         function animate() {
-            const bgGrad = ctx.createRadialGradient(width/2, height/2, 0, width/2, height/2, width);
+            const bgGrad = ctx.createRadialGradient(width / 2, height / 2, 0, width / 2, height / 2, width);
             bgGrad.addColorStop(0, '#0f2a36');
             bgGrad.addColorStop(1, '#050f14');
             ctx.fillStyle = bgGrad;
             ctx.fillRect(0, 0, width, height);
-            
-            // Солнце
-            const cx = width / 2;
-            const cy = height / 2;
-            const sunGrad = ctx.createRadialGradient(cx, cy, 5, cx, cy, 50);
-            sunGrad.addColorStop(0, '#FFF5E1');
-            sunGrad.addColorStop(0.4, '#FFD200');
-            sunGrad.addColorStop(1, 'rgba(255, 100, 0, 0)');
-            ctx.fillStyle = sunGrad;
-            ctx.beginPath();
-            ctx.arc(cx, cy, 50, 0, Math.PI * 2);
-            ctx.fill();
 
             stars.forEach(s => { s.update(); s.draw(); });
-            planets.forEach(p => { p.update(); p.draw(); });
             requestAnimationFrame(animate);
         }
 
         window.addEventListener('resize', resize);
         resize();
         animate();
+
+        // ═══════════════════════════════════════════════════════════
+        // СТРАНЫ, ГОРОДА И КОД ТЕЛЕФОНА
+        // ═══════════════════════════════════════════════════════════
+        const COUNTRIES = [
+            { name: 'Polska', dial: '+48', flag: '🇵🇱', cities: ['Warszawa', 'Kraków', 'Wrocław', 'Poznań', 'Gdańsk', 'Szczecin', 'Łódź', 'Katowice', 'Lublin', 'Bydgoszcz', 'Białystok', 'Rzeszów', 'Toruń', 'Kielce', 'Radom', 'Gliwice', 'Olsztyn', 'Zabrze', 'Bielsko-Biała', 'Bytom'] },
+            { name: 'Ukraina', dial: '+380', flag: '🇺🇦', cities: ['Kijów', 'Lwów', 'Odessa', 'Charków', 'Dniepr', 'Zaporoże', 'Winnica', 'Iwano-Frankiwsk', 'Tarnopol', 'Czerniowce', 'Równe', 'Żytomierz', 'Połtawa', 'Cherson', 'Mikołajów', 'Sumy', 'Chmielnicki'] },
+            { name: 'Niemcy', dial: '+49', flag: '🇩🇪', cities: ['Berlin', 'Hamburg', 'Monachium', 'Kolonia', 'Frankfurt', 'Stuttgart', 'Düsseldorf', 'Dortmund', 'Leipzig', 'Norymberga', 'Bremen', 'Dresden', 'Hanower', 'Duisburg', 'Bochum'] },
+            { name: 'Wielka Brytania', dial: '+44', flag: '🇬🇧', cities: ['Londyn', 'Manchester', 'Birmingham', 'Glasgow', 'Leeds', 'Liverpool', 'Bristol', 'Edinburgh', 'Sheffield', 'Belfast', 'Leicester', 'Coventry', 'Bradford'] },
+            { name: 'Białoruś', dial: '+375', flag: '🇧🇾', cities: ['Mińsk', 'Grodno', 'Brześć', 'Witebsk', 'Mohylew', 'Bobrujsk', 'Baranowicze', 'Pińsk', 'Orsha', 'Mozyr'] },
+            { name: 'Czechy', dial: '+420', flag: '🇨🇿', cities: ['Praga', 'Brno', 'Ostrawa', 'Pilzno', 'Liberec', 'Ołomuniec', 'Hradec Králové', 'České Budějovice', 'Pardubice'] },
+            { name: 'Litwa', dial: '+370', flag: '🇱🇹', cities: ['Wilno', 'Kowno', 'Kłajpeda', 'Szawle', 'Poniewież', 'Alytus', 'Mariampol'] },
+            { name: 'Łotwa', dial: '+371', flag: '🇱🇻', cities: ['Ryga', 'Daugavpils', 'Lipawa', 'Jełgawa', 'Jūrmała', 'Ventspils', 'Rēzekne'] },
+            { name: 'Estonia', dial: '+372', flag: '🇪🇪', cities: ['Tallin', 'Tartu', 'Narwa', 'Pärnu', 'Kohtla-Järve', 'Viljandi'] },
+            { name: 'Francja', dial: '+33', flag: '🇫🇷', cities: ['Paryż', 'Lyon', 'Marsylia', 'Tuluza', 'Bordeaux', 'Nantes', 'Strasburg', 'Lille', 'Nicea', 'Reims', 'Montpellier', 'Grenoble'] },
+            { name: 'Włochy', dial: '+39', flag: '🇮🇹', cities: ['Rzym', 'Mediolan', 'Neapol', 'Turyn', 'Palermo', 'Genua', 'Bolonia', 'Florencja', 'Bari', 'Katania'] },
+            { name: 'Hiszpania', dial: '+34', flag: '🇪🇸', cities: ['Madryt', 'Barcelona', 'Walencja', 'Sewilla', 'Zaragoza', 'Málaga', 'Murcia', 'Palma', 'Las Palmas', 'Bilbao'] },
+            { name: 'Holandia', dial: '+31', flag: '🇳🇱', cities: ['Amsterdam', 'Rotterdam', 'Haga', 'Utrecht', 'Eindhoven', 'Tilburg', 'Groningen', 'Almere', 'Breda'] },
+            { name: 'Belgia', dial: '+32', flag: '🇧🇪', cities: ['Bruksela', 'Antwerpia', 'Gandawa', 'Brugia', 'Liège', 'Charleroi', 'Namur'] },
+            { name: 'Austria', dial: '+43', flag: '🇦🇹', cities: ['Wiedeń', 'Graz', 'Linz', 'Salzburg', 'Innsbruck', 'Klagenfurt', 'Villach'] },
+            { name: 'Szwajcaria', dial: '+41', flag: '🇨🇭', cities: ['Zurych', 'Genewa', 'Bazylea', 'Berno', 'Lozanna', 'Lucerna', 'Sankt Gallen'] },
+            { name: 'Mołdawia', dial: '+373', flag: '🇲🇩', cities: ['Kiszyniów', 'Tyraspol', 'Bielce', 'Bendery', 'Rybnița', 'Cahul'] },
+            { name: 'Rumunia', dial: '+40', flag: '🇷🇴', cities: ['Bukareszt', 'Cluj-Napoca', 'Timișoara', 'Iași', 'Constanța', 'Craiova', 'Brașov', 'Galați'] },
+            { name: 'Słowacja', dial: '+421', flag: '🇸🇰', cities: ['Bratysława', 'Koszyce', 'Preszów', 'Żylina', 'Bańska Bystrzyca', 'Trnava', 'Nitra'] },
+            { name: 'Węgry', dial: '+36', flag: '🇭🇺', cities: ['Budapeszt', 'Debreczyn', 'Miszkolc', 'Pecz', 'Győr', 'Nyíregyháza', 'Kecskemét', 'Székesfehérvár'] },
+            { name: 'USA', dial: '+1', flag: '🇺🇸', cities: ['Nowy Jork', 'Los Angeles', 'Chicago', 'Houston', 'Phoenix', 'Philadelphia', 'San Antonio', 'San Diego', 'Dallas', 'San Jose', 'Austin', 'Miami', 'Atlanta', 'Seattle', 'Boston'] },
+            { name: 'Kanada', dial: '+1', flag: '🇨🇦', cities: ['Toronto', 'Montreal', 'Vancouver', 'Calgary', 'Ottawa', 'Edmonton', 'Winnipeg', 'Quebec City', 'Hamilton'] },
+            { name: 'Inne', dial: '+', flag: '🌍', cities: [] },
+        ];
+
+        // Populate dial-code select
+        function initDialSelect() {
+            const sel = document.getElementById('dialCode');
+            sel.innerHTML = '';
+            COUNTRIES.forEach(c => {
+                const opt = document.createElement('option');
+                opt.value = c.dial;
+                opt.textContent = c.flag + ' ' + c.dial;
+                if (c.name === 'Polska') opt.selected = true;
+                sel.appendChild(opt);
+            });
+        }
+
+        // Populate country select
+        function initCountrySelect() {
+            const sel = document.getElementById('country');
+            sel.innerHTML = '<option value="">— Kraj —</option>';
+            COUNTRIES.forEach(c => {
+                if (c.name === 'Inne') return;
+                const opt = document.createElement('option');
+                opt.value = c.name;
+                opt.dataset.dial = c.dial;
+                opt.textContent = c.flag + '  ' + c.name;
+                sel.appendChild(opt);
+            });
+        }
+
+        // Populate city select based on selected country
+        function populateCities(countryName) {
+            const cityEl = document.getElementById('city');
+            const country = COUNTRIES.find(c => c.name === countryName);
+            cityEl.innerHTML = '';
+            if (!country || !country.cities.length) {
+                cityEl.innerHTML = '<option value="">— brak miast —</option>';
+                cityEl.disabled = true;
+                return;
+            }
+            cityEl.disabled = false;
+            const placeholder = document.createElement('option');
+            placeholder.value = '';
+            placeholder.textContent = '— Miasto —';
+            cityEl.appendChild(placeholder);
+            country.cities.forEach(city => {
+                const opt = document.createElement('option');
+                opt.value = city;
+                opt.textContent = city;
+                cityEl.appendChild(opt);
+            });
+        }
+
+        // When country changes → update cities + auto-sync dial code
+        document.getElementById('country').addEventListener('change', function () {
+            populateCities(this.value);
+        });
+
+        initDialSelect();
+        initCountrySelect();
 
         // --- ЛОГИКА ПЕРЕКЛЮЧЕНИЯ ЯЗЫКОВ ---
         document.querySelectorAll('.lang-btn').forEach(btn => {
@@ -701,9 +1041,13 @@
                 document.getElementById('secChild').textContent = t.secChild;
                 document.getElementById('secAddr').textContent = t.secAddr;
                 document.getElementById('dobLabel').textContent = t.dobLabel;
-                document.getElementById('lblTerms').textContent = t.lblTerms;
-                document.getElementById('lblPriv').textContent = t.lblPriv;
-                document.getElementById('lblPhoto').textContent = t.lblPhoto;
+                document.getElementById('txtTerms1').textContent = t.lblTermsPriv.split('|')[0];
+                document.getElementById('txtTerms2').textContent = t.lblTermsPriv.split('|')[1] || ' i ';
+                document.getElementById('lblDataProcess').textContent = t.lblDataProcess;
+                document.getElementById('lblUrgent').textContent = t.lblUrgent;
+                document.getElementById('lblImage1').textContent = t.lblImage;
+                document.getElementById('lblRecord').textContent = t.lblRecord;
+                document.getElementById('lblMarketing').textContent = t.lblMarketing;
                 document.getElementById('regBtn').textContent = t.btn;
                 document.getElementById('haveAccLink').textContent = t.haveAcc;
                 document.getElementById('footerCompany').textContent = t.footerCompany;
@@ -727,7 +1071,7 @@
                 // Ссылки в футере
                 document.querySelectorAll('#footerLinks a').forEach(a => {
                     const key = a.dataset.key;
-                    if(t[key]) a.textContent = t[key];
+                    if (t[key]) a.textContent = t[key];
                 });
             });
         });
@@ -738,14 +1082,14 @@
             const btn = document.getElementById('regBtn');
             btn.disabled = true;
             btn.textContent = '...';
-            
+
             const payload = {
                 email: document.getElementById('email').value,
                 password: document.getElementById('password').value,
                 password_confirmation: document.getElementById('passwordRep').value,
                 parent_name: document.getElementById('pName').value,
                 parent_surname: document.getElementById('pSurname').value,
-                parent_phone: document.getElementById('phone').value,
+                parent_phone: document.getElementById('dialCode').value + document.getElementById('phone').value,
                 parent_passport: document.getElementById('passport').value,
                 name: document.getElementById('cName').value,
                 surname: document.getElementById('cSurname').value,
@@ -754,18 +1098,22 @@
                 city: document.getElementById('city').value,
                 address: document.getElementById('address').value,
                 zip: document.getElementById('zip').value,
-                photo_consent: document.getElementById('checkPhoto').checked ? 1 : 0,
-                terms_accepted: document.getElementById('checkTerms').checked ? 1 : 0,
-                privacy_accepted: document.getElementById('checkPriv').checked ? 1 : 0,
+                photo_consent: document.getElementById('checkImage').checked ? 1 : 0,
+                terms_accepted: document.getElementById('checkTermsPriv').checked ? 1 : 0,
+                privacy_accepted: document.getElementById('checkTermsPriv').checked ? 1 : 0,
+                data_processing: document.getElementById('checkDataProcess').checked ? 1 : 0,
+                urgent_start: document.getElementById('checkUrgent').checked ? 1 : 0,
+                recording_consent: document.getElementById('checkRecord').checked ? 1 : 0,
+                marketing_consent: document.getElementById('checkMarketing').checked ? 1 : 0,
                 reg_comment: document.getElementById('comment').value,
             };
 
             try {
                 const response = await fetch('/api/v1/register', {
                     method: 'POST',
-                    headers: { 
-                        'Content-Type': 'application/json', 
-                        'Accept': 'application/json' 
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
                     },
                     body: JSON.stringify(payload)
                 });
@@ -776,20 +1124,262 @@
                 } else {
                     alert(data.message || 'Ошибка регистрации');
                     btn.disabled = false;
-                    btn.textContent = document.querySelector('.lang-btn.active').dataset.lang === 'en' ? 'REGISTER NOW' : 
-                                      document.querySelector('.lang-btn.active').dataset.lang === 'pl' ? 'ZAREJESTRUJ SIĘ' :
-                                      document.querySelector('.lang-btn.active').dataset.lang === 'ua' ? 'ЗАРЕЄСТРУВАТИСЯ' :
-                                      'ЗАРЕГИСТРИРОВАТЬСЯ';
+                    btn.textContent = document.querySelector('.lang-btn.active').dataset.lang === 'en' ? 'REGISTER NOW' :
+                        document.querySelector('.lang-btn.active').dataset.lang === 'pl' ? 'ZAREJESTRUJ SIĘ' :
+                            document.querySelector('.lang-btn.active').dataset.lang === 'ua' ? 'ЗАРЕЄСТРУВАТИСЯ' :
+                                'ЗАРЕГИСТРИРОВАТЬСЯ';
                 }
             } catch (err) {
                 alert('Ошибка соединения с сервером');
                 btn.disabled = false;
-                btn.textContent = document.querySelector('.lang-btn.active').dataset.lang === 'en' ? 'REGISTER NOW' : 
-                                  document.querySelector('.lang-btn.active').dataset.lang === 'pl' ? 'ZAREJESTRUJ SIĘ' :
-                                  document.querySelector('.lang-btn.active').dataset.lang === 'ua' ? 'ЗАРЕЄСТРУВАТИСЯ' :
-                                  'ЗАРЕГИСТРИРОВАТЬСЯ';
+                btn.textContent = document.querySelector('.lang-btn.active').dataset.lang === 'en' ? 'REGISTER NOW' :
+                    document.querySelector('.lang-btn.active').dataset.lang === 'pl' ? 'ZAREJESTRUJ SIĘ' :
+                        document.querySelector('.lang-btn.active').dataset.lang === 'ua' ? 'ЗАРЕЄСТРУВАТИСЯ' :
+                            'ЗАРЕГИСТРИРОВАТЬСЯ';
             }
         });
     </script>
+    <!-- ══ MODAL: REGULAMIN ══════════════════════════════════════ -->
+    <div class="modal-overlay" id="modalTerms">
+        <div class="modal-window">
+            <div class="modal-header">
+                <span class="modal-title">Regulamin Portalu Rodzica</span>
+                <button class="modal-close" onclick="closeModal('modalTerms')">✕</button>
+            </div>
+            <div class="modal-body">
+                <p style="color:rgba(255,255,255,0.35); font-size:11px; margin-bottom:16px;">Wersja obowiązująca od dnia
+                    04.03.2026 r. · recruitment-edugls.com</p>
+
+                <h3>§1. Postanowienia ogólne</h3>
+                <p>1.1. Niniejszy Regulamin określa ogólne warunki, zasady oraz sposób świadczenia usług drogą
+                    elektroniczną za pośrednictwem platformy rekrutacyjno-edukacyjnej dostępnej pod adresem
+                    <strong>recruitment-edugls.com</strong> (zwanej dalej Portalem Rodzica).
+                </p>
+                <p
+                    style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:12px; font-size:12px;">
+                    <strong>Dane Usługodawcy:</strong><br>
+                    GLOBAL LEADERS SKILLS sp. z o.o.<br>
+                    ul. Kabacki Dukt 1, lok. U1 i U2, 02-798 Warszawa<br>
+                    KRS: 0001055763 | NIP: 5252970924<br>
+                    E-mail: <a href="/cdn-cgi/l/email-protection" class="__cf_email__"
+                        data-cfemail="680903090c0d0501091b18090b0d050d05071a11280f05090104460b0705">[email&#160;protected]</a><br>
+                    Telefon: +48 730 536 091
+                </p>
+
+                <h3>§2. Definicje</h3>
+                <ul>
+                    <li><strong>Portal Rodzica (Serwis)</strong> – platforma internetowa pod adresem
+                        recruitment-edugls.com, służąca do zarządzania edukacją dziecka, rekrutacją oraz komunikacją.
+                    </li>
+                    <li><strong>Rodzic / Opiekun prawny (Użytkownik)</strong> – osoba fizyczna zakładająca Konto w
+                        Serwisie, działająca w imieniu własnym oraz reprezentująca małoletnie Dziecko.</li>
+                    <li><strong>Konto</strong> – indywidualny panel Użytkownika w Serwisie, zabezpieczony loginem i
+                        hasłem.</li>
+                    <li><strong>Przedsiębiorca na prawach konsumenta</strong> – osoba fizyczna zawierająca umowę
+                        bezpośrednio związaną z jej działalnością gospodarczą, gdy z treści tej umowy wynika, że nie
+                        posiada ona dla tej osoby charakteru zawodowego.</li>
+                </ul>
+
+                <h3>§4. Rejestracja, Dane i Zgody Użytkownika</h3>
+                <p><strong>4.1. Zakres zbieranych danych:</strong> Aby w pełni korzystać z Portalu Rodzica, konieczne
+                    jest założenie Konta. Podczas rejestracji wymagane są: imię i nazwisko Rodzica/Opiekuna, dane
+                    logowania (e-mail, hasło), adres zamieszkania, dane kontaktowe, a także imię, nazwisko i data
+                    urodzenia Dziecka.</p>
+                <p><strong>4.2. Oświadczenia i zgody składane podczas rejestracji:</strong></p>
+                <ul>
+                    <li><span style="color:#ff4b4b;">*</span> <strong>Akceptacja Regulaminu i Polityki Prywatności
+                            (obowiązkowe)</strong> – warunek konieczny do utworzenia Konta i zawarcia umowy.</li>
+                    <li><span style="color:#ff4b4b;">*</span> <strong>Zgoda na przetwarzanie danych
+                            (obowiązkowe)</strong> – w celu prawidłowej realizacji usług edukacyjnych.</li>
+                    <li><span style="color:#ff4b4b;">*</span> <strong>Żądanie rozpoczęcia świadczenia usług przed
+                            upływem 14 dni (obowiązkowe)</strong> – skutki opisano w §6.</li>
+                    <li><span style="color:#41e1e8;">✓</span> <strong>Wizerunek i nagrywanie (dobrowolne)</strong> –
+                        zgoda na publikację wizerunku dziecka oraz nagrywanie zajęć.</li>
+                    <li><span style="color:#41e1e8;">✓</span> <strong>Informacje marketingowe (dobrowolne)</strong> –
+                        zgoda na przesyłanie ofert i promocji e-mailem.</li>
+                </ul>
+
+                <h3>§6. Odstąpienie od umowy</h3>
+                <p><strong>6.1.</strong> Konsumentowi przysługuje prawo odstąpienia od umowy w terminie <strong>14
+                        dni</strong> bez podania przyczyny.</p>
+                <p
+                    style="background:rgba(245,158,11,0.08); border:1px solid rgba(245,158,11,0.2); border-radius:10px; padding:12px;">
+                    <strong>6.2. Skutki żądania rozpoczęcia usług przed upływem 14 dni:</strong><br>
+                    Z uwagi na złożone podczas rejestracji oświadczenie, Usługodawca natychmiastowo przystępuje do
+                    świadczenia usług. W przypadku odstąpienia od umowy <strong>Użytkownik ma obowiązek zapłaty za
+                        świadczenia spełnione do chwili odstąpienia</strong>, proporcjonalnie do zakresu wykonanego
+                    świadczenia.
+                </p>
+                <p><strong>6.3.</strong> Aby skorzystać z prawa odstąpienia, należy przesłać oświadczenie na: <strong><a
+                            href="/cdn-cgi/l/email-protection" class="__cf_email__"
+                            data-cfemail="c0a1aba1a4a5ada9a1b3b0a1a3a5ada5adafb2b980a7ada1a9aceea3afad">[email&#160;protected]</a></strong>.
+                </p>
+
+                <h3>§7. Procedura Reklamacyjna</h3>
+                <ul>
+                    <li><strong>7.1.</strong> Usługodawca ponosi odpowiedzialność za brak zgodności usług z umową wobec
+                        Konsumentów i Przedsiębiorców na prawach konsumenta.</li>
+                    <li><strong>7.2.</strong> Reklamacje należy zgłaszać na: <strong><a
+                                href="/cdn-cgi/l/email-protection" class="__cf_email__"
+                                data-cfemail="ec8d878d888981858d9f9c8d8f89818981839e95ac8b818d8580c28f8381">[email&#160;protected]</a></strong>,
+                        podając dane Konta, opis problemu i żądanie.</li>
+                    <li><strong>7.3.</strong> Reklamacje rozpatrywane są w terminie <strong>14 dni</strong> od
+                        otrzymania.</li>
+                </ul>
+
+                <h3>§8. Postanowienia końcowe</h3>
+                <p>8.1. W sprawach nieuregulowanych mają zastosowanie przepisy prawa polskiego.</p>
+                <p>8.2. Zasady przetwarzania danych szczegółowo opisuje Polityka Prywatności Serwisu.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ══ MODAL: POLITYKA PRYWATNOŚCI ══════════════════════════ -->
+    <div class="modal-overlay" id="modalPriv">
+        <div class="modal-window">
+            <div class="modal-header">
+                <span class="modal-title">Polityka Prywatności</span>
+                <button class="modal-close" onclick="closeModal('modalPriv')">✕</button>
+            </div>
+            <div class="modal-body">
+                <p style="color:rgba(255,255,255,0.35); font-size:11px; margin-bottom:16px;">Wersja obowiązująca od dnia
+                    04.03.2026 r. · recruitment-edugls.com</p>
+
+                <p style="font-style:italic; margin-bottom:16px;">Niniejsza Polityka Prywatności określa zasady
+                    przetwarzania i ochrony danych osobowych przekazanych przez Użytkowników w związku z rejestracją i
+                    korzystaniem z Portalu Rodzica w domenie <strong>recruitment-edugls.com</strong>.</p>
+
+                <h3>I. Administrator Danych Osobowych</h3>
+                <p>Administratorem danych osobowych Użytkowników (Rodziców/Opiekunów oraz Dzieci) jest:</p>
+                <p
+                    style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:12px; font-size:12px;">
+                    <strong>GLOBAL LEADERS SKILLS Sp. z o.o.</strong><br>
+                    Siedziba: ul. Kabacki Dukt 1 lok U1 i U2, 02-798 Warszawa<br>
+                    NIP: 5252970924 | KRS: 0001055763<br>
+                    E-mail: <a href="/cdn-cgi/l/email-protection" class="__cf_email__"
+                        data-cfemail="8dece6ece9e8e0e4ecfefdeceee8e0e8e0e2fff4cdeae0ece4e1a3eee2e0">[email&#160;protected]</a><br>
+                    Telefon: +48 730 536 091
+                </p>
+
+                <h3>II. Zakres i Cele Przetwarzania Danych</h3>
+                <p>Administrator za pośrednictwem formularza rejestracyjnego zbiera i przetwarza następujące dane
+                    osobowe:</p>
+                <ul>
+                    <li><strong>Dane Rodzica/Opiekuna:</strong> imię i nazwisko, adres e-mail, numer telefonu, adres
+                        zamieszkania, hasło do konta.</li>
+                    <li><strong>Dane Dziecka (Ucznia):</strong> imię i nazwisko, data urodzenia.</li>
+                </ul>
+                <p><strong>Cele i podstawy prawne przetwarzania:</strong></p>
+                <ul>
+                    <li><strong>1. Realizacja usług edukacyjnych i prowadzenie Konta</strong> – niezbędne do wykonania
+                        umowy i organizacji zajęć (art. 6 ust. 1 lit. b RODO).</li>
+                    <li><strong>2. Wypełnienie obowiązków prawnych</strong> – w zakresie wymaganym przez prawo (art. 6
+                        ust. 1 lit. c RODO).</li>
+                    <li><strong>3. Marketing bezpośredni</strong> – przesyłanie informacji o kursach i ofertach
+                        e-mailem, wyłącznie na podstawie dobrowolnej zgody (art. 6 ust. 1 lit. a RODO).</li>
+                    <li><strong>4. Obowiązki prawne i księgowe</strong> – rozliczenia finansowe i dokumentacja
+                        rachunkowa (art. 6 ust. 1 lit. c RODO).</li>
+                </ul>
+
+                <h3>III. Prawa Użytkownika</h3>
+                <p>Zgodnie z przepisami RODO, każdemu Użytkownikowi przysługuje prawo do:</p>
+                <ul>
+                    <li><strong>Dostępu</strong> do treści swoich danych oraz ich kopii.</li>
+                    <li><strong>Sprostowania</strong> (poprawiania) błędnych danych.</li>
+                    <li><strong>Usunięcia</strong> danych (prawo do bycia zapomnianym).</li>
+                    <li><strong>Cofnięcia zgody</strong> (np. na marketing lub wizerunek) w dowolnym momencie.</li>
+                    <li><strong>Wniesienia sprzeciwu</strong> wobec przetwarzania danych.</li>
+                    <li><strong>Przenoszenia</strong> danych do innego administratora.</li>
+                    <li><strong>Wniesienia skargi</strong> do Prezesa Urzędu Ochrony Danych Osobowych (PUODO).</li>
+                </ul>
+
+                <h3>IV. Bezpieczeństwo Danych</h3>
+                <p>Administrator stosuje odpowiednie środki techniczne i organizacyjne zapewniające ochronę
+                    przetwarzanych danych osobowych, ze szczególnym uwzględnieniem ochrony danych małoletnich.</p>
+                <p
+                    style="background:rgba(65,225,232,0.06); border:1px solid rgba(65,225,232,0.15); border-radius:10px; padding:12px; font-size:12px;">
+                    🔒 Komunikacja między komputerem Użytkownika a serwerem jest szyfrowana przy użyciu protokołu
+                    <strong>SSL</strong>. Hasła Użytkowników są przechowywane w formie zaszyfrowanej (hashowanej).
+                </p>
+
+                <h3>V. Pliki Cookies</h3>
+                <ul>
+                    <li>Portal korzysta z plików cookies przechowywanych w urządzeniu końcowym Użytkownika.</li>
+                    <li>Cookies wykorzystywane są do: utrzymania sesji logowania, dostosowania zawartości strony oraz
+                        tworzenia anonimowych statystyk (np. Google Analytics).</li>
+                    <li>Użytkownik może w każdej chwili zablokować cookies w ustawieniach przeglądarki.</li>
+                </ul>
+
+                <h3>VI. Profilowanie</h3>
+                <p><strong>Strona internetowa nie korzysta z profilowania danych osobowych.</strong> Zebrane dane nie są
+                    używane do zautomatyzowanego podejmowania decyzji ani automatycznej oceny zachowań Użytkownika
+                    wywołujących skutki prawne.</p>
+
+                <h3>VII. Kontakt</h3>
+                <p>W przypadku pytań dotyczących przetwarzania danych lub chęci wycofania zgód:</p>
+                <p
+                    style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:12px; font-size:12px;">
+                    E-mail: <strong><a href="/cdn-cgi/l/email-protection" class="__cf_email__"
+                            data-cfemail="7d1c161c191810141c0e0d1c1e18101810120f043d1a101c1411531e1210">[email&#160;protected]</a></strong><br>
+                    Adres: GLOBAL LEADERS SKILLS Sp. z o.o., ul. Kabacki Dukt 1 lok U1 i U2, 02-798 Warszawa
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ══ MODAL: ZGODA NA ZDJĘCIA ══════════════════════════════ -->
+    <div class="modal-overlay" id="modalPhoto">
+        <div class="modal-window">
+            <div class="modal-header">
+                <span class="modal-title">Zgoda na wizerunek</span>
+                <button class="modal-close" onclick="closeModal('modalPhoto')">✕</button>
+            </div>
+            <div class="modal-body">
+                <h3>Zakres zgody</h3>
+                <p>Wyrażam zgodę na nieodpłatne utrwalanie i wykorzystanie wizerunku mojego dziecka w postaci zdjęć i
+                    materiałów wideo wykonanych podczas zajęć organizowanych przez SPACE MEMORY ASSOCIATION Sp. z o.o.
+                </p>
+
+                <h3>Cel wykorzystania</h3>
+                <ul>
+                    <li>Dokumentacja przebiegu zajęć i postępów uczniów.</li>
+                    <li>Materiały promocyjne publikowane na stronie internetowej i w mediach społecznościowych szkoły.
+                    </li>
+                    <li>Wewnętrzne materiały szkoleniowe dla kadry pedagogicznej.</li>
+                </ul>
+
+                <h3>Czas trwania zgody</h3>
+                <p>Zgoda jest udzielana na czas nieokreślony i może zostać odwołana w dowolnym momencie poprzez pisemne
+                    poinformowanie administratora. Odwołanie zgody nie wpływa na zgodność z prawem przetwarzania
+                    dokonanego przed jej odwołaniem.</p>
+
+                <h3>Uwaga</h3>
+                <p>Zaznaczenie tej opcji jest dobrowolne i nie jest warunkiem uczestnictwa w zajęciach.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openModal(id) {
+            document.getElementById(id).classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        document.querySelectorAll('.modal-overlay').forEach(overlay => {
+            overlay.addEventListener('click', function (e) {
+                if (e.target === this) closeModal(this.id);
+            });
+        });
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.modal-overlay.active').forEach(m => closeModal(m.id));
+            }
+        });
+    </script>
+
 </body>
+
 </html>

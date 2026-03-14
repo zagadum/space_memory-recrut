@@ -25,31 +25,69 @@ class PaymentController extends Controller
     public function index(Request $request): View
     {
         $studentId = Auth::guard('student')->id();
-
-        $transactions = GlsPaymentTransaction::query()
-            ->where('student_id', '=', $studentId)
-            ->orderByDesc('paid_at')
-            ->get();
-
-        return view('father.payment', ['transactions' => $transactions,]);
-    }
-
-    public function createOrder(Request $request): View
-    {
-        $studentId = Auth::guard('student')->id();
-        $student   = DB::table('recruting_student')->where('id', $studentId)->first();
+        $student = \App\Models\RecrutingStudent::find($studentId);
 
         if (!$student) {
             abort(403);
         }
 
+        $payments = GlsPaymentTransaction::query()
+            ->where('student_id', '=', $studentId)
+            ->orderByDesc('created_at')
+            ->get();
+
+        $contract = (object)[
+            'signed' => true, // Assuming true for now, as real contract status logic is missing
+        ];
+
+        $periods = [
+            [
+                'months' => 1,
+                'lessons' => 4,
+                'price' => 440,
+                'old' => 490,
+                'popular' => false,
+                'save' => 0,
+            ],
+            [
+                'months' => 3,
+                'lessons' => 12,
+                'price' => 1180,
+                'old' => 1470,
+                'popular' => true,
+                'save' => 290,
+            ],
+            [
+                'months' => 9,
+                'lessons' => 36,
+                'price' => 3160,
+                'old' => 4410,
+                'popular' => false,
+                'save' => 1250,
+            ],
+        ];
+
+        return view('father.payment', compact('student', 'contract', 'payments', 'periods'));
+    }
+
+    public function createOrder(Request $request)
+    {
+        $studentId = Auth::guard('student')->id();
+        $student   = DB::table('recruting_student')->where('id', $studentId)->first();
+
+        if (!$student) {
+            return response()->json(['error' => 'Student not found'], 403);
+        }
+
         $validated = $request->validate([
-            'project_code' => ['required', 'string', 'in:space_memory,indigo'],
+            'project_code' => ['sometimes', 'string', 'in:space_memory,indigo'],
             'amount'       => ['required', 'numeric', 'min:1'],
         ]);
 
+        $projectCode = $validated['project_code'] ?? 'space_memory';
+
         $project = GlsProject::query()
-            ->where('code', $validated['project_code'])
+            ->where('code', $projectCode)
             ->firstOrFail();
 
         // Create transaction in DB
@@ -65,7 +103,7 @@ class PaymentController extends Controller
 
         // Build iMoje form fields
         $hashMethod = 'sha256';
-        $serviceKey = env('IMOJE_SERVICE_KEY');
+        $serviceKey = (string)env('IMOJE_SERVICE_KEY');
 
         $fields = [
             'merchantId'          => (string)env('IMOJE_MERCHANT_ID'),
@@ -90,6 +128,13 @@ class PaymentController extends Controller
         $fields['signature'] = $signature;
 
         $payUrl = env('IMOJE_PAY_URL', 'https://sandbox.paywall.imoje.pl/payment');
+
+        if ($request->expectsJson() || $request->isJson()) {
+            return response()->json([
+                'pay_url' => $payUrl,
+                'fields'  => $fields,
+            ]);
+        }
 
         return view('father.payment_redirect', [
             'fields' => $fields,

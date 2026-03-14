@@ -110,7 +110,7 @@ class RegistrationCompletionController extends Controller
         $student = Student::query()->where('email', '=', $import->email)->first();
         Auth::guard('student')->login($student);
 
-        return redirect('/father/document')->with('success', __('recruiting.registration.success'));
+        return redirect('/father/parent-portal')->with('success', __('recruiting.registration.success'));
     }
 
     private function mapCountry(?string $countryName): ?int

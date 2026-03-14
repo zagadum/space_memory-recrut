@@ -7,7 +7,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
+use App\Models\Student;
 use App\Jobs\SendVerificationCodeJob;
+use Illuminate\Support\Facades\Auth;
 
 class StudentCabinetController extends Controller
 {
@@ -38,7 +40,14 @@ class StudentCabinetController extends Controller
                 'verification_code' => null,
                 'email_verified_at' => now(),
                 'api_token'         => $apiToken,
+                'enabled'           => 1,
             ]);
+
+        // Standardize login for SPA/Portal
+        $studentModel = Student::find($student->id);
+        if ($studentModel) {
+            Auth::guard('student')->login($studentModel);
+        }
 
         return response()->json([
             'success'   => true,

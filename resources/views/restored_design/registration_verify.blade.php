@@ -307,19 +307,8 @@
                 Мы отправили 4-значный код подтверждения на ваш имейл.
             </p>
             
-            <div class="father-form-group" style="margin-bottom: 20px;">
-                <label class="father-label" style="display: block; margin-bottom: 8px; color: var(--primary-accent); font-weight: 600;">{{ __('father.verify.email_label') ?? 'Adres email' }}</label>
-                <input type="email" name="email" id="verify-email" required 
-                       placeholder="jan@example.pl"
-                       class="father-input" 
-                       style="width: 100%; padding: 12px; border-radius: 12px; border: 1px solid var(--glass-border); background: rgba(255,255,255,0.05); color: white;"
-                       value="">
-            </div>
-
             <div class="code-input-container" id="inputSection">
                 <input type="text" maxlength="1" class="code-digit" autofocus>
-                <input type="text" maxlength="1" class="code-digit">
-                <input type="text" maxlength="1" class="code-digit">
                 <input type="text" maxlength="1" class="code-digit">
                 <input type="text" maxlength="1" class="code-digit">
                 <input type="text" maxlength="1" class="code-digit">
@@ -329,7 +318,7 @@
 
             <button class="action-btn" id="confirmBtn">Подтвердить</button>
             
-            <button class="resend-link" id="resendBtn" disabled>Отправить код еще раз</button>
+            <button class="resend-link" id="resendBtn">Отправить код еще раз</button>
         </div>
     </div>
 
@@ -357,24 +346,8 @@
         const inputSection = document.getElementById('inputSection');
         const resendBtn = document.getElementById('resendBtn');
         const svgIcon = document.getElementById('svgIcon');
-        const emailInput = document.getElementById('verify-email');
         
-        // Try to get email from localStorage or URL
-        const userEmail = localStorage.getItem('student_email') || new URLSearchParams(window.location.search).get('email');
-        if (userEmail) emailInput.value = userEmail;
-
-        // Auto-paste logic
-        document.addEventListener('paste', (e) => {
-            const pasteData = (e.clipboardData || window.clipboardData).getData('text').trim();
-            if (pasteData.length === 6 && /^\d+$/.test(pasteData)) {
-                e.preventDefault();
-                pasteData.split('').forEach((char, i) => {
-                    if (inputs[i]) inputs[i].value = char;
-                });
-                inputs[5].focus();
-                verifyCode(pasteData);
-            }
-        });
+        const userEmail = localStorage.getItem('student_email');
 
         // Логика ввода кода
         inputs.forEach((input, index) => {
@@ -387,7 +360,7 @@
                 // Авто-отправка если все поля заполнены
                 let code = "";
                 inputs.forEach(i => code += i.value);
-                if (code.length === 6) {
+                if (code.length === 4) {
                     verifyCode(code);
                 }
             });
@@ -401,35 +374,25 @@
         confirmBtn.addEventListener('click', () => {
             let code = "";
             inputs.forEach(input => code += input.value);
-            if (code.length === 6) {
+            if (code.length === 4) {
                 verifyCode(code);
-            } else {
-                showError("Wprowadź 6-cyfrowy kod");
             }
         });
 
         async function verifyCode(code) {
-            const email = emailInput.value.trim();
-            if (!email || !email.includes('@')) {
-                showError("Proszę podać poprawny adres email");
-                emailInput.focus();
-                return;
-            }
-
             confirmBtn.disabled = true;
             confirmBtn.textContent = "...";
             errorMsg.style.display = 'none';
             
             try {
-                const response = await fetch('/recruitment/verify-code', {
+                const response = await fetch('/api/v1/recruitment/verify-code', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'Accept': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        'Accept': 'application/json'
                     },
                     body: JSON.stringify({
-                        email: email,
+                        email: userEmail,
                         code: code
                     })
                 });
@@ -437,7 +400,6 @@
                 
                 if (data.success) {
                     localStorage.setItem('api_token', data.api_token);
-                    localStorage.setItem('student_email', email);
                     showSuccess();
                 } else {
                     showError(data.message || "Неверный код. Попробуйте еще раз.");
@@ -445,7 +407,7 @@
             } catch (err) {
                 showError("Ошибка соединения с сервером");
             } finally {
-                if (inputSection.style.display !== 'none') {
+                if (!inputSection.offsetParent === null) { // if not hidden
                      confirmBtn.disabled = false;
                      confirmBtn.textContent = "Подтвердить";
                 }
@@ -466,7 +428,6 @@
             errorMsg.style.display = 'none';
             inputSection.style.display = 'none';
             resendBtn.style.display = 'none';
-            emailInput.parentElement.style.display = 'none';
             confirmBtn.disabled = false;
             confirmBtn.textContent = "Начать работу";
             
@@ -480,37 +441,30 @@
             `;
 
             confirmBtn.onclick = () => {
-                window.location.href = '/father/parent-portal';
+                window.location.href = '/test-parent-portal';
             };
         }
 
         // Таймер для повторной отправки
-        let timer = 60;
+        let timer = 30;
         let timerInterval;
 
         resendBtn.addEventListener('click', async () => {
             if(timer > 0) return;
-            const email = emailInput.value.trim();
-            if (!email) {
-                alert("Wprowadź email");
-                return;
-            }
             
             try {
-                const response = await fetch('/recruitment/resend-code', {
+                const response = await fetch('/api/v1/recruitment/resend-code', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'Accept': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        'Accept': 'application/json'
                     },
-                    body: JSON.stringify({ email: email })
+                    body: JSON.stringify({ email: userEmail })
                 });
                 const data = await response.json();
                 if (data.success) {
-                    timer = 60;
+                    timer = 30;
                     startTimer();
-                    alert("Kod został wysłany ponownie");
                 } else {
                     alert(data.message || "Ошибка при отправке");
                 }
@@ -523,7 +477,7 @@
             resendBtn.disabled = true;
             if (timerInterval) clearInterval(timerInterval);
             timerInterval = setInterval(() => {
-                resendBtn.textContent = `Отправить заново через ${timer}с`;
+                resendBtn.textContent = `Отправить снова через ${timer}с`;
                 timer--;
                 if (timer < 0) {
                     clearInterval(timerInterval);
@@ -563,7 +517,7 @@
                 if(s.alpha > 1 || s.alpha < 0) s.change *= -1;
                 ctx.beginPath();
                 ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(255, 255, 255, ${s.alpha <= 0 ? 0 : s.alpha})`;
+                ctx.fillStyle = `rgba(255, 255, 255, ${Math.max(0, s.alpha)})`;
                 ctx.fill();
             });
             requestAnimationFrame(animate);
