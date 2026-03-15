@@ -232,7 +232,7 @@ header.d-lg-none { background: var(--bg) !important; border-bottom: 1px solid va
             <span class="lrn-badge"><i class="fas fa-users"></i> Группы до 10 детей</span>
             <span class="lrn-badge"><i class="fas fa-clock"></i> 1 занятие в неделю</span>
             <span class="lrn-badge lrn-badge--gold"><i class="fas fa-star"></i> Возраст 5–14 лет</span>
-            <span class="lrn-badge lrn-badge--gold"><i class="fas fa-graduation-cap"></i> Платформа indigomental.com</span>
+            <span class="lrn-badge lrn-badge--gold"><i class="fas fa-graduation-cap"></i> Платформа space-memory.com</span>
         </div>
     </div>
 
@@ -272,7 +272,7 @@ header.d-lg-none { background: var(--bg) !important; border-bottom: 1px solid va
             </div>
             <ul class="lrn-tip-list">
                 <li>Выделяйте <strong style="color:#fff">10–15 минут в день</strong> для домашних упражнений между занятиями.</li>
-                <li>Используйте приложение на платформе <strong style="color:#fff">indigomental.com</strong> для ежедневных тренировок.</li>
+                <li>Используйте приложение на платформе <strong style="color:#fff">space-memory.com</strong> для ежедневных тренировок.</li>
                 <li>Хвалите ребёнка за усилия, а не только за результат — это укрепляет мотивацию.</li>
                 <li>Не сравнивайте прогресс вашего ребёнка с другими — каждый развивается в своём ритме.</li>
                 <li>Создайте тихое и удобное место для тренировок без отвлекающих факторов.</li>
@@ -318,7 +318,7 @@ header.d-lg-none { background: var(--bg) !important; border-bottom: 1px solid va
             <div class="lrn-card__head">
                 <div class="lrn-card__head-icon lrn-card__head-icon--gold"><i class="fas fa-laptop"></i></div>
                 <div>
-                    <div class="lrn-card__head-title">Платформа indigomental.com</div>
+                    <div class="lrn-card__head-title">Платформа space-memory.com</div>
                     <div class="lrn-card__head-sub">Ваш цифровой помощник</div>
                 </div>
             </div>
@@ -343,12 +343,12 @@ header.d-lg-none { background: var(--bg) !important; border-bottom: 1px solid va
 
         <div class="lrn-faq-item">
             <div class="lrn-faq-q">Как понять, что ребёнок прогрессирует?<i class="fas fa-chevron-down"></i></div>
-            <div class="lrn-faq-a">Прогресс заметен по нескольким признакам: ребёнок начинает быстрее считать в уме, лучше запоминает информацию с первого прочтения, меньше испытывает трудности с домашними заданиями. На платформе indigomental.com доступна статистика по результатам.</div>
+            <div class="lrn-faq-a">Прогресс заметен по нескольким признакам: ребёнок начинает быстрее считать в уме, лучше запоминает информацию с первого прочтения, меньше испытывает трудности с домашними заданиями. На платформе space-memory.com доступна статистика по результатам.</div>
         </div>
 
         <div class="lrn-faq-item">
             <div class="lrn-faq-q">Что делать, если ребёнок пропустил занятие?<i class="fas fa-chevron-down"></i></div>
-            <div class="lrn-faq-a">Пропущенное занятие не переносится. Рекомендуем пройти домашние тренировки на платформе indigomental.com — там есть полный набор материалов по программе. Абонемент при этом остаётся без изменений (4 занятия в месяц).</div>
+            <div class="lrn-faq-a">Пропущенное занятие не переносится. Рекомендуем пройти домашние тренировки на платформе space-memory.com — там есть полный набор материалов по программе. Абонемент при этом остаётся без изменений (4 занятия в месяц).</div>
         </div>
 
         <div class="lrn-faq-item">
