@@ -40,14 +40,14 @@ class FatherDocumentController extends Controller
             ->findOrFail($document);
 
         $parent = (object)[
-            'full_name' => ($student->parent_name ?? $student->name ?? '') . ' ' . ($student->parent_surname ?? $student->surname ?? ''),
+            'full_name' => $student->parent_full_name ?: $student->full_name,
             'email' => $student->email,
         ];
 
         $contract = (object)[
             'signed' => in_array(strtolower(trim((string) $document->doc_status)), ['sign', 'signed'], true)
                 || !is_null($document->sign_date),
-            'subscription_amount' => 0,
+            'subscription_amount' => (float) ($student->sum_aboniment ?? 0),
         ];
 
         return view('father.document_view', compact('student', 'document', 'parent', 'contract'));
@@ -110,10 +110,7 @@ class FatherDocumentController extends Controller
         $isSigned = in_array(strtolower(trim((string) $document->doc_status)), ['sign', 'signed'], true)
             || !is_null($document->sign_date);
 
-        $parentName = trim(
-            ($student->parent_name ?? $student->name ?? '') . ' ' .
-            ($student->parent_surname ?? $student->surname ?? '')
-        ) ?: ($student->email ?? '—');
+        $parentName = $student->parent_full_name ?: $student->full_name ?: ($student->email ?? '—');
 
         // Если PDF уже сохранён — отдаём из storage
         if ($document->pdf_path && Storage::disk('private')->exists($document->pdf_path)) {

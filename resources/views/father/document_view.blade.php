@@ -388,11 +388,11 @@ header.d-lg-none { background: var(--bg) !important; border-bottom: 1px solid va
                             </div>
                             <div class="doc-party__row">
                                 <div class="doc-party__key">Ученик (Kursant)</div>
-                                <div class="doc-party__val doc-party__val--filled">{{ $student->full_name ?? '—' }}</div>
+                                <div class="doc-party__val doc-party__val--filled">{{ $student->full_name ?: '—' }}</div>
                             </div>
                             <div class="doc-party__row">
                                 <div class="doc-party__key">Группа</div>
-                                <div class="doc-party__val doc-party__val--filled">{{ $student->group->name ?? '—' }}</div>
+                                <div class="doc-party__val doc-party__val--filled">{{ $student->group?->name ?? '—' }}</div>
                             </div>
                             <div class="doc-party__row">
                                 <div class="doc-party__key">Абонемент / мес.</div>

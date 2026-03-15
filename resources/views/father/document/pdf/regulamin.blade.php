@@ -71,7 +71,7 @@
                 <div class="party-label">Klient (Rodzic)</div>
                 <div class="party-row"><div class="party-key">Imię i nazwisko</div><div class="party-val">{{ $parentName }}</div></div>
                 <div class="party-row"><div class="party-key">Email</div><div style="font-size:9.5pt;">{{ $student->email }}</div></div>
-                <div class="party-row"><div class="party-key">Kursant</div><div class="party-val">{{ trim(($student->name ?? '') . ' ' . ($student->surname ?? '')) ?: '—' }}</div></div>
+                <div class="party-row"><div class="party-key">Kursant</div><div class="party-val">{{ $student->full_name ?: '—' }}</div></div>
                 @if($student->city)<div class="party-row"><div class="party-key">Miejscowość</div><div style="font-size:9.5pt;">{{ $student->city }}</div></div>@endif
             </td>
         </tr>

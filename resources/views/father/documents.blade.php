@@ -268,7 +268,8 @@ header.d-lg-none { background: var(--bg) !important; border-bottom: 1px solid va
     <div class="dp-list">
         @forelse ($documents as $doc)
         @php
-            $isSigned = ($doc->doc_status ?? null) === 'sign';
+            $isSigned = in_array(strtolower(trim((string) ($doc->doc_status ?? ''))), ['sign', 'signed'], true)
+                || !is_null($doc->sign_date);
         @endphp
         <div class="dp-card {{ $isSigned ? 'dp-card--signed' : 'dp-card--unsigned' }}">
             <div class="dp-card__file-icon" {!! $isSigned ? 'style="color: var(--green);"' : '' !!}>

@@ -17,9 +17,21 @@ class GlsDocument extends Model
         'doc_no',
         'title',
         'doc_status',
+        'doc_type',
         'pdf_path',
         'sign_date',
     ];
+
+    /**
+     * Возвращает читаемую метку типа документа.
+     */
+    public function getDocTypeLabelAttribute(): string
+    {
+        return match ($this->doc_type ?? 'contract') {
+            'contract' => 'Договор',
+            default    => ucfirst($this->doc_type ?? 'contract'),
+        };
+    }
 
     protected function casts(): array
     {

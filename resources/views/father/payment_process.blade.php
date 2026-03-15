@@ -408,7 +408,7 @@ header.d-lg-none { background: var(--bg) !important; border-bottom: 1px solid va
                 <div class="pay-card__sub">
                     Ученик: <strong style="color:#fff">{{ ($student->name ?? '') . ' ' . ($student->surname ?? '') ?: 'Не указано' }}</strong>
                     &nbsp;·&nbsp;
-                    Группа: <strong style="color:var(--teal)">{{ $student->group->name ?? 'Не назначена' }}</strong>
+                    Группа: <strong style="color:var(--teal)">{{ $student->group?->name ?? 'Не назначена' }}</strong>
                 </div>
             </div>
 

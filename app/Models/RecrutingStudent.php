@@ -79,5 +79,33 @@ class RecrutingStudent extends Authenticatable
 
     protected $appends = ['resource_url'];
 
+    /**
+     * Полное имя студента (Kursant).
+     */
+    public function getFullNameAttribute(): string
+    {
+        return trim(($this->name ?? '') . ' ' . ($this->surname ?? ''));
+    }
+
+    /**
+     * Полное имя родителя.
+     */
+    public function getParentFullNameAttribute(): string
+    {
+        $first = trim(($this->parent_name ?? '') . ' ' . ($this->parent_surname ?? ''));
+        if ($first) {
+            return $first;
+        }
+        return trim(($this->name ?? '') . ' ' . ($this->surname ?? ''));
+    }
+
+    /**
+     * Группа занятий (NewGroup).
+     */
+    public function group(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(\App\Models\NewGroup::class, 'group_id');
+    }
+
 }
 

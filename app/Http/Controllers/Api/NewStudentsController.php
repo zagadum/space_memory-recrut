@@ -256,6 +256,7 @@ class NewStudentsController extends Controller
                     'project_id' => $project->id,
                     'title' => 'Regulamin swiadczenia uslug',
                     'doc_status' => 'new',
+                    'doc_type'   => 'contract',
                 ]);
 
                 return $createdStudentId;

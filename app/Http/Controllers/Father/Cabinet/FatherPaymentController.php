@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Father\Cabinet;
 
 use App\Http\Controllers\Controller;
+use App\Models\GlsDocument;
 use App\Models\GlsPaymentTransaction;
 use App\Models\GlsProject;
+use App\Models\RecrutingStudent;
 use App\Services\ImojePaymentService;
 use Illuminate\Http\Request;
 
@@ -12,11 +14,24 @@ class FatherPaymentController extends Controller
 {
     public function index(Request $request)
     {
+        /** @var RecrutingStudent $student */
         $student = auth()->guard('recruting_student')->user();
-        
-        // TODO: проверить подписан ли договор
+
+        if (!$student instanceof RecrutingStudent) {
+            abort(403);
+        }
+
+        $contractDoc = GlsDocument::where('student_id', $student->id)
+            ->where('doc_type', 'contract')
+            ->orderByDesc('id')
+            ->first();
+
+        $contractSigned = $contractDoc
+            && in_array(strtolower(trim((string) $contractDoc->doc_status)), ['sign', 'signed'], true);
+
         $contract = (object)[
-            'signed' => true, // Example
+            'signed'   => $contractSigned,
+            'document' => $contractDoc,
         ];
 
         $payments = GlsPaymentTransaction::where('student_id', $student->id)
@@ -43,7 +58,12 @@ class FatherPaymentController extends Controller
             'lessons'    => 'required|integer',
         ]);
 
+        /** @var RecrutingStudent $student */
         $student = auth()->guard('recruting_student')->user();
+
+        if (!$student instanceof RecrutingStudent) {
+            abort(403);
+        }
 
         if ($student->id != $validated['student_id']) {
             abort(403);
@@ -101,8 +121,13 @@ class FatherPaymentController extends Controller
 
     public function success(Request $request)
     {
+        /** @var RecrutingStudent $student */
         $student = auth()->guard('recruting_student')->user();
-        
+
+        if (!$student instanceof RecrutingStudent) {
+            abort(403);
+        }
+
         $payment = GlsPaymentTransaction::where('student_id', $student->id)
             ->where('status', 'completed')
             ->orderBy('created_at', 'desc')

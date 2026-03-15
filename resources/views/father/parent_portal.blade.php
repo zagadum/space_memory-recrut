@@ -453,6 +453,80 @@ header.d-lg-none {
 }
 
 /* ============================================================
+   CONTRACT BANNER
+   ============================================================ */
+.pp-contract-banner {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px 28px;
+    border-radius: var(--radius-md);
+    border: 1px solid;
+    margin-bottom: 28px;
+    position: relative;
+    overflow: hidden;
+}
+.pp-contract-banner--warn {
+    background: rgba(245, 190, 48, 0.07);
+    border-color: rgba(245, 190, 48, 0.35);
+}
+.pp-contract-banner--ok {
+    background: rgba(74, 222, 128, 0.06);
+    border-color: rgba(74, 222, 128, 0.25);
+}
+.pp-contract-banner__icon {
+    font-size: 26px;
+    flex-shrink: 0;
+    line-height: 1;
+}
+.pp-contract-banner__body { flex: 1; }
+.pp-contract-banner__title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #fff;
+    margin: 0 0 4px;
+}
+.pp-contract-banner--warn .pp-contract-banner__title { color: var(--gold); }
+.pp-contract-banner--ok  .pp-contract-banner__title { color: #4ade80; }
+.pp-contract-banner__text {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin: 0;
+    line-height: 1.5;
+}
+.pp-contract-banner__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 22px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: opacity .2s, transform .15s;
+}
+.pp-contract-banner__btn:hover {
+    opacity: .85;
+    transform: translateY(-2px);
+    text-decoration: none;
+}
+.pp-contract-banner__btn--sign {
+    background: linear-gradient(135deg, var(--gold), #e09c18);
+    color: #1a0f00;
+}
+.pp-contract-banner__btn--view {
+    background: rgba(74, 222, 128, 0.12);
+    border: 1px solid rgba(74, 222, 128, 0.3);
+    color: #4ade80;
+}
+@media (max-width: 575px) {
+    .pp-contract-banner { flex-wrap: wrap; }
+    .pp-contract-banner__btn { width: 100%; justify-content: center; }
+}
+
+/* ============================================================
    АДАПТИВ
    ============================================================ */
 @media (max-width: 991px) {
@@ -525,11 +599,55 @@ header.d-lg-none {
                 {{ $student->name ?? '' }} {{ $student->surname ?? '' }}
             </h1>
             <p style="color: rgba(255,255,255,0.6); font-size: 14px; margin-top: 5px;">
-                {{ $student->group->name ?? 'Не назначена' }}
+                {{ $student->group?->name ?? 'Не назначена' }}
             </p>
             <span class="pp-header__line"></span>
         </div>
     </header>
+
+    {{-- ======================== CONTRACT BANNER ======================== --}}
+    @if(!$hasSignedContract)
+        <div class="pp-contract-banner pp-contract-banner--warn">
+            <div class="pp-contract-banner__icon">📋</div>
+            <div class="pp-contract-banner__body">
+                <p class="pp-contract-banner__title">Подпишите договор</p>
+                <p class="pp-contract-banner__text">
+                    Для доступа к занятиям и оплатам необходимо ознакомиться с договором и поставить электронную подпись.
+                </p>
+            </div>
+            @if($contractDoc)
+                <a href="{{ route('father.document.view', $contractDoc->id) }}" class="pp-contract-banner__btn pp-contract-banner__btn--sign">
+                    <i class="fas fa-pen-nib"></i>
+                    Подписать
+                </a>
+            @else
+                <a href="{{ route('father.documents') }}" class="pp-contract-banner__btn pp-contract-banner__btn--sign">
+                    <i class="fas fa-file-contract"></i>
+                    К документам
+                </a>
+            @endif
+        </div>
+    @else
+        <div class="pp-contract-banner pp-contract-banner--ok">
+            <div class="pp-contract-banner__icon">✅</div>
+            <div class="pp-contract-banner__body">
+                <p class="pp-contract-banner__title">Договор подписан</p>
+                <p class="pp-contract-banner__text">
+                    Вы подписали договор
+                    @if($contractDoc && $contractDoc->sign_date)
+                        {{ optional($contractDoc->sign_date)->format('d.m.Y') }}
+                    @endif
+                    — можно переходить к оплате.
+                </p>
+            </div>
+            @if($contractDoc)
+                <a href="{{ route('father.document.view', $contractDoc->id) }}" class="pp-contract-banner__btn pp-contract-banner__btn--view">
+                    <i class="fas fa-eye"></i>
+                    Просмотреть
+                </a>
+            @endif
+        </div>
+    @endif
 
     {{-- ======================== ACTION CARDS ======================== --}}
     <div class="pp-actions">
@@ -588,7 +706,9 @@ header.d-lg-none {
             {{-- ШАГ 1 --}}
             <div class="pp-step">
                 <div class="pp-step__aside">
-                    <div class="pp-step__num">1</div>
+                    <div class="pp-step__num" @if($hasSignedContract) style="background: linear-gradient(135deg,#14532d,#166534);border-color:rgba(74,222,128,0.5);color:#4ade80;" @endif>
+                        @if($hasSignedContract)<i class="fas fa-check" style="font-size:14px;"></i>@else 1 @endif
+                    </div>
                     <div class="pp-step__line"></div>
                 </div>
                 <div class="pp-step__body">
@@ -607,7 +727,9 @@ header.d-lg-none {
             {{-- ШАГ 2 --}}
             <div class="pp-step">
                 <div class="pp-step__aside">
-                    <div class="pp-step__num">2</div>
+                    <div class="pp-step__num" @if($hasSignedContract) style="background: linear-gradient(135deg,#14532d,#166534);border-color:rgba(74,222,128,0.5);color:#4ade80;" @endif>
+                        @if($hasSignedContract)<i class="fas fa-check" style="font-size:14px;"></i>@else 2 @endif
+                    </div>
                     <div class="pp-step__line"></div>
                 </div>
                 <div class="pp-step__body">

@@ -660,7 +660,7 @@
                 <div class="pay-card__sub">
                     Ученик: <strong style="color:#fff">{{ $student->full_name ?? '—' }}</strong>
                     &nbsp;·&nbsp;
-                    Группа: <strong style="color:var(--teal)">{{ $student->group->name ?? 'Не назначена' }}</strong>
+                    Группа: <strong style="color:var(--teal)">{{ $student->group?->name ?? 'Не назначена' }}</strong>
                 </div>
             </div>
 
