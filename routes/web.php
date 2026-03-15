@@ -87,6 +87,7 @@ Route::prefix('father')
         Route::get('/document', fn() => redirect()->route('father.documents'));
         Route::get('/document-view', fn() => redirect()->route('father.documents'));
         Route::get('/document-view/{document}', [\App\Http\Controllers\Father\Cabinet\FatherDocumentController::class, 'show'])->name('father.document.view');
+        Route::get('/document-download/{document}', [\App\Http\Controllers\Father\Cabinet\FatherDocumentController::class, 'download'])->name('father.document.download');
         Route::post('/documents/sign', [\App\Http\Controllers\Father\Cabinet\FatherDocumentController::class, 'sign'])->name('father.documents.sign');
 
         Route::get('/payment', [\App\Http\Controllers\Father\Cabinet\FatherPaymentController::class, 'index'])->name('father.payment');

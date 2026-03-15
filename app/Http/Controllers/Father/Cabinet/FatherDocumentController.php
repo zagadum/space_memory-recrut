@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\GlsDocument;
 use App\Models\RecrutingStudent;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class FatherDocumentController extends Controller
 {
@@ -88,6 +89,29 @@ class FatherDocumentController extends Controller
             'success' => true,
             'signed_at' => optional($document->sign_date)->format('Y-m-d H:i:s'),
             'doc_status' => $document->doc_status,
+        ]);
+    }
+
+    public function download(Request $request, int $document)
+    {
+        $student = auth()->guard('recruting_student')->user();
+
+        if (!$student instanceof RecrutingStudent || empty($student->id)) {
+            abort(403, 'Unauthorized');
+        }
+
+        $document = GlsDocument::query()
+            ->where('student_id', $student->id)
+            ->findOrFail($document);
+
+        if (!$document->pdf_path || !Storage::disk('private')->exists($document->pdf_path)) {
+            abort(404, 'PDF недоступен');
+        }
+
+        $filename = 'Document-' . ($document->doc_no ?? $document->id) . '.pdf';
+
+        return Storage::disk('private')->download($document->pdf_path, $filename, [
+            'Content-Type' => 'application/pdf',
         ]);
     }
 }

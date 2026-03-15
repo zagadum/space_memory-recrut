@@ -331,9 +331,16 @@ header.d-lg-none { background: var(--bg) !important; border-bottom: 1px solid va
                     Regulamin GLS · вступил в силу 03.03.2026
                 </div>
                 <div class="dv-paper-toolbar__right">
-                    <button class="dv-tool-btn" onclick="window.open('{{ $document->pdf_url ?? '#' }}')" title="Скачать PDF">
-                        <i class="fas fa-download"></i>
-                    </button>
+                    @if(!empty($document->pdf_path))
+                        <a href="{{ route('father.document.download', $document->id) }}"
+                           class="dv-tool-btn" title="Скачать PDF">
+                            <i class="fas fa-download"></i>
+                        </a>
+                    @else
+                        <button class="dv-tool-btn" disabled title="PDF ещё не сформирован" style="opacity:.35;cursor:not-allowed;">
+                            <i class="fas fa-download"></i>
+                        </button>
+                    @endif
                     <button class="dv-tool-btn" id="btnTop" title="Наверх">
                         <i class="fas fa-angle-up"></i>
                     </button>
@@ -520,13 +527,15 @@ header.d-lg-none { background: var(--bg) !important; border-bottom: 1px solid va
                     Подписание документа
                 </div>
 
-                {{-- Single checkbox --}}
-                <div class="dv-consent">
-                    <input type="checkbox" class="dv-cb" id="cbRead" {{ $isSigned ? 'disabled' : '' }}>
+                {{-- Checkbox — скрыт если документ уже подписан --}}
+                @if(!$isSigned)
+                <div class="dv-consent" id="consentBlock">
+                    <input type="checkbox" class="dv-cb" id="cbRead">
                     <label class="dv-consent-label" for="cbRead">
                         Я ознакомился(-ась) с документом и принимаю все его условия
                     </label>
                 </div>
+                @endif
 
                 {{-- Signed banner (hidden) --}}
                 <div class="dv-signed {{ $isSigned ? 'show' : '' }}" id="signedBanner">
@@ -563,78 +572,83 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const docScroll    = document.getElementById('docScroll');
     const progressFill = document.getElementById('progressFill');
-    const cbRead       = document.getElementById('cbRead');
-    const btnSign      = document.getElementById('btnSign');
+    const cbRead       = document.getElementById('cbRead');       // null когда подписан
+    const btnSign      = document.getElementById('btnSign');      // null когда подписан
     const isSigned     = {{ $isSigned ? 'true' : 'false' }};
 
-    /* Update progress bar on scroll */
+    /* ── Progress bar ── */
     function updateProgress() {
         const scrollable = docScroll.scrollHeight - docScroll.clientHeight;
-        if (scrollable <= 0) {
-            progressFill.style.width = '100%';
-            return;
-        }
-        const pct = (docScroll.scrollTop / scrollable) * 100;
-        progressFill.style.width = Math.min(pct, 100) + '%';
+        progressFill.style.width = scrollable <= 0
+            ? '100%'
+            : Math.min((docScroll.scrollTop / scrollable) * 100, 100) + '%';
     }
-
     docScroll.addEventListener('scroll', updateProgress);
     updateProgress();
 
-    /* Scroll to top */
+    /* ── Scroll to top ── */
     document.getElementById('btnTop').addEventListener('click', () =>
         docScroll.scrollTo({ top: 0, behavior: 'smooth' }));
 
-    /* Enable sign button when checkbox checked */
-    if (!isSigned) {
+    /* ── Checkbox → кнопка подписи ── */
+    if (!isSigned && cbRead && btnSign) {
         cbRead.addEventListener('change', function () {
             btnSign.disabled = !this.checked;
         });
     }
 
-    /* Sign — POST to API, record in DB */
-    btnSign.addEventListener('click', function () {
-        if (isSigned) {
-            return;
-        }
+    /* ── Подписать ── */
+    if (!isSigned && btnSign) {
+        btnSign.addEventListener('click', function () {
+            btnSign.disabled = true;
+            btnSign.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Сохраняем…';
 
-        btnSign.disabled = true;
-        btnSign.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Сохраняем…';
-
-        fetch('{{ route("father.documents.sign") }}', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': '{{ csrf_token() }}'
-            },
-            body: JSON.stringify({
-                document_id: {{ $document->id ?? 'null' }},
-                student_id:  {{ $student->id  ?? 'null' }}
+            fetch('{{ route("father.documents.sign") }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({
+                    document_id: {{ $document->id ?? 'null' }},
+                    student_id:  {{ $student->id  ?? 'null' }}
+                })
             })
-        })
-        .then(async (r) => {
-            const data = await r.json();
-            if (!r.ok || !data.success) {
-                throw new Error(data.message || 'Ошибка подписи');
-            }
-            onSigned(data.signed_at);
-        })
-        .catch((error) => {
-            btnSign.disabled = false;
-            btnSign.innerHTML = '<i class="fas fa-pen-nib"></i> Подписать документ';
-            alert(error.message || 'Не удалось подписать документ');
+            .then(async (r) => {
+                const data = await r.json();
+                if (!r.ok || !data.success) {
+                    throw new Error(data.message || 'Ошибка подписи');
+                }
+                onSigned(data.signed_at);
+            })
+            .catch((error) => {
+                btnSign.disabled = false;
+                btnSign.innerHTML = '<i class="fas fa-pen-nib"></i> Подписать документ';
+                alert(error.message || 'Не удалось подписать документ');
+            });
         });
-    });
+    }
 
+    /* ── Показать состояние «подписан» ── */
     function onSigned(signedAt) {
-        document.getElementById('signBlock').style.display = 'none';
-        cbRead.disabled = true;
+        // скрыть кнопку
+        const signBlock = document.getElementById('signBlock');
+        if (signBlock) signBlock.style.display = 'none';
+
+        // скрыть чекбокс
+        const consentBlock = document.getElementById('consentBlock');
+        if (consentBlock) consentBlock.style.display = 'none';
+
+        // дата подписания
         if (signedAt) {
-            const signedDate = new Date(String(signedAt).replace(' ', 'T'));
-            document.getElementById('signedDate').textContent =
-                signedDate.toLocaleDateString('ru-RU') + ' · ' +
-                signedDate.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
+            const dt = new Date(String(signedAt).replace(' ', 'T'));
+            const el = document.getElementById('signedDate');
+            if (el) el.textContent =
+                dt.toLocaleDateString('ru-RU') + ' · ' +
+                dt.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
         }
+
+        // баннер
         document.getElementById('signedBanner').classList.add('show');
     }
 
