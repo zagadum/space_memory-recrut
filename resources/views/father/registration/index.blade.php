@@ -737,7 +737,7 @@
                 <button type="submit" class="submit-btn" id="regBtn">ZAREJESTRUJ SIĘ</button>
             </form>
 
-            <a href="/admin/login" class="login-link" id="haveAccLink">Masz już konto? Zaloguj się</a>
+            <a href="/login" class="login-link" id="haveAccLink">Masz już konto? Zaloguj się</a>
         </div>
     </div>
 
