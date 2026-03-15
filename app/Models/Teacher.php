@@ -117,11 +117,11 @@ class Teacher extends Authenticatable // implements  HasMedia
         return $this->hasOne(TeacherGroup::class, 'teacher_id', 'id');
     }
     public function Student(){
-        return $this->hasOne(Student::class, 'teacher_id', 'id');
+        return $this->hasOne(RecrutingStudent::class, 'teacher_id', 'id');
     }
     public function StudentBlock()
     {
-        return $this->hasOne(Student::class, 'teacher_id', 'id');
+        return $this->hasOne(RecrutingStudent::class, 'teacher_id', 'id');
     }
     /**
      * Get url of avatar image

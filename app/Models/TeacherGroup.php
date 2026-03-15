@@ -76,11 +76,11 @@ class TeacherGroup extends Model
         return $this->hasOne(Age::class, 'id', 'age_id');
     }
     public function Student(){
-        return $this->hasOne(Student::class, 'group_id', 'id');
+        return $this->hasOne(RecrutingStudent::class, 'group_id', 'id');
     }
     public function StudentBlock()
     {
-        return $this->hasOne(Student::class, 'group_id', 'id');
+        return $this->hasOne(RecrutingStudent::class, 'group_id', 'id');
     }
 
 }

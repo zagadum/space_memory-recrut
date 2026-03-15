@@ -35,7 +35,7 @@ class GlsPaymentTransaction extends Model
 
     public function student(): BelongsTo
     {
-        return $this->belongsTo(Student::class, 'student_id');
+        return $this->belongsTo(RecrutingStudent::class, 'student_id');
     }
 
     public function project(): BelongsTo
