@@ -17,6 +17,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Illuminate\View\View;
 
 class PaymentController extends Controller
@@ -115,7 +116,7 @@ class PaymentController extends Controller
             'customerPhone'       => $student->parent_phone ?? '',
             'orderId'             => (string) $transaction->id,
             'customerId'          => (string) $studentId,
-            'orderDescription'    => $project->name . ' — ' . now()->translatedFormat('F Y'),
+            'orderDescription'    => $this->buildImojeOrderDescription($project->name ?? $project->code ?? 'Payment', (float) $validated['amount']),
             'locale'              => 'pl',
             'urlSuccess'          => url('/father/payment-success'),
             'urlFailure'          => url('/father/payment-fail'),
@@ -219,5 +220,16 @@ class PaymentController extends Controller
             'Content-Type'        => 'application/pdf',
             'Content-Disposition' => 'attachment; filename="' . $filename . '"',
         ]);
+    }
+
+    private function buildImojeOrderDescription(string $title, float $amount): string
+    {
+        $raw = sprintf('%s %.2f PLN', $title, $amount);
+        $ascii = Str::ascii($raw);
+        $normalized = preg_replace('/\s+/', ' ', trim($ascii)) ?? '';
+        $safe = preg_replace('/[^A-Za-z0-9\x{00C0}-\x{02C0}\s#&_\-"\',.\/]/u', '', $normalized) ?? '';
+        $safe = trim($safe);
+
+        return mb_substr($safe !== '' ? $safe : 'Payment order', 0, 120);
     }
 }

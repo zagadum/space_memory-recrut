@@ -12,6 +12,7 @@ use App\Models\RecrutingStudent;
 use App\Services\ImojePaymentService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class FatherPaymentController extends Controller
 {
@@ -177,7 +178,7 @@ class FatherPaymentController extends Controller
             'customerPhone'       => $student->parent_phone ?? '',
             'orderId'             => (string) $transaction->id,
             'customerId'          => (string) $student->id,
-            'orderDescription'    => $transactionTitle,
+            'orderDescription'    => $this->buildImojeOrderDescription($project, $plan),
             'locale'              => 'pl',
             'urlSuccess'          => route('father.payment.success'),
             'urlFailure'          => route('father.payment.fail'),
@@ -237,5 +238,26 @@ class FatherPaymentController extends Controller
         }
 
         return view('father.payment_fail', compact('student'));
+    }
+
+    private function buildImojeOrderDescription(GlsProject $project, GlsPaymentPlan $plan): string
+    {
+        $raw = sprintf(
+            '%s package %d months %d lessons',
+            $project->name ?: ($project->code ?: 'Payment'),
+            (int) $plan->months,
+            (int) $plan->lessons
+        );
+
+        $ascii = Str::ascii($raw);
+        $normalized = preg_replace('/\s+/', ' ', trim($ascii)) ?? '';
+        $safe = preg_replace('/[^A-Za-z0-9\x{00C0}-\x{02C0}\s#&_\-"\',\.\/]/u', '', $normalized) ?? '';
+        $safe = trim($safe);
+
+        if ($safe === '') {
+            $safe = sprintf('Order #%d %dM %dL', (int) $plan->id, (int) $plan->months, (int) $plan->lessons);
+        }
+
+        return mb_substr($safe, 0, 120);
     }
 }
