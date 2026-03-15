@@ -220,10 +220,44 @@ class FatherPaymentController extends Controller
             abort(403);
         }
 
-        $payment = GlsPaymentTransaction::where('student_id', $student->id)
-            ->where('status', 'completed')
-            ->orderBy('created_at', 'desc')
-            ->first();
+        $orderId = $request->integer('orderId')
+            ?: $request->integer('order_id')
+            ?: $request->integer('id');
+
+        $providerTransactionId = (string) ($request->input('transactionId')
+            ?: $request->input('transaction_id')
+            ?: '');
+
+        $paymentsQuery = GlsPaymentTransaction::query()
+            ->where('student_id', $student->id);
+
+        $payment = null;
+
+        if ($orderId > 0) {
+            $payment = (clone $paymentsQuery)
+                ->where('id', $orderId)
+                ->first();
+        }
+
+        if (!$payment && $providerTransactionId !== '') {
+            $payment = (clone $paymentsQuery)
+                ->where('provider_transaction_id', $providerTransactionId)
+                ->first();
+        }
+
+        if (!$payment) {
+            $payment = (clone $paymentsQuery)
+                ->where('status', 'completed')
+                ->orderByDesc('paid_at')
+                ->orderByDesc('created_at')
+                ->first();
+        }
+
+        if (!$payment) {
+            $payment = (clone $paymentsQuery)
+                ->orderByDesc('created_at')
+                ->first();
+        }
         
         return view('father.payment_success', compact('student', 'payment'));
     }
