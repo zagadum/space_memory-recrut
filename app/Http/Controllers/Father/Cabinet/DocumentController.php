@@ -15,10 +15,13 @@ class DocumentController extends Controller
     {
         $studentId = \Illuminate\Support\Facades\Auth::guard('recruting_student')->id();
 
-        $documents = GlsInvoiceDocument::query()
-            ->where('student_id', '=', $studentId)
-            ->orderByDesc('issue_date')
-            ->get();
+        if ($studentId>0){
+            $documents = GlsInvoiceDocument::query()
+                ->where('student_id', '=', $studentId)
+                ->orderByDesc('issue_date')
+                ->get();
+        }
+
 
         return view('father.document', ['documents' => $documents,]);
     }

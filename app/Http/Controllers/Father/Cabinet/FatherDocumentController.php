@@ -11,8 +11,11 @@ class FatherDocumentController extends Controller
     public function index(Request $request)
     {
         $student = auth()->guard('recruting_student')->user();
-        
-        $documents = GlsInvoiceDocument::where('student_id', $student->id)->get();
+        $documents=[];
+        if (isset($student) && $student->id>0){
+            $documents = GlsInvoiceDocument::where('student_id', $student->id)->get();
+        }
+
         
         return view('father.documents', compact('student', 'documents'));
     }
@@ -20,7 +23,9 @@ class FatherDocumentController extends Controller
     public function show(Request $request, int $document)
     {
         $student = auth()->guard('recruting_student')->user();
-        
+        if  (empty($student->id)){
+            abort(403, 'Unauthorized');
+        }
         $document = GlsInvoiceDocument::where('student_id', $student->id)->findOrFail($document);
         
         $parent = (object)[
@@ -33,9 +38,7 @@ class FatherDocumentController extends Controller
             'subscription_amount' => $document->amount_gross,
         ];
         
-        return view('father.document_view', compact(
-            'student', 'document', 'parent', 'contract'
-        ));
+        return view('father.document_view', compact('student', 'document', 'parent', 'contract'));
     }
 
     public function sign(Request $request)

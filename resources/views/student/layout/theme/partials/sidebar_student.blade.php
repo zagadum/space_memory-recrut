@@ -14,7 +14,7 @@
     </div>
 
     <nav class="nav flex-column mb-auto">
-        <a class="nav-link btn btn-outline-primary mb-3" href="#">
+        <a class="nav-link btn btn-outline-primary mb-3" href="/father">
            <div class="nav-icon icon-home"></div>
             <span>{{ trans('student.main_menu.main') }}</span>
         </a>
