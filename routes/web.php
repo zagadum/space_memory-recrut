@@ -96,7 +96,7 @@ Route::prefix('father')
 
         // Legacy / Common
         Route::get('/payment/download-invoice/{id}', [\App\Http\Controllers\Father\Cabinet\PaymentController::class, 'downloadInvoice'])->name('father.download-invoice');
-        Route::get('/learn', [\App\Http\Controllers\Father\LearnController::class, 'index'])->name('father.learn');
+        Route::get('/learn', [\App\Http\Controllers\Father\Cabinet\ParentLearnController::class, 'index'])->name('father.learn');
     });
 
 

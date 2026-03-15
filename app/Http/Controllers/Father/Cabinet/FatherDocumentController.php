@@ -18,6 +18,24 @@ class FatherDocumentController extends Controller
         $documents = [];
 
         if ($student instanceof RecrutingStudent && $student->id > 0) {
+            // Автоматически создать договор, если у студента ещё нет ни одного contract-документа
+            $hasContract = GlsDocument::where('student_id', $student->id)
+                ->where('doc_type', 'contract')
+                ->exists();
+
+            if (!$hasContract) {
+                $year   = now()->format('Y');
+                $padded = str_pad((string) $student->id, 5, '0', STR_PAD_LEFT);
+                GlsDocument::create([
+                    'student_id' => $student->id,
+                    'project_id' => $student->project_id ?? null,
+                    'doc_no'     => "CON-{$year}-{$padded}",
+                    'title'      => 'Umowa o świadczenie usług edukacyjnych',
+                    'doc_status' => 'new',
+                    'doc_type'   => 'contract',
+                ]);
+            }
+
             $documents = GlsDocument::query()
                 ->where('student_id', $student->id)
                 ->orderByDesc('created_at')

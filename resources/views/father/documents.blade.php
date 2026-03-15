@@ -226,7 +226,24 @@ header.d-lg-none { background: var(--bg) !important; border-bottom: 1px solid va
     color: var(--green); text-decoration: none;
 }
 
-/* ── АДАПТИВ ── */
+/* ── BACK BUTTON ── */
+.dp-back {
+    width: 38px; height: 38px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: transparent; color: var(--muted);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; cursor: pointer; text-decoration: none;
+    transition: background .2s, color .2s, border-color .2s;
+    flex-shrink: 0;
+}
+.dp-back:hover {
+    background: var(--teal-dim);
+    border-color: rgba(38,249,255,0.3);
+    color: var(--teal); text-decoration: none;
+}
+
+/* ── Адаптив ── */
 @media (max-width: 991px) {
     .dp-wrap { padding: 24px 20px 110px; }
     .dp-head h1 { font-size: 22px; }
@@ -250,6 +267,9 @@ header.d-lg-none { background: var(--bg) !important; border-bottom: 1px solid va
 
     {{-- HEADER --}}
     <div class="dp-head">
+        <a href="{{ route('father.portal') }}" class="dp-back" title="Назад в портал">
+            <i class="fas fa-arrow-left"></i>
+        </a>
         <div class="dp-head__icon">
             <i class="fas fa-file-contract"></i>
         </div>

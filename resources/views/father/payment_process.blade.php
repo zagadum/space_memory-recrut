@@ -374,6 +374,23 @@ header.d-lg-none { background: var(--bg) !important; border-bottom: 1px solid va
 }
 .pay-modal__btn-cancel:hover { background: var(--surface-2); color: #fff; }
 
+/* ── BACK ── */
+.pay-back {
+    width: 38px; height: 38px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: transparent; color: var(--muted);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; cursor: pointer; text-decoration: none;
+    transition: background .2s, color .2s, border-color .2s;
+    flex-shrink: 0;
+}
+.pay-back:hover {
+    background: var(--teal-dim);
+    border-color: rgba(38,249,255,0.3);
+    color: var(--teal); text-decoration: none;
+}
+
 /* ── RESPONSIVE ── */
 @media (max-width: 991px) {
     .pay-wrap { padding: 24px 20px 110px; }
@@ -390,6 +407,9 @@ header.d-lg-none { background: var(--bg) !important; border-bottom: 1px solid va
 
     {{-- PAGE HEADER --}}
     <div class="pay-head">
+        <a href="{{ route('father.portal') }}" class="pay-back" title="Назад в портал">
+            <i class="fas fa-arrow-left"></i>
+        </a>
         <div class="pay-head__icon">
             <i class="fas fa-credit-card"></i>
         </div>
