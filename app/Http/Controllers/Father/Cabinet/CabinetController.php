@@ -1,5 +1,6 @@
 <?php
-namespace App\Http\Controllers\Father;
+
+namespace App\Http\Controllers\Father\Cabinet;
 
 use App\Http\Controllers\Controller;
 
