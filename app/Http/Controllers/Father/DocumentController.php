@@ -13,7 +13,7 @@ class DocumentController extends Controller
 {
     public function index(Request $request): View
     {
-        $studentId = \Illuminate\Support\Facades\Auth::guard('student')->id();
+        $studentId = \Illuminate\Support\Facades\Auth::guard('recruting_student')->id();
 
         $documents = GlsInvoiceDocument::query()
             ->where('student_id', '=', $studentId)

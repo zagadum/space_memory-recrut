@@ -17,9 +17,10 @@ class AuthController extends Controller
 {
     public function showLogin(Request $request): View|RedirectResponse
     {
+
         \App::setLocale('pl');
         // Already logged in → go to portal
-        if (Auth::guard('student')->check()) {
+        if (Auth::guard('recruting_student')->check()) {
             return redirect()->route('father.payment');
         }
 
@@ -64,7 +65,7 @@ class AuthController extends Controller
         RateLimiter::clear($key);
 
         // Login via student guard
-        Auth::guard('student')->loginUsingId($student->id);
+        Auth::guard('recruting_student')->loginUsingId($student->id);
 
         // Update session
         $request->session()->regenerate();
@@ -80,7 +81,7 @@ class AuthController extends Controller
 
     public function logout(Request $request): RedirectResponse
     {
-        Auth::guard('student')->logout();
+        Auth::guard('recruting_student')->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 

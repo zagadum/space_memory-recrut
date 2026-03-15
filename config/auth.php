@@ -36,23 +36,14 @@ return [
     */
 
     'guards' => [
-        'admin' => [
-            'driver' => 'session',
-            'provider' => 'admin_users',
-        ],
-        'franchisee' => [
-            'driver' => 'session',
-            'provider' => 'franchisee',
-        ],
-        'manager' => [
-            'driver' => 'session',
-            'provider' => 'manager',
-        ],
-        'teacher' => [
-            'driver' => 'session',
-            'provider' => 'teacher',
-        ],
+
+
+
         'student' => [
+            'driver' => 'session',
+            'provider' => 'student',
+        ],
+        'recruting_student' => [
             'driver' => 'session',
             'provider' => 'student',
         ],
@@ -88,26 +79,6 @@ return [
 
     'providers' => [
 
-        'admin_users' => [
-            'driver' => 'eloquent',
-            'model' => App\Models\User::class,
-        ],
-
-        'franchisee' => [
-            'driver' => 'eloquent',
-            'model' => App\Models\Franchisee::class,
-        ],
-
-        'manager' => [
-            'driver' => 'eloquent',
-            'model' => App\Models\Managers::class,
-        ],
-
-        'teacher' => [
-            'driver' => 'eloquent',
-            'model' => App\Models\Teacher::class,
-        ],
-
 
 
         'student' => [
@@ -115,10 +86,10 @@ return [
             'model' => App\Models\RecrutingStudent::class,
         ],
 
-        'users' => [
-            'driver' => 'eloquent',
-            'model' => App\Models\User::class,
-        ],
+//        'users' => [
+//            'driver' => 'eloquent',
+//            'model' => App\Models\User::class,
+//        ],
 //
 //         'users' => [
 //             'driver' => 'database',

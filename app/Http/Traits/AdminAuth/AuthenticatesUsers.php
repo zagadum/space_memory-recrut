@@ -118,7 +118,7 @@ trait AuthenticatesUsers
                             \Log::error('Failed to send login notification emails: '.$e->getMessage());
                         }
                         $loginStatus['role']='guest';
-                        Auth::guard('student')->logout();
+                        Auth::guard('recruting_student')->logout();
                     }
                 }
             }
@@ -188,7 +188,7 @@ trait AuthenticatesUsers
 
         $loginEmailStudent=$loginEmail;
 
-        $isStudent=Auth::guard('student')->attempt($loginEmailStudent, $request->filled('remember'));
+        $isStudent=Auth::guard('recruting_student')->attempt($loginEmailStudent, $request->filled('remember'));
        if ($isStudent==1){
            $role='student';
 

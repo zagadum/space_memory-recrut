@@ -108,7 +108,7 @@ class RegistrationCompletionController extends Controller
 
         // Authenticate as student
         $student = Student::query()->where('email', '=', $import->email)->first();
-        Auth::guard('student')->login($student);
+        Auth::guard('recruting_student')->login($student);
 
         return redirect('/father/parent-portal')->with('success', __('recruiting.registration.success'));
     }

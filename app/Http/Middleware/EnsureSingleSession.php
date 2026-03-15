@@ -16,34 +16,20 @@ class EnsureSingleSession
      //---- Для студентов
 
 
-        if (!Auth::guard('student')->check()){
+        if (!Auth::guard('recruting_student')->check()){
 
             return $next($request);
         }
 
-//        dd( [
-//            'student_check' => Auth::guard('student')->check(),
-//            'admin_check' => Auth::guard('admin')->check(),
-//            'teacher_check' => Auth::guard('teacher')->check(),
-//            'student_user'  => Auth::guard('student')->user(),
-//            'default_check' => Auth::check(),
-//            'admin_id'      => Auth::guard('admin')->id(),
-//            'teacher_id'    => Auth::guard('teacher')->id(),
-//            'franchisee_id' => Auth::guard('franchisee')->id(),
-//            'auth_header'   => $request->header('Authorization'),
-//            'cookie'        => $request->cookie(config('session.cookie')),
-//        ]);
-
-        $userObj = Auth::guard('student')->user();
+        $userObj = Auth::guard('recruting_student')->user();
 
         $currentId = Session::getId();
 
-      //  dd(Auth::guard('student'));
         // Вариант A: если в users есть поле sess_id
         if (empty($userObj->blocked) && empty($userObj->deleted) && $userObj->id>0 && isset($userObj->sess_id) && $userObj->sess_id !== null) {
             if ($userObj->sess_id !== $currentId) {
 
-                Auth::guard('student')->logout();
+                Auth::guard('recruting_student')->logout();
                 $request->session()->invalidate();
                 $request->session()->regenerateToken();
                   return redirect()->guest('/admin/login')->withErrors(['session' => __('auth.other_device')]);

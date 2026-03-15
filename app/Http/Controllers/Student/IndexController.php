@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 class IndexController extends Controller {
     function dashboard(){
-        $student = Auth::guard('student')->user();
+        $student = Auth::guard('recruting_student')->user();
 
         // Safe null-safety for teacher and group
         $teacher = $student ? $student->teacher : null;

@@ -19,9 +19,9 @@ class CheckStudent
     {
 
 
-        if (Auth::guard('student')->check()){
+        if (Auth::guard('recruting_student')->check()){
 
-            $userObj=Auth::guard('student')->user();
+            $userObj=Auth::guard('recruting_student')->user();
 
             if (isset($userObj) && $userObj->id>0 && $userObj->deleted==0 && empty($userObj->blocked) ) {
                 return $next($request);

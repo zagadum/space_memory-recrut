@@ -2,16 +2,14 @@
 
 namespace App\Http\Controllers\Auth;
 
-//??? use Brackets\AdminAuth\Http\Controllers\Controller;
 use  App\Http\Traits\AdminAuth\AuthenticatesUsers;
 use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use App\Helpers\JwtHelper;
+
 use App\Http\Controllers\Controller;
-use App\Services\IpLocationService;
+
 class LoginController extends Controller
 {
     /*
@@ -84,12 +82,10 @@ class LoginController extends Controller
     /**
      * Показывает форму входа
      */
-    public function showLoginForm(Request $request,  IpLocationService $ipService){
+    public function showLoginForm(Request $request){
         $role = session('role');
 
-
-
-
+        die('aaa');
         if (isset($role) && !$this->ChekRule($role)) {
             return $this->logout(request());
         }
@@ -101,10 +97,10 @@ class LoginController extends Controller
 
         }
 
-        $showSetLocationModal = $ipService->check($request);
+
  
      
-        return view('admin.auth.login', ['ipService' => $ipService, 'showSetLocationModal' => $showSetLocationModal] );
+        return view('auth.login' );
     }
 
    
@@ -173,7 +169,7 @@ class LoginController extends Controller
     }
     protected function guard_student()
     {
-        return Auth::guard('student');
+        return Auth::guard('recruting_student');
     }
 
 

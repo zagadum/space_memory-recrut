@@ -2,7 +2,7 @@
 
 return [
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'Recruiting Space Memory'),
 
     'env' => env('APP_ENV', 'production'),
 
@@ -14,7 +14,7 @@ return [
 
     'timezone' => 'UTC',
 
-    'locale' => 'en',
+    'locale' => 'pl',
 
     'fallback_locale' => 'en',
 
@@ -30,7 +30,7 @@ return [
     ],
 
     'providers' => [
-        Illuminate\Auth\AuthServiceProvider::class,
+         Illuminate\Auth\AuthServiceProvider::class,
         Illuminate\Broadcasting\BroadcastServiceProvider::class,
         Illuminate\Bus\BusServiceProvider::class,
         Illuminate\Cache\CacheServiceProvider::class,

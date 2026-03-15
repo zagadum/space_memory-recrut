@@ -17,9 +17,8 @@ class CheckApi
     public function handle($request, Closure $next)
     {
 
-        if (Auth::guard('student')->check()){
-
-            $userObj=Auth::guard('student')->user();
+        if (Auth::guard('recruting_student')->check()){
+            $userObj=Auth::guard('recruting_student')->user();
             if ($userObj->id && empty($userObj->blocked) && $userObj->deleted==0) {
                 return $next($request);
             }

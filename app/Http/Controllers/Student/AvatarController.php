@@ -11,8 +11,8 @@ class AvatarController extends Controller
 {
     public function uploadAvatar(Request $request)
     {
-        if (Auth::guard('student')->check()) {
-            $this->studentObj = Auth::guard('student')->user();
+        if (Auth::guard('recruting_student')->check()) {
+            $this->studentObj = Auth::guard('recruting_student')->user();
             $request->validate(['photo' => 'required|image|mimes:jpeg,png,jpg,gif']);
 
 

@@ -24,7 +24,7 @@ class PaymentController extends Controller
 {
     public function index(Request $request): View
     {
-        $studentId = Auth::guard('student')->id();
+        $studentId = Auth::guard('recruting_student')->id();
         $student = \App\Models\RecrutingStudent::find($studentId);
 
         if (!$student) {
@@ -72,7 +72,7 @@ class PaymentController extends Controller
 
     public function createOrder(Request $request)
     {
-        $studentId = Auth::guard('student')->id();
+        $studentId = Auth::guard('recruting_student')->id();
         $student   = DB::table('recruting_student')->where('id', $studentId)->first();
 
         if (!$student) {
@@ -164,7 +164,7 @@ class PaymentController extends Controller
      */
     public function downloadInvoice(Request $request, int $id): \Symfony\Component\HttpFoundation\StreamedResponse|\Illuminate\Http\Response
     {
-        $studentId = \Illuminate\Support\Facades\Auth::guard('student')->id();
+        $studentId = \Illuminate\Support\Facades\Auth::guard('recruting_student')->id();
 
         $document = GlsInvoiceDocument::query()
             ->where('id', '=', $id)

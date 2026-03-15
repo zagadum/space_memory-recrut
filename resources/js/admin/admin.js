@@ -38,14 +38,6 @@ import './app-components/bootstrap';
 import './index';
 
 
-
-
-import '@fullcalendar/core/vdom' ;
-import FullCalendar from '@fullcalendar/vue';
-import dayGridPlugin from '@fullcalendar/daygrid';
-import interactionPlugin from '@fullcalendar/interaction';
- Vue.component('fullcalendar', FullCalendar);
-
 Vue.use(VueI18n);
 
 const i18n = new VueI18n({
