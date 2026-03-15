@@ -73,7 +73,7 @@ Route::middleware(['web'])->group(static function () {
 //------------------------------------------------------------------------
 //------- STUDENT -----------------------
 
-
+//????????
 Route::middleware(['is_auth'])->group(static function () {
     Route::group(['prefix' => 'student', 'as' => 'student.'], static function () {
             Route::any('/', function () {
@@ -84,9 +84,6 @@ Route::middleware(['is_auth'])->group(static function () {
             );
         });
 
-Route::middleware(['is_student'])->group(static function () {
-// Any specific student middleware routes can go here
-});
 
 
 Route::get('/verify', [StudentCabinetController::class , 'showVerifyPage'])->name('verification.show');
@@ -118,11 +115,8 @@ Route::prefix('father')
 
         Route::get('/documents', [\App\Http\Controllers\Father\FatherDocumentController::class, 'index'])
             ->name('father.documents');
-        
-        // Fallbacks for 404s
         Route::get('/document', fn() => redirect()->route('father.documents'));
         Route::get('/document-view', fn() => redirect()->route('father.documents'));
-
         Route::get('/document-view/{document}', [\App\Http\Controllers\Father\FatherDocumentController::class, 'show'])
             ->name('father.document.view');
         Route::post('/documents/sign', [\App\Http\Controllers\Father\FatherDocumentController::class, 'sign'])
@@ -149,4 +143,3 @@ Route::get('/legal/photo', fn() => view('legal.photo_consent'))->name('legal.pho
 Route::fallback(function () {
     abort(404);
 });
-/* Auto-generated admin routes */

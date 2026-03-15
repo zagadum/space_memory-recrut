@@ -17,7 +17,7 @@ return new class extends Migration
 
         Schema::create('recruting_student_history', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('student_id');
+            $table->unsignedBigInteger('student_id');
             $table->string('event', 100);
             $table->string('detail', 500)->nullable();
             $table->string('changed_by', 100)->nullable();
