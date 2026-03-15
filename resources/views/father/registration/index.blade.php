@@ -686,7 +686,7 @@
                 <!-- СОГЛАСИЯ -->
                 <div class="form-section">
                     <div class="checkbox-group">
-                        <input type="checkbox" id="checkTermsPriv" required checked>
+                        <input type="checkbox" id="checkTermsPriv" required >
                         <label for="checkTermsPriv" id="lblTermsPriv">
                             <span id="txtTerms1">Akceptuję </span><button type="button" class="doc-link"
                                 onclick="openModal('modalTerms')">Regulamin</button><span id="txtTerms2"> i
@@ -695,33 +695,33 @@
                         </label>
                     </div>
                     <div class="checkbox-group">
-                        <input type="checkbox" id="checkDataProcess" required checked>
+                        <input type="checkbox" id="checkDataProcess" required >
                         <label for="checkDataProcess">
                             <span id="lblDataProcess">Zgadzam się na przetwarzanie danych w celu realizacji
                                 usług</span><span class="required-star">*</span>
                         </label>
                     </div>
                     <div class="checkbox-group">
-                        <input type="checkbox" id="checkUrgent" required checked>
+                        <input type="checkbox" id="checkUrgent" required >
                         <label for="checkUrgent">
                             <span id="lblUrgent">Żądam rozpoczęcia usług przed upływem 14 dni</span><span
                                 class="required-star">*</span>
                         </label>
                     </div>
                     <div class="checkbox-group" style="margin-top: 8px;">
-                        <input type="checkbox" id="checkImage" checked>
+                        <input type="checkbox" id="checkImage" >
                         <label for="checkImage">
                             <span id="lblImage1">Zgadzam się na publikację wizerunku dziecka</span>
                         </label>
                     </div>
                     <div class="checkbox-group">
-                        <input type="checkbox" id="checkRecord" checked>
+                        <input type="checkbox" id="checkRecord" >
                         <label for="checkRecord">
                             <span id="lblRecord">Zgadzam się na nagrywanie zajęć</span>
                         </label>
                     </div>
                     <div class="checkbox-group">
-                        <input type="checkbox" id="checkMarketing" checked>
+                        <input type="checkbox" id="checkMarketing" >
                         <label for="checkMarketing">
                             <span id="lblMarketing">Chcę otrzymywać informacje marketingowe e-mailem</span>
                         </label>
