@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
-class CheckStudent
+class CheckFather
 {
     /**
      * Handle an incoming request.

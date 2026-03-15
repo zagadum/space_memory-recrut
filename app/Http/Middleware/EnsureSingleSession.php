@@ -32,7 +32,7 @@ class EnsureSingleSession
                 Auth::guard('recruting_student')->logout();
                 $request->session()->invalidate();
                 $request->session()->regenerateToken();
-                  return redirect()->guest('/admin/login')->withErrors(['session' => __('auth.other_device')]);
+                  return redirect()->guest('/father/login')->withErrors(['session' => __('auth.other_device')]);
             }
             return $next($request);
         }

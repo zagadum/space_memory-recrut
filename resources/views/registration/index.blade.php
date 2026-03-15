@@ -1142,7 +1142,7 @@
                         'Content-Type': 'application/json',
                         'Accept': 'application/json',
                         'X-CSRF-TOKEN': csrfToken,
-                        'X-Form-Token': registerFormToken,
+                        'X-Register-Form-Token': registerFormToken,
                         'X-Requested-With': 'XMLHttpRequest'
                     },
                     body: JSON.stringify(payload)

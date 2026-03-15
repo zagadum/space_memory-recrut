@@ -10,7 +10,7 @@ class FatherDocumentController extends Controller
 {
     public function index(Request $request)
     {
-        $student = auth()->guard('student')->user();
+        $student = auth()->guard('recruting_student')->user();
         
         $documents = GlsInvoiceDocument::where('student_id', $student->id)->get();
         
@@ -19,7 +19,7 @@ class FatherDocumentController extends Controller
 
     public function show(Request $request, int $document)
     {
-        $student = auth()->guard('student')->user();
+        $student = auth()->guard('recruting_student')->user();
         
         $document = GlsInvoiceDocument::where('student_id', $student->id)->findOrFail($document);
         
@@ -45,7 +45,7 @@ class FatherDocumentController extends Controller
             'student_id'  => 'required|integer',
         ]);
 
-        $student = auth()->guard('student')->user();
+        $student = auth()->guard('recruting_student')->user();
         
         if ($student->id != $request->student_id) {
             return response()->json(['success' => false, 'message' => 'Unauthorized'], 403);

@@ -12,7 +12,7 @@ class FatherPaymentController extends Controller
 {
     public function index(Request $request)
     {
-        $student = auth()->guard('student')->user();
+        $student = auth()->guard('recruting_student')->user();
         
         // TODO: проверить подписан ли договор
         $contract = (object)[
@@ -43,7 +43,7 @@ class FatherPaymentController extends Controller
             'lessons'    => 'required|integer',
         ]);
 
-        $student = auth()->guard('student')->user();
+        $student = auth()->guard('recruting_student')->user();
 
         if ($student->id != $validated['student_id']) {
             abort(403);
@@ -101,7 +101,7 @@ class FatherPaymentController extends Controller
 
     public function success(Request $request)
     {
-        $student = auth()->guard('student')->user();
+        $student = auth()->guard('recruting_student')->user();
         
         $payment = GlsPaymentTransaction::where('student_id', $student->id)
             ->where('status', 'completed')

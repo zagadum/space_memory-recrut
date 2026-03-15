@@ -39,7 +39,7 @@ return [
     |
     */
 
-    'login_redirect' => '/admin',
+    'login_redirect' => '/father',
 
     /*
     |--------------------------------------------------------------------------
@@ -50,7 +50,7 @@ return [
     |
     */
 
-    'logout_redirect' => '/admin/login',
+    'logout_redirect' => '/father/logout',
 
     /*
     |--------------------------------------------------------------------------
@@ -61,7 +61,7 @@ return [
     |
     */
 
-    'password_reset_redirect' => '/admin/login',
+    'password_reset_redirect' => '/father/login',
 
     /*
     |--------------------------------------------------------------------------
@@ -73,7 +73,7 @@ return [
     |
     */
 
-    'activation_redirect' => '/admin/login',
+    'activation_redirect' => '/father/login',
 
     /*
     |

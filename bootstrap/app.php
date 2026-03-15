@@ -20,14 +20,14 @@ return Application::configure(basePath: dirname(__DIR__))
             'verify.form'   => \App\Http\Middleware\EnsureRegisterFormRequest::class,
         ]);
 
-        $middleware->group('is_student', [
-            \App\Http\Middleware\CheckStudent::class,
-            \App\Http\Middleware\SetStudentLocale::class,
+        $middleware->group('is_father', [
+            \App\Http\Middleware\CheckFather::class,
+
         ]);
 
         $middleware->group('is_auth', [
             \App\Http\Middleware\CheckAuth::class,
-            \App\Http\Middleware\SetStudentLocale::class,
+
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

@@ -12,7 +12,7 @@ class LoginController extends Controller{
 
     public function login(){
 
-        return redirect('/admin/login');
+        return redirect('/login');
 
     }
     public function auth(Request $request){
@@ -62,7 +62,7 @@ class LoginController extends Controller{
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/admin/login');
+        return redirect('/father/login');
     }
 
 

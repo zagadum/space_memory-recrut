@@ -10,7 +10,7 @@ class FatherPortalController extends Controller
     public function index(Request $request)
     {
         // Получить студента из сессии (is_student middleware)
-        $student = auth()->guard('student')->user();
+        $student = auth()->guard('recruting_student')->user();
 
         return view('father.parent_portal', compact('student'));
     }

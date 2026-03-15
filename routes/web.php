@@ -26,7 +26,7 @@ Route::get('/', function () {
     return redirect('/register');
 });
 Route::get('/login', function () {
-    return redirect('/register');
+    return redirect('/father/login');
 });
 
 Route::get('/register', function () {
@@ -48,27 +48,22 @@ Route::post('/payments/imoje/return', 'App\Http\Controllers\ImojeController@retu
 
 //-------------- Admin part end ----
 
-Route::get('/admin', function () {
-
-//  return redirect()->route('student-dashboard');
-
-});
 
 
 
 Route::middleware(['web'])->group(static function () {
 
     Route::namespace ('App\Http\Controllers\Auth')->group(static function () {
-            Route::get('/admin/login', 'LoginController@showLoginForm')->name('login');
-            Route::get('/admin/login/alias', function () {
-                    return redirect()->route('login');
-                }
-                )->name('brackets/admin-auth::admin/login');
+            //Route::get('/admin/login', 'LoginController@showLoginForm')->name('login');
+            //Route::get('/admin/login/alias', function () {
+            //        return redirect()->route('login');
+            //    }
+             //   )->name('brackets/admin-auth::admin/login');
                 //???  Route::get('/admin/login', 'LoginController@showLoginForm')->name('brackets/admin-auth::admin/login');
         
-                Route::post('/admin/login', 'LoginController@login')->middleware('throttle:5,1');
+             //   Route::post('/admin/login', 'LoginController@login')->middleware('throttle:5,1');
                 ; //see app\Http\Traits\AdminAuth\AuthenticatesUsers.php
-                Route::any('/admin/logout', 'LoginController@logout')->name('logoutAdmin');
+              //  Route::any('/admin/logout', 'LoginController@logout')->name('logoutAdmin');
                 Route::any('/logout', 'LoginController@logout')->name('logoutAny');
             }
             );
@@ -117,7 +112,7 @@ Route::get('/father/logout', [\App\Http\Controllers\Father\AuthController::class
     ->name('father.logout');
 
 Route::prefix('father')
-    ->middleware('is_student')
+    ->middleware('is_father')
     ->group(function () {
         Route::get('/parent-portal', [\App\Http\Controllers\Father\Cabinet\FatherPortalController::class, 'index'])
             ->name('father.portal');

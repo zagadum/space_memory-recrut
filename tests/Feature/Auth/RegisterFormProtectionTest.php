@@ -44,14 +44,14 @@ class RegisterFormProtectionTest extends TestCase
         $this->get('/register')->assertOk();
 
         $headers = $this->registerHeaders();
-        unset($headers['X-Form-Token']);
+        unset($headers['X-Register-Form-Token']);
 
         $this->withHeaders($headers)
             ->postJson('/api/v1/register', $this->validPayload('protected-denied@example.com'))
             ->assertStatus(403)
             ->assertJson([
                 'success' => false,
-                'message' => 'Invalid form token.',
+                'message' => 'Invalid register form token.',
             ]);
 
         $this->assertDatabaseMissing('recruting_student', [
@@ -64,11 +64,11 @@ class RegisterFormProtectionTest extends TestCase
         $baseUrl = rtrim(url('/'), '/');
 
         return [
-            'X-CSRF-TOKEN'       => csrf_token(),
-            'X-Form-Token'       => (string) session('register_form_token'),
-            'Origin'             => $baseUrl,
-            'Referer'            => $baseUrl . '/register',
-            'X-Requested-With'  => 'XMLHttpRequest',
+            'X-CSRF-TOKEN' => csrf_token(),
+            'X-Register-Form-Token' => (string) session('register_form_token'),
+            'Origin' => $baseUrl,
+            'Referer' => $baseUrl . '/register',
+            'X-Requested-With' => 'XMLHttpRequest',
         ];
     }
 

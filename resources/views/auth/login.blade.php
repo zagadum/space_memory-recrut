@@ -78,7 +78,7 @@ $showNewYear=false;
             @endif
             <div class="auth-logo"><img src="{{asset('/images/auth-logo.png')}}"></div>
             <div class="auth-form_container">
-                <auth-form :action="/admin/login" :data="{}" inline-template>
+                <auth-form :action="/father/login" :data="{}" inline-template>
                     <form class="form-horizontal" role="form" method="POST" action="{{ url('/admin/login') }}" novalidate>
                         {{ csrf_field() }}
                         <div class="auth-body">

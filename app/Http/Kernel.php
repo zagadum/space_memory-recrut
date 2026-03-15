@@ -52,8 +52,8 @@ class Kernel extends HttpKernel
         // Check password age and if it older than specified time then
         // redirects user to the new password page
 
-        'is_student'    => [\App\Http\Middleware\CheckStudent::class, \App\Http\Middleware\SetStudentLocale::class],
-        'is_auth'    => [\App\Http\Middleware\CheckAuth::class, \App\Http\Middleware\SetStudentLocale::class],
+        'is_father'    => [\App\Http\Middleware\CheckFather::class  ],
+        'is_auth'    => [\App\Http\Middleware\CheckAuth::class],
 
         'api' => [
             'throttle:api',

@@ -8,25 +8,20 @@ use Symfony\Component\HttpFoundation\Response;
 
 class EnsureRegisterFormRequest
 {
-    /**
-     * @param  string  $tokenKey     Ключ сессии с токеном формы (default: register_form_token)
-     * @param  string  $refererPath  Ожидаемый path реферера (default: /register)
-     */
-    public function handle(Request $request, Closure $next, string $tokenKey = 'register_form_token', string $refererPath = '/register'): Response
+    public function handle(Request $request, Closure $next): Response
     {
         $sessionToken = (string) $request->session()->get($tokenKey, '');
         $headerToken = (string) $request->header('X-Form-Token', '');
 
         if ($sessionToken === '' || $headerToken === '' || !hash_equals($sessionToken, $headerToken)) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Invalid form token.',
+        $sessionToken = (string) $request->session()->get('register_form_token', '');
+        $headerToken = (string) $request->header('X-Register-Form-Token', '');
             ], 403);
         }
 
         $origin = $request->headers->get('Origin');
         if ($origin !== null && !$this->isSameOrigin($origin, $request)) {
-            return response()->json([
+                'message' => 'Invalid register form token.',
                 'success' => false,
                 'message' => 'Invalid request origin.',
             ], 403);
@@ -36,7 +31,7 @@ class EnsureRegisterFormRequest
         if (!$referer || !$this->isExpectedReferer($referer, $request, $refererPath)) {
             return response()->json([
                 'success' => false,
-                'message' => 'Invalid request referer.',
+        if (!$referer || !$this->isRegisterReferer($referer, $request)) {
             ], 403);
         }
 
@@ -49,21 +44,22 @@ class EnsureRegisterFormRequest
         $originScheme = parse_url($origin, PHP_URL_SCHEME);
         $originPort   = parse_url($origin, PHP_URL_PORT);
 
-        return $originHost === $request->getHost()
+        $originHost = parse_url($origin, PHP_URL_HOST);
             && $originScheme === $request->getScheme()
-            && (($originPort ?: $this->defaultPort($originScheme)) === $request->getPort());
+        $originPort = parse_url($origin, PHP_URL_PORT);
     }
 
     private function isExpectedReferer(string $referer, Request $request, string $expectedPath): bool
     {
         $refererHost   = parse_url($referer, PHP_URL_HOST);
-        $refererScheme = parse_url($referer, PHP_URL_SCHEME);
+    private function isRegisterReferer(string $referer, Request $request): bool
         $refererPort   = parse_url($referer, PHP_URL_PORT);
-        $refererPath   = parse_url($referer, PHP_URL_PATH) ?: '';
+        $refererHost = parse_url($referer, PHP_URL_HOST);
 
         return $refererHost === $request->getHost()
-            && $refererScheme === $request->getScheme()
-            && (($refererPort ?: $this->defaultPort($refererScheme)) === $request->getPort())
+            && rtrim($refererPath, '/') === '/register';
+        $refererPort = parse_url($referer, PHP_URL_PORT);
+        $refererPath = parse_url($referer, PHP_URL_PATH) ?: '';
             && rtrim($refererPath, '/') === rtrim($expectedPath, '/');
     }
 

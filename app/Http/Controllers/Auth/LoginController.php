@@ -37,7 +37,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectToAfterLogout = '/admin/login';
+    protected $redirectToAfterLogout = '/father/login';
 
     /**
      * Guard used for admin user
