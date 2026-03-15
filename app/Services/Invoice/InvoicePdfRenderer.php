@@ -11,7 +11,7 @@ final readonly class InvoicePdfRenderer
 {
     public function renderAndStore(InvoiceData $data): string
     {
-        $pdf = Pdf::loadView('pdf.invoice.faktura', ['invoice' => $data])
+        $pdf = Pdf::loadView('father.invoice.pdf.faktura', ['invoice' => $data])
             ->setPaper('a4')
             ->setOption('defaultFont', 'DejaVu Sans');
 
