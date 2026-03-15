@@ -180,7 +180,7 @@ class FatherPaymentController extends Controller
             'customerId'          => (string) $student->id,
             'orderDescription'    => $this->buildImojeOrderDescription($project, $plan),
             'locale'              => 'pl',
-            'urlSuccess'          => route('father.payment.success'),
+            'urlSuccess'          => route('father.payment.success').'?orderId='.  $transaction->id,
             'urlFailure'          => route('father.payment.fail'),
             'urlNotification'     => route('imoje.webhook'),
         ];
@@ -258,7 +258,8 @@ class FatherPaymentController extends Controller
                 ->orderByDesc('created_at')
                 ->first();
         }
-        
+
+
         return view('father.payment_success', compact('student', 'payment'));
     }
 
