@@ -676,7 +676,7 @@ header.d-lg-none {
             </div>
         </a>
 
-        <a href="#" class="pp-action-card">
+        <a href="/father/learn" class="pp-action-card">
             <div class="pp-action-card__icon" style="font-size: 48px; display: flex; align-items: center; justify-content: center; background: none !important; border: none !important;">
                 🎓
             </div>
