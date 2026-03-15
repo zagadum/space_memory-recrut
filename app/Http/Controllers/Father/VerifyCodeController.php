@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Father;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
-use App\Models\RecrutingStudent;
 use App\Jobs\SendVerificationCodeJob;
+use App\Models\RecrutingStudent;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\Str;
 
-class StudentCabinetController extends Controller
+class VerifyCodeController extends Controller
 {
 
     //POST проверка кода
@@ -34,22 +34,19 @@ class StudentCabinetController extends Controller
 
         RateLimiter::hit($throttleKey, 900);
 
-        $student = DB::table('recruting_student')
+        $recuting_student = DB::table('recruting_student')
             ->where('email', $email)
             ->where('verification_code', $validated['code'])
             ->first();
 
-        if (!$student) {
-            return response()->json([
-                'success' => false,
-                'message' => __('api.invalid_code_or_email')
-            ], 422);
+        if (!$recuting_student) {
+            return response()->json(['success' => false, 'message' => __('api.invalid_code_or_email')], 422);
         }
 
         $apiToken = Str::random(60);
 
         DB::table('recruting_student')
-            ->where('id', $student->id)
+            ->where('id', $recuting_student->id)
             ->where('verification_code', $validated['code'])
             ->update([
                 'verification_code' => null,
@@ -61,60 +58,43 @@ class StudentCabinetController extends Controller
         RateLimiter::clear($throttleKey);
 
         // Standardize login for SPA/Portal
-        $studentModel = RecrutingStudent::find($student->id);
-        if ($studentModel) {
-            Auth::guard('recruting_student')->login($studentModel);
+        $recuting_studentModel = RecrutingStudent::find($recuting_student->id);
+        if ($recuting_studentModel) {
+            Auth::guard('recruting_student')->login($recuting_studentModel);
         }
 
-        return response()->json([
-            'success'   => true,
-            'api_token' => $apiToken,
-            'message'   => __('api.email_successfully_verified')
-        ]);
+        return response()->json(['success'   => true, 'api_token' => $apiToken, 'message'   => __('api.email_successfully_verified')]);
     }
 
     // Страница   повторно выслать код для входа
     public function resendCode(Request $request)
     {
-        $validated = $request->validate([
-            'email' => ['required', 'email'],
-        ]);
+        $validated = $request->validate(['email' => ['required', 'email'],]);
 
         $email = trim($validated['email']);
         $throttleKey = 'student-resend-code:' . Str::lower($email) . '|' . $request->ip();
 
         if (RateLimiter::tooManyAttempts($throttleKey, 3)) {
-            return response()->json([
-                'success' => false,
-                'message' => __('auth.throttle', ['seconds' => RateLimiter::availableIn($throttleKey)]),
-            ], 429);
+            return response()->json(['success' => false, 'message' => __('auth.throttle', ['seconds' => RateLimiter::availableIn($throttleKey)]),], 429);
         }
 
         RateLimiter::hit($throttleKey, 600);
 
-        $student = DB::table('recruting_student')
+        $recuting_student = DB::table('recruting_student')
             ->where('email', $email)
             ->first();
 
-        if ($student) {
+        if ($recuting_student) {
             do {
                 $code = str_pad((string)random_int(0, 999999), 6, '0', STR_PAD_LEFT);
-            } while ($code === (string) $student->verification_code);
+            } while ($code === (string) $recuting_student->verification_code);
 
-            DB::table('recruting_student')
-                ->where('id', $student->id)
-                ->update([
-                    'verification_code' => $code,
-                    'updated_at'        => now(),
-                ]);
+            DB::table('recruting_student')->where('id', $recuting_student->id)->update(['verification_code' => $code, 'updated_at'        => now(),]);
 
-            SendVerificationCodeJob::dispatch($student->email, $code);
+            SendVerificationCodeJob::dispatch($recuting_student->email, $code);
         }
 
-        return response()->json([
-            'success' => true,
-            'message' => __('api.new_code_sent')
-        ]);
+        return response()->json(['success' => true, 'message' => __('api.new_code_sent')]);
     }
 
     // Страница ввод кода
@@ -123,13 +103,8 @@ class StudentCabinetController extends Controller
         $verifyFormToken = \Illuminate\Support\Str::random(64);
         session(['verify_form_token' => $verifyFormToken]);
 
-        return view('registration.verify', [
-            'verifyFormToken' => $verifyFormToken,
-        ]);
+        return view('father.registration.verify', ['verifyFormToken' => $verifyFormToken,]);
     }
 
-    public function showCabinetPage()
-    {
-        return view('student.cabinet');
-    }
+
 }

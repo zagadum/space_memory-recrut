@@ -7,7 +7,7 @@ use App\Http\Controllers\Api\FallbackController;
 use App\Http\Controllers\Api\NewStudentsController;
 use App\Http\Controllers\Api\LeadsController;
 use App\Http\Controllers\Api\ExpelledStudentsController;
-use App\Http\Controllers\Api\StudentCabinetController;
+
 
 /*
 |--------------------------------------------------------------------------

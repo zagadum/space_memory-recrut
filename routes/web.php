@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Api\StudentCabinetController;
+
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 
@@ -33,9 +33,7 @@ Route::get('/register', function () {
     $registerFormToken = Str::random(64);
     session(['register_form_token' => $registerFormToken]);
 
-    return view('registration.index', [
-        'registerFormToken' => $registerFormToken,
-    ]);
+    return view('father.registration.index', ['registerFormToken' => $registerFormToken,]);
 });
 
 
@@ -86,14 +84,10 @@ Route::middleware(['is_auth'])->group(static function () {
 
 
 
-Route::get('/verify', [StudentCabinetController::class, 'showVerifyPage'])->name('verification.show');
-Route::post('/recruitment/verify-code', [StudentCabinetController::class, 'verifyCode'])
-    ->middleware(['api.locale', 'verify.form:verify_form_token,/verify'])
-    ->name('verification.verify');
-Route::post('/recruitment/resend-code', [StudentCabinetController::class, 'resendCode'])
-    ->middleware('verify.form:verify_form_token,/verify')
-    ->name('verification.resend');
-Route::get('/cabinet', [StudentCabinetController::class , 'showCabinetPage']);
+Route::get('/verify', [\App\Http\Controllers\Father\VerifyCodeController::class, 'showVerifyPage'])->name('verification.show');
+Route::post('/recruitment/verify-code', [\App\Http\Controllers\Father\VerifyCodeController::class, 'verifyCode'])->middleware(['api.locale', 'verify.form:verify_form_token,/verify'])->name('verification.verify');
+Route::post('/recruitment/resend-code', [\App\Http\Controllers\Father\VerifyCodeController::class, 'resendCode'])->middleware('verify.form:verify_form_token,/verify')->name('verification.resend');
+Route::get('/cabinet', [\App\Http\Controllers\Father\Cabinet\CabinetController::class , 'index']);
 // Recruiting
 Route::get('/register/invite/{token}', [\App\Http\Controllers\Father\Invite\RecruitingInviteController::class , 'accept'])->name('recruiting.invite');
 Route::get('/register/complete/{token}', [\App\Http\Controllers\Father\Invite\RegistrationCompletionController::class , 'index'])->name('registration.complete');
