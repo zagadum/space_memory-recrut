@@ -10,7 +10,7 @@
     <nav class="father-nav">
         <div class="father-nav__logo">Global Leaders Skills</div>
         <div class="father-nav__links">
-            <a href="{{ route('father.document') }}"
+            <a href="/father/document"
                class="father-nav__link @if(request()->routeIs('father.document*')) father-nav__link--active @endif">
                 {{ __('father.nav.documents') }}
             </a>
