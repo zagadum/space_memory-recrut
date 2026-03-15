@@ -66,6 +66,8 @@
         </nav>
 
         {{-- Bottom Actions --}}
+
+        
         <div class="px-4 pb-5">
             <a href="{{ url('/logout') }}" class="nav-link btn btn-outline-secondary btn-block">
                 <div class="nav-icon icon-exit"></div>

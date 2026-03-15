@@ -416,15 +416,15 @@ header.d-lg-none { background: var(--bg) !important; border-bottom: 1px solid va
 
     {{-- PAGE HEADER --}}
     <div class="pay-head">
-        <a href="{{ route('father.portal') }}" class="pay-back" title="Назад в портал">
+        <a href="{{ route('father.portal') }}" class="pay-back" title="{{ __('father.payment_process.back_to_portal') }}">
             <i class="fas fa-arrow-left"></i>
         </a>
         <div class="pay-head__icon">
             <i class="fas fa-credit-card"></i>
         </div>
         <div>
-            <h1>Оплата обучения</h1>
-            <p>Выберите период и произведите оплату</p>
+            <h1>{{ __('father.payment_process.title') }}</h1>
+            <p>{{ __('father.payment_process.subtitle') }}</p>
         </div>
     </div>
 
@@ -433,13 +433,13 @@ header.d-lg-none { background: var(--bg) !important; border-bottom: 1px solid va
         {{-- ══════════════════════ LEFT ══════════════════════ --}}
         <div class="pay-card">
             <div class="pay-card__header">
-                <div class="pay-card__title">Выберите период оплаты обучения</div>
+                <div class="pay-card__title">{{ __('father.payment_process.select_period') }}</div>
                 <div class="pay-card__sub">
-                    Ученик: <strong style="color:#fff">{{ ($student->name ?? '') . ' ' . ($student->surname ?? '') ?: 'Не указано' }}</strong>
+                    {{ __('father.payment_process.student_label') }} <strong style="color:#fff">{{ ($student->name ?? '') . ' ' . ($student->surname ?? '') ?: __('father.payment_process.not_specified') }}</strong>
                     &nbsp;·&nbsp;
-                    Группа: <strong style="color:var(--teal)">{{ $student->group?->name ?? 'Не назначена' }}</strong>
+                    {{ __('father.payment_process.group_label') }} <strong style="color:var(--teal)">{{ $student->group?->name ?? __('father.payment_process.no_group') }}</strong>
                     &nbsp;·&nbsp;
-                    Проект: <strong style="color:#fff">{{ $project->name ?? '—' }}</strong>
+                    {{ __('father.payment_process.project_label') }} <strong style="color:#fff">{{ $project->name ?? '—' }}</strong>
                 </div>
             </div>
 
@@ -454,21 +454,21 @@ header.d-lg-none { background: var(--bg) !important; border-bottom: 1px solid va
                          data-old="{{ number_format((float) ($plan->old_price ?? $plan->price), 2, '.', '') }}"
                          data-currency="{{ $plan->currency }}">
                         @if($plan->is_featured)
-                            <div class="period-item__popular">Популярный</div>
+                            <div class="period-item__popular">{{ __('father.payment_process.featured') }}</div>
                         @endif
                         <div class="period-item__radio"></div>
                         <div class="period-item__body">
                             <div class="period-item__name">{{ $plan->period_label }}</div>
-                            <div class="period-item__lessons">{{ $plan->lessons }} занятий</div>
+                            <div class="period-item__lessons">{{ $plan->lessons }} {{ __('father.payment_process.lessons_count') }}</div>
                         </div>
                         @if(($plan->save_amount ?? 0) > 0)
-                            <div class="period-item__save"><i class="fas fa-tag"></i> Экономия {{ number_format((float) $plan->save_amount, 0) }} {{ $plan->currency }}</div>
+                            <div class="period-item__save"><i class="fas fa-tag"></i> {{ __('father.payment_process.savings') }} {{ number_format((float) $plan->save_amount, 0) }} {{ $plan->currency }}</div>
                         @endif
                     </div>
                 @empty
                     <div class="hist-empty">
                         <i class="fas fa-tags"></i>
-                        Для проекта пока не настроены тарифы.
+                        {{ __('father.payment_process.no_plans') }}
                     </div>
                 @endforelse
 
@@ -478,7 +478,7 @@ header.d-lg-none { background: var(--bg) !important; border-bottom: 1px solid va
 
             <div class="pay-card__footer">
                 <div class="pay-price">
-                    <div class="pay-price__label">К оплате</div>
+                    <div class="pay-price__label">{{ __('father.payment_process.total_to_pay') }}</div>
                     <div class="pay-price__row">
                         <span class="pay-price__old" id="priceOld">
                             {{ $firstPlan ? number_format((float) ($firstPlan->old_price ?? $firstPlan->price), 0) . ' ' . $firstPlan->currency : '—' }}
@@ -491,17 +491,17 @@ header.d-lg-none { background: var(--bg) !important; border-bottom: 1px solid va
                 <div class="pay-btn-wrap">
                     <button class="pay-btn {{ ($contract->signed ?? false) && $paymentPlans->isNotEmpty() ? '' : 'locked' }}" id="btnPay">
                         <i class="fas {{ ($contract->signed ?? false) && $paymentPlans->isNotEmpty() ? 'fa-credit-card' : 'fa-lock' }}"></i>
-                        Оплатить
+                        {{ __('father.payment_process.pay_btn') }}
                     </button>
                     @if(!($contract->signed ?? false))
                     <div class="pay-btn-tooltip">
                         <i class="fas fa-exclamation-triangle"></i>
-                        Сначала необходимо <strong>подписать договор</strong> — тогда оплата станет доступна.
+                        {!! __('father.payment_process.sign_first') !!}
                     </div>
                     @elseif($paymentPlans->isEmpty())
                     <div class="pay-btn-tooltip">
                         <i class="fas fa-exclamation-triangle"></i>
-                        Для проекта пока <strong>не настроены тарифы</strong>.
+                        {!! __('father.payment_process.no_plans_tooltip') !!}
                     </div>
                     @endif
                 </div>
@@ -518,7 +518,7 @@ header.d-lg-none { background: var(--bg) !important; border-bottom: 1px solid va
         <div class="hist-card">
             <div class="hist-card__title">
                 <i class="fas fa-history"></i>
-                История оплат
+                {{ __('father.payment_process.history_title') }}
             </div>
 
             @forelse($payments as $p)
@@ -537,7 +537,7 @@ header.d-lg-none { background: var(--bg) !important; border-bottom: 1px solid va
             @empty
             <div class="hist-empty">
                 <i class="fas fa-receipt"></i>
-                Платежей пока нет
+                {{ __('father.payment_process.no_history') }}
             </div>
             @endforelse
 
@@ -554,21 +554,21 @@ header.d-lg-none { background: var(--bg) !important; border-bottom: 1px solid va
         <button class="pay-modal__close" id="closeModal"><i class="fas fa-times"></i></button>
 
         <div class="pay-modal__icon">⚠️</div>
-        <h2>Важная информация</h2>
+        <h2>{{ __('father.payment_process.modal_title') }}</h2>
 
         <div class="pay-modal__body">
-            <p>Оплата занятий подтверждает <strong>бронирование места</strong> для вашего ребёнка в выбранной группе, однако не означает немедленного начала обучения.</p>
-            <p>Старт занятий происходит после <strong>полного формирования группы</strong> — когда все родители подпишут договор и произведут оплату.</p>
-            <p>В день проведения первого занятия вы получите <strong>e-mail с подтверждением</strong> официального старта группы. С этого момента производится перерасчёт оплаченной суммы исходя из фактического количества занятий в текущем месяце.</p>
-            <p>Если в месяце проводится <strong>менее 4 занятий</strong>, оставшаяся сумма автоматически переносится на следующий месяц.</p>
-            <p>Мы стараемся сформировать группы и запустить обучение для вас как можно скорее! 🚀</p>
+            <p>{!! __('father.payment_process.modal_p1') !!}</p>
+            <p>{!! __('father.payment_process.modal_p2') !!}</p>
+            <p>{!! __('father.payment_process.modal_p3') !!}</p>
+            <p>{!! __('father.payment_process.modal_p4') !!}</p>
+            <p>{!! __('father.payment_process.modal_p5') !!}</p>
         </div>
 
         <div class="pay-modal__actions">
-            <button class="pay-modal__btn-cancel" id="cancelModal">Отмена</button>
+            <button class="pay-modal__btn-cancel" id="cancelModal">{{ __('father.payment_process.cancel_btn') }}</button>
             <button class="pay-modal__btn-confirm" id="confirmPay">
                 <i class="fas fa-lock" style="margin-right:7px"></i>
-                Перейти к оплате
+                {{ __('father.payment_process.go_to_payment_btn') }}
             </button>
         </div>
     </div>
@@ -641,7 +641,7 @@ $(document).ready(function() {
     $('#confirmPay').on('click', function() {
         console.log('Confirm payment clicked');
         const $btn = $(this);
-        $btn.html('<i class="fas fa-spinner fa-spin" style="margin-right:7px"></i>Перенаправляем…');
+        $btn.html('<i class="fas fa-spinner fa-spin" style="margin-right:7px"></i>{{ __('father.payment_process.redirecting') }}');
         $btn.prop('disabled', true);
 
         const paymentPlanId = $selectedItem.length ? $selectedItem.data('planId') : null;
@@ -657,7 +657,7 @@ $(document).ready(function() {
         } else {
             console.error('Payment form or inputs not found');
             $btn.prop('disabled', false);
-            $btn.html('Ошибка формы');
+            $btn.html('{{ __('father.payment_process.form_error') }}');
         }
     });
 

@@ -205,180 +205,144 @@ header.d-lg-none { background: var(--bg) !important; border-bottom: 1px solid va
 
     {{-- TOP BAR --}}
     <div class="lrn-topbar">
-        <a href="{{ route('father.portal') }}" class="lrn-back" title="Назад в портал">
+        <a href="{{ route('father.portal') }}" class="lrn-back" title="{{ __('father.learn_view.back_to_portal') }}">
             <i class="fas fa-arrow-left"></i>
         </a>
         <div class="lrn-topbar__icon">🎓</div>
         <div class="lrn-topbar__info">
-            <h1>Обучение для родителей</h1>
-            <p>Всё, что нужно знать, чтобы поддержать ребёнка на пути к успеху</p>
+            <h1>{{ __('father.learn_view.title') }}</h1>
+            <p>{{ __('father.learn_view.subtitle') }}</p>
         </div>
     </div>
 
     {{-- HERO --}}
     <div class="lrn-hero">
         <span class="lrn-hero__emoji">🧠</span>
-        <h2>Методология Space Memory</h2>
+        <h2>{{ __('father.learn_view.methodology_title') }}</h2>
         <p>
-            Space Memory — уникальная образовательная программа компании Global Leaders Skills,
-            объединяющая три дисциплины: <strong style="color:#fff">ментальную арифметику</strong>,
-            <strong style="color:#fff">скоростное чтение</strong> и
-            <strong style="color:#fff">техники запоминания</strong>.
-            Программа разработана для детей 5–14 лет и направлена на комплексное развитие
-            интеллектуального потенциала ребёнка.
+            {!! __('father.learn_view.methodology_text') !!}
         </p>
         <div class="lrn-hero__badges">
-            <span class="lrn-badge"><i class="fas fa-calendar-alt"></i> 24 месяца программы</span>
-            <span class="lrn-badge"><i class="fas fa-users"></i> Группы до 10 детей</span>
-            <span class="lrn-badge"><i class="fas fa-clock"></i> 1 занятие в неделю</span>
-            <span class="lrn-badge lrn-badge--gold"><i class="fas fa-star"></i> Возраст 5–14 лет</span>
-            <span class="lrn-badge lrn-badge--gold"><i class="fas fa-graduation-cap"></i> Платформа space-memory.com</span>
+            <span class="lrn-badge"><i class="fas fa-calendar-alt"></i> {{ __('father.learn_view.program_duration') }}</span>
+            <span class="lrn-badge"><i class="fas fa-users"></i> {{ __('father.learn_view.groups_size') }}</span>
+            <span class="lrn-badge"><i class="fas fa-clock"></i> {{ __('father.learn_view.lessons_freq') }}</span>
+            <span class="lrn-badge lrn-badge--gold"><i class="fas fa-star"></i> {{ __('father.learn_view.age_range') }}</span>
+            <span class="lrn-badge lrn-badge--gold"><i class="fas fa-graduation-cap"></i> {{ __('father.learn_view.platform_link') }}</span>
         </div>
     </div>
 
     {{-- 3 МЕТОДА --}}
-    <div class="lrn-section-title"><i class="fas fa-book-open"></i> Три направления программы</div>
+    <div class="lrn-section-title"><i class="fas fa-book-open"></i> {{ __('father.learn_view.directions_title') }}</div>
     <div class="lrn-methods">
         <div class="lrn-method">
             <span class="lrn-method__emoji">🔢</span>
-            <div class="lrn-method__title">Ментальная арифметика</div>
-            <p class="lrn-method__text">Ребёнок учится считать в уме с помощью ментального образа абакуса. Регулярные тренировки развивают оба полушария мозга, концентрацию и скорость мышления. Дети начинают считать быстрее калькулятора.</p>
+            <div class="lrn-method__title">{{ __('father.learn_view.mental_arithmetic_title') }}</div>
+            <p class="lrn-method__text">{{ __('father.learn_view.mental_arithmetic_text') }}</p>
             <div class="lrn-method__accent"></div>
         </div>
         <div class="lrn-method lrn-method--gold">
             <span class="lrn-method__emoji">📖</span>
-            <div class="lrn-method__title">Скоростное чтение</div>
-            <p class="lrn-method__text">Техники расширения поля зрения и подавления субвокализации позволяют читать в 3–5 раз быстрее при сохранении полного понимания текста. Навык, который пригодится в школе и на протяжении всей жизни.</p>
+            <div class="lrn-method__title">{{ __('father.learn_view.speed_reading_title') }}</div>
+            <p class="lrn-method__text">{{ __('father.learn_view.speed_reading_text') }}</p>
             <div class="lrn-method__accent"></div>
         </div>
         <div class="lrn-method lrn-method--green">
             <span class="lrn-method__emoji">🧩</span>
-            <div class="lrn-method__title">Техники запоминания</div>
-            <p class="lrn-method__text">Метод дворца памяти, мнемонические ассоциации, цепочки образов — дети учатся запоминать большие объёмы информации легко и надолго. Помогает с учёбой, иностранными языками и творческими задачами.</p>
+            <div class="lrn-method__title">{{ __('father.learn_view.memory_techniques_title') }}</div>
+            <p class="lrn-method__text">{{ __('father.learn_view.memory_techniques_text') }}</p>
             <div class="lrn-method__accent"></div>
         </div>
     </div>
 
     {{-- СОВЕТЫ --}}
-    <div class="lrn-section-title"><i class="fas fa-hands-helping"></i> Советы для родителей</div>
+    <div class="lrn-section-title"><i class="fas fa-hands-helping"></i> {{ __('father.learn_view.tips_title') }}</div>
     <div class="lrn-two-col">
         <div class="lrn-card">
             <div class="lrn-card__head">
                 <div class="lrn-card__head-icon"><i class="fas fa-home"></i></div>
                 <div>
-                    <div class="lrn-card__head-title">Поддержка дома</div>
-                    <div class="lrn-card__head-sub">Как помочь ребёнку прогрессировать</div>
+                    <div class="lrn-card__head-title">{{ __('father.learn_view.home_support_title') }}</div>
+                    <div class="lrn-card__head-sub">{{ __('father.learn_view.home_support_subtitle') }}</div>
                 </div>
             </div>
             <ul class="lrn-tip-list">
-                <li>Выделяйте <strong style="color:#fff">10–15 минут в день</strong> для домашних упражнений между занятиями.</li>
-                <li>Используйте приложение на платформе <strong style="color:#fff">space-memory.com</strong> для ежедневных тренировок.</li>
-                <li>Хвалите ребёнка за усилия, а не только за результат — это укрепляет мотивацию.</li>
-                <li>Не сравнивайте прогресс вашего ребёнка с другими — каждый развивается в своём ритме.</li>
-                <li>Создайте тихое и удобное место для тренировок без отвлекающих факторов.</li>
+                @foreach(__('father.learn_view.home_support_tips') as $tip)
+                    <li>{!! $tip !!}</li>
+                @endforeach
             </ul>
         </div>
         <div class="lrn-card">
             <div class="lrn-card__head">
                 <div class="lrn-card__head-icon lrn-card__head-icon--gold"><i class="fas fa-chart-line"></i></div>
                 <div>
-                    <div class="lrn-card__head-title">Чего ожидать</div>
-                    <div class="lrn-card__head-sub">Динамика прогресса по месяцам</div>
+                    <div class="lrn-card__head-title">{{ __('father.learn_view.what_to_expect_title') }}</div>
+                    <div class="lrn-card__head-sub">{{ __('father.learn_view.what_to_expect_subtitle') }}</div>
                 </div>
             </div>
             <ul class="lrn-tip-list">
-                <li><strong style="color:#fff">1–3 месяц:</strong> Знакомство с инструментами, формирование привычки и базовых навыков.</li>
-                <li><strong style="color:#fff">4–6 месяц:</strong> Ощутимый прогресс в скорости счёта и объёме памяти.</li>
-                <li><strong style="color:#fff">7–12 месяц:</strong> Уверенные навыки, перенос умений на школьные предметы.</li>
-                <li><strong style="color:#fff">13–24 месяц:</strong> Продвинутый уровень, участие в олимпиадах и соревнованиях.</li>
-                <li>Первые заметные результаты — уже через <strong style="color:#fff">2–3 месяца</strong> регулярных занятий.</li>
+                @foreach(__('father.learn_view.what_to_expect_tips') as $tip)
+                    <li>{!! $tip !!}</li>
+                @endforeach
             </ul>
         </div>
     </div>
 
     {{-- ВАЖНО ЗНАТЬ --}}
-    <div class="lrn-section-title"><i class="fas fa-info-circle"></i> Важно знать</div>
+    <div class="lrn-section-title"><i class="fas fa-info-circle"></i> {{ __('father.learn_view.important_to_know_title') }}</div>
     <div class="lrn-two-col">
         <div class="lrn-card">
             <div class="lrn-card__head">
                 <div class="lrn-card__head-icon"><i class="fas fa-user-shield"></i></div>
                 <div>
-                    <div class="lrn-card__head-title">Правила посещения</div>
-                    <div class="lrn-card__head-sub">Что нужно знать родителю</div>
+                    <div class="lrn-card__head-title">{{ __('father.learn_view.attendance_rules_title') }}</div>
+                    <div class="lrn-card__head-sub">{{ __('father.learn_view.attendance_rules_subtitle') }}</div>
                 </div>
             </div>
             <ul class="lrn-tip-list">
-                <li>Занятия проходят <strong style="color:#fff">один раз в неделю</strong> по расписанию группы.</li>
-                <li>Родители <strong style="color:#fff">не присутствуют</strong> на уроке — это часть педагогической методики.</li>
-                <li>При пропуске занятие <strong style="color:#fff">не переносится</strong>, но материал доступен на платформе.</li>
-                <li>Заморозка на лето: уведомите заранее, минимум 3 оплаченных месяца.</li>
+                @foreach(__('father.learn_view.attendance_rules_tips') as $tip)
+                    <li>{!! $tip !!}</li>
+                @endforeach
             </ul>
         </div>
         <div class="lrn-card">
             <div class="lrn-card__head">
                 <div class="lrn-card__head-icon lrn-card__head-icon--gold"><i class="fas fa-laptop"></i></div>
                 <div>
-                    <div class="lrn-card__head-title">Платформа space-memory.com</div>
-                    <div class="lrn-card__head-sub">Ваш цифровой помощник</div>
+                    <div class="lrn-card__head-title">{{ __('father.learn_view.platform_info_title') }}</div>
+                    <div class="lrn-card__head-sub">{{ __('father.learn_view.platform_info_subtitle') }}</div>
                 </div>
             </div>
             <ul class="lrn-tip-list">
-                <li>Доступ к платформе включён в стоимость абонемента.</li>
-                <li>На платформе: домашние задания, видеоуроки, тренажёры.</li>
-                <li>Вы можете отслеживать прогресс ребёнка в личном кабинете.</li>
-                <li>Поддерживаются: компьютер, планшет, смартфон.</li>
-                <li>Проблемы с доступом: <strong style="color:#fff">dzialjakosci.indigo@gmail.com</strong></li>
+                @foreach(__('father.learn_view.platform_info_tips') as $tip)
+                    <li>{!! $tip !!}</li>
+                @endforeach
             </ul>
         </div>
     </div>
 
     {{-- FAQ --}}
-    <div class="lrn-section-title"><i class="fas fa-question-circle"></i> Часто задаваемые вопросы</div>
+    <div class="lrn-section-title"><i class="fas fa-question-circle"></i> {{ __('father.learn_view.faq_title') }}</div>
     <div class="lrn-faq">
 
+        @foreach(__('father.learn_view.faq') as $item)
         <div class="lrn-faq-item">
-            <div class="lrn-faq-q">С какого возраста можно начинать занятия?<i class="fas fa-chevron-down"></i></div>
-            <div class="lrn-faq-a">Программа разработана для детей от <strong>5 лет</strong>. Группы Младших (5–7 лет) занимаются 30 минут, Группы Старших (8–14 лет) — 45 минут. Чем раньше начать, тем выше результат, так как мозг ребёнка в этом возрасте особенно пластичен.</div>
+            <div class="lrn-faq-q">{{ $item['q'] }}<i class="fas fa-chevron-down"></i></div>
+            <div class="lrn-faq-a">{!! $item['a'] !!}</div>
         </div>
-
-        <div class="lrn-faq-item">
-            <div class="lrn-faq-q">Как понять, что ребёнок прогрессирует?<i class="fas fa-chevron-down"></i></div>
-            <div class="lrn-faq-a">Прогресс заметен по нескольким признакам: ребёнок начинает быстрее считать в уме, лучше запоминает информацию с первого прочтения, меньше испытывает трудности с домашними заданиями. На платформе space-memory.com доступна статистика по результатам.</div>
-        </div>
-
-        <div class="lrn-faq-item">
-            <div class="lrn-faq-q">Что делать, если ребёнок пропустил занятие?<i class="fas fa-chevron-down"></i></div>
-            <div class="lrn-faq-a">Пропущенное занятие не переносится. Рекомендуем пройти домашние тренировки на платформе space-memory.com — там есть полный набор материалов по программе. Абонемент при этом остаётся без изменений (4 занятия в месяц).</div>
-        </div>
-
-        <div class="lrn-faq-item">
-            <div class="lrn-faq-q">Можно ли заморозить занятия на летние каникулы?<i class="fas fa-chevron-down"></i></div>
-            <div class="lrn-faq-a">Да. Заморозка на лето возможна при условии, что вы оплатили не менее <strong>3 месяцев</strong> вперёд. О заморозке необходимо уведомить нас заблаговременно — по телефону или e-mail.</div>
-        </div>
-
-        <div class="lrn-faq-item">
-            <div class="lrn-faq-q">Как расторгнуть договор?<i class="fas fa-chevron-down"></i></div>
-            <div class="lrn-faq-a">Договор расторгается с уведомлением до конца текущего месяца — оно действует на конец следующего. Уведомление необходимо подать <strong>в письменной форме или по e-mail</strong> (устного сообщения тренеру недостаточно). Подробнее — п. 12 Регламента.</div>
-        </div>
-
-        <div class="lrn-faq-item">
-            <div class="lrn-faq-q">Как оплатить за второго ребёнка?<i class="fas fa-chevron-down"></i></div>
-            <div class="lrn-faq-a">Если вы записываете двух и более детей, каждый следующий ребёнок получает скидку <strong>10%</strong> на абонемент. Для активации скидки сообщите об этом менеджеру.</div>
-        </div>
+        @endforeach
 
     </div>
 
     {{-- КОНТАКТЫ --}}
-    <div class="lrn-section-title"><i class="fas fa-headset"></i> Есть вопросы?</div>
+    <div class="lrn-section-title"><i class="fas fa-headset"></i> {{ __('father.learn_view.support_title') }}</div>
     <div class="lrn-contact">
         <div class="lrn-contact__emoji">🤝</div>
         <div class="lrn-contact__body">
-            <h3>Мы всегда на связи</h3>
+            <h3>{{ __('father.learn_view.support_subtitle') }}</h3>
             <p>
-                Если у вас остались вопросы — позвоните нам или напишите на e-mail.
-                Работаем в будни с 9:00 до 18:00 (CET).<br>
+                {{ __('father.learn_view.support_text') }}<br>
                 <span style="color:rgba(242,242,242,0.4); font-size:12px;">
-                    GLOBAL LEADERS SKILLS Sp. z o.o. · ul. Kabacki Dukt 1, lok. U1 i U2, 02-798 Warszawa
+                    {{ __('father.learn_view.company_address') }}
                 </span>
             </p>
         </div>

@@ -6,6 +6,6 @@ return [
     'number'          => 'Numer faktury',
     'issue_date'      => 'Data wystawienia',
     'amount'          => 'Kwota',
-    'attachment_note' => 'Faktura w formacie PDF znajduje się w заłączniku do tej wiadomości.',
+    'attachment_note' => 'Faktura w formacie PDF znajduje się w załączniku do tej wiadomości.',
     'closing'         => 'Dziękujemy za zaufanie i życzymy owocnej nauki!',
 ];

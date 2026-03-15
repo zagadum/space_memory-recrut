@@ -95,6 +95,9 @@ Route::prefix('father')
         Route::get('/payment-success', [\App\Http\Controllers\Father\Cabinet\FatherPaymentController::class, 'success'])->name('father.payment.success');
         Route::get('/payment-fail', [\App\Http\Controllers\Father\Cabinet\FatherPaymentController::class, 'fail'])->name('father.payment.fail');
 
+        // Language Switcher
+        Route::get('/lang/{locale}', [\App\Http\Controllers\LocaleController::class, 'switch'])->name('locale.switch');
+
         // Legacy / Common
         Route::get('/payment/download-invoice/{id}', [\App\Http\Controllers\Father\Cabinet\PaymentController::class, 'downloadInvoice'])->name('father.download-invoice');
         Route::get('/learn', [\App\Http\Controllers\Father\Cabinet\ParentLearnController::class, 'index'])->name('father.learn');

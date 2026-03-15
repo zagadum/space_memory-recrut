@@ -585,7 +585,7 @@ header.d-lg-none {
             <img src="{{ $student->avatar_url ?? asset('images/ava.png') }}"
                  alt="Avatar"
                  class="pp-header__avatar">
-            <button class="pp-header__edit-btn" title="Изменить фото">
+            <button class="pp-header__edit-btn" title="{{ __('father.portal.edit_photo') }}">
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none">
                     <path d="M7 16l3-1 7-7-2-2-7 7-1 3m10-10l2 2"
                           stroke="#04151d" stroke-width="2.5"
@@ -594,12 +594,12 @@ header.d-lg-none {
             </button>
         </div>
         <div class="pp-header__info">
-            <p class="pp-header__label">Strefa rodzica</p>
+            <p class="pp-header__label">{{ __('father.portal.parent_zone') }}</p>
             <h1 class="pp-header__name">
                 {{ $student->name ?? '' }} {{ $student->surname ?? '' }}
             </h1>
             <p style="color: rgba(255,255,255,0.6); font-size: 14px; margin-top: 5px;">
-                {{ $student->group?->name ?? 'Не назначена' }}
+                {{ $student->group?->name ?? __('father.portal.no_group') }}
             </p>
             <span class="pp-header__line"></span>
         </div>
@@ -610,20 +610,20 @@ header.d-lg-none {
         <div class="pp-contract-banner pp-contract-banner--warn">
             <div class="pp-contract-banner__icon">📋</div>
             <div class="pp-contract-banner__body">
-                <p class="pp-contract-banner__title">Подпишите договор</p>
+                <p class="pp-contract-banner__title">{{ __('father.portal.sign_contract') }}</p>
                 <p class="pp-contract-banner__text">
-                    Для доступа к занятиям и оплатам необходимо ознакомиться с договором и поставить электронную подпись.
+                    {{ __('father.portal.sign_contract_desc') }}
                 </p>
             </div>
             @if($contractDoc)
                 <a href="{{ route('father.document.view', $contractDoc->id) }}" class="pp-contract-banner__btn pp-contract-banner__btn--sign">
                     <i class="fas fa-pen-nib"></i>
-                    Подписать
+                    {{ __('father.portal.sign_btn') }}
                 </a>
             @else
                 <a href="{{ route('father.documents') }}" class="pp-contract-banner__btn pp-contract-banner__btn--sign">
                     <i class="fas fa-file-contract"></i>
-                    К документам
+                    {{ __('father.portal.to_documents_btn') }}
                 </a>
             @endif
         </div>
@@ -631,19 +631,19 @@ header.d-lg-none {
         <div class="pp-contract-banner pp-contract-banner--ok">
             <div class="pp-contract-banner__icon">✅</div>
             <div class="pp-contract-banner__body">
-                <p class="pp-contract-banner__title">Договор подписан</p>
+                <p class="pp-contract-banner__title">{{ __('father.portal.contract_signed') }}</p>
                 <p class="pp-contract-banner__text">
-                    Вы подписали договор
+                    {{ __('father.portal.contract_signed_at') }}
                     @if($contractDoc && $contractDoc->sign_date)
                         {{ optional($contractDoc->sign_date)->format('d.m.Y') }}
                     @endif
-                    — можно переходить к оплате.
+                    {{ __('father.portal.can_pay_now') }}
                 </p>
             </div>
             @if($contractDoc)
                 <a href="{{ route('father.document.view', $contractDoc->id) }}" class="pp-contract-banner__btn pp-contract-banner__btn--view">
                     <i class="fas fa-eye"></i>
-                    Просмотреть
+                    {{ __('father.portal.view_btn') }}
                 </a>
             @endif
         </div>
@@ -657,7 +657,7 @@ header.d-lg-none {
                 📄
             </div>
             <div class="pp-action-card__footer">
-                <span class="pp-action-card__title">Документы</span>
+                <span class="pp-action-card__title">{{ __('father.portal.documents') }}</span>
                 <span class="pp-action-card__arrow">
                     <i class="fas fa-arrow-right"></i>
                 </span>
@@ -669,7 +669,7 @@ header.d-lg-none {
                 💳
             </div>
             <div class="pp-action-card__footer">
-                <span class="pp-action-card__title">Оплаты</span>
+                <span class="pp-action-card__title">{{ __('father.portal.payments') }}</span>
                 <span class="pp-action-card__arrow">
                     <i class="fas fa-arrow-right"></i>
                 </span>
@@ -681,7 +681,7 @@ header.d-lg-none {
                 🎓
             </div>
             <div class="pp-action-card__footer">
-                <span class="pp-action-card__title">Обучение для родителей</span>
+                <span class="pp-action-card__title">{{ __('father.portal.parent_learn') }}</span>
                 <span class="pp-action-card__arrow">
                     <i class="fas fa-arrow-right"></i>
                 </span>
@@ -695,10 +695,10 @@ header.d-lg-none {
 
         <div class="pp-welcome__head">
             <span class="pp-welcome__emoji">👋</span>
-            <h2 class="pp-welcome__title">Добро пожаловать в Портал родителя</h2>
+            <h2 class="pp-welcome__title">{{ __('father.portal.welcome_title') }}</h2>
         </div>
         <p class="pp-welcome__subtitle">
-            Чтобы начать обучение, пожалуйста, выполните несколько простых шагов:
+            {{ __('father.portal.welcome_subtitle') }}
         </p>
 
         <div class="pp-steps">
@@ -712,10 +712,9 @@ header.d-lg-none {
                     <div class="pp-step__line"></div>
                 </div>
                 <div class="pp-step__body">
-                    <h3 class="pp-step__title">Ознакомьтесь с договором</h3>
+                    <h3 class="pp-step__title">{{ __('father.portal.step1_title') }}</h3>
                     <p class="pp-step__text">
-                        Перейдите во вкладку «Документы» и внимательно прочитайте договор.<br>
-                        Если вы заметите неточности в данных или информации, пожалуйста, свяжитесь с нами:
+                        {!! __('father.portal.step1_text') !!}
                     </p>
                     <a href="tel:+48730536091" class="pp-step__phone">
                         <i class="fas fa-phone-alt"></i>
@@ -733,13 +732,12 @@ header.d-lg-none {
                     <div class="pp-step__line"></div>
                 </div>
                 <div class="pp-step__body">
-                    <h3 class="pp-step__title">Подпишите договор онлайн</h3>
+                    <h3 class="pp-step__title">{{ __('father.portal.step2_title') }}</h3>
                     <p class="pp-step__text">
-                        Нажмите кнопку «Podpisz umowę», чтобы подтвердить договор в электронном виде.
+                        {{ __('father.portal.step2_text') }}
                     </p>
                     <p class="pp-step__note">
-                        В момент подписания система автоматически сохраняет IP-адрес устройства
-                        в целях юридического подтверждения согласия.
+                        {{ __('father.portal.step2_note') }}
                     </p>
                 </div>
             </div>
@@ -751,14 +749,14 @@ header.d-lg-none {
                     <div class="pp-step__line"></div>
                 </div>
                 <div class="pp-step__body">
-                    <h3 class="pp-step__title">Оплатите занятия</h3>
+                    <h3 class="pp-step__title">{{ __('father.portal.step3_title') }}</h3>
                     <p class="pp-step__text">
-                        Перейдите во вкладку «Оплаты» и выберите удобный период обучения:
+                        {{ __('father.portal.step3_text') }}
                     </p>
                     <ul class="pp-step__list">
-                        <li>1 месяц (4 занятия)</li>
-                        <li>3 месяца (12 занятий)</li>
-                        <li>6 месяцев (24 занятия)</li>
+                        <li>{{ __('father.portal.plan_1m') }}</li>
+                        <li>{{ __('father.portal.plan_3m') }}</li>
+                        <li>{{ __('father.portal.plan_6m') }}</li>
                     </ul>
                 </div>
             </div>
@@ -770,15 +768,15 @@ header.d-lg-none {
                     <div class="pp-step__line"></div>
                 </div>
                 <div class="pp-step__body">
-                    <h3 class="pp-step__title">Выберите способ оплаты</h3>
+                    <h3 class="pp-step__title">{{ __('father.portal.step4_title') }}</h3>
                     <div class="pp-step__tags">
                         <span class="pp-step__tag">
                             <i class="fas fa-credit-card" style="margin-right:6px; color: var(--teal); opacity:.7;"></i>
-                            Imoje — карта, Apple Pay, Google Pay
+                            {{ __('father.portal.pay_method_imoje') }}
                         </span>
                         <span class="pp-step__tag">
                             <i class="fas fa-sync-alt" style="margin-right:6px; color: var(--teal); opacity:.7;"></i>
-                            Подписка — ежемесячное списание
+                            {{ __('father.portal.pay_method_subscription') }}
                         </span>
                     </div>
                 </div>

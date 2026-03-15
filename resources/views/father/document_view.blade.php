@@ -311,12 +311,12 @@ header.d-lg-none { background: var(--bg) !important; border-bottom: 1px solid va
 
     {{-- TOP BAR --}}
     <div class="dv-topbar">
-        <a href="{{ route('father.documents') }}" class="dv-back" title="Назад к документам">
+        <a href="{{ route('father.documents') }}" class="dv-back" title="{{ __('father.document_view.back_to_documents') }}">
             <i class="fas fa-arrow-left"></i>
         </a>
         <div class="dv-topbar__title">
-            <h1>{{ $document->title ?? ($document->doc_no ? ('Документ № ' . $document->doc_no) : 'Договор 2026 Групповые занятия') }}</h1>
-            <p>Ознакомьтесь с документом и подпишите его</p>
+            <h1>{{ $document->title ?? ($document->doc_no ? (__('father.document_view.title') . ' № ' . $document->doc_no) : __('father.document_view.title')) }}</h1>
+            <p>{{ __('father.document_view.subtitle') }}</p>
         </div>
     </div>
 
@@ -328,13 +328,13 @@ header.d-lg-none { background: var(--bg) !important; border-bottom: 1px solid va
             <div class="dv-paper-toolbar">
                 <div class="dv-paper-toolbar__left">
                     <i class="fas fa-file-alt"></i>
-                    Regulamin GLS · вступил в силу 03.03.2026
+                    {{ __('father.document_view.regulamin_hint') }}
                 </div>
                 <div class="dv-paper-toolbar__right">
-                    <button class="dv-tool-btn" id="btnDownload" title="Скачать PDF">
+                    <button class="dv-tool-btn" id="btnDownload" title="{{ __('father.document_view.download_pdf') }}">
                         <i class="fas fa-download" id="btnDownloadIcon"></i>
                     </button>
-                    <button class="dv-tool-btn" id="btnTop" title="Наверх">
+                    <button class="dv-tool-btn" id="btnTop" title="{{ __('father.document_view.scroll_top') }}">
                         <i class="fas fa-angle-up"></i>
                     </button>
                 </div>
@@ -359,43 +359,43 @@ header.d-lg-none { background: var(--bg) !important; border-bottom: 1px solid va
 
                 {{-- PARTIES --}}
                 <div class="doc-section">
-                    <div class="doc-section-title">Стороны договора</div>
+                    <div class="doc-section-title">{{ __('father.document_view.parties_title') }}</div>
                     <div class="doc-parties">
                         <div class="doc-party">
-                            <div class="doc-party__label">Исполнитель</div>
+                            <div class="doc-party__label">{{ __('father.document_view.executor') }}</div>
                             <div class="doc-party__row">
-                                <div class="doc-party__key">Название</div>
+                                <div class="doc-party__key">{{ __('father.document_view.executor_name') }}</div>
                                 <div class="doc-party__val">GLOBAL LEADERS SKILLS Sp. z o.o.</div>
                             </div>
                             <div class="doc-party__row">
-                                <div class="doc-party__key">Адрес</div>
+                                <div class="doc-party__key">{{ __('father.document_view.executor_address') }}</div>
                                 <div class="doc-party__val">ul. Kabacki Dukt 1, lok. U1 i U2, 02-798 Warszawa</div>
                             </div>
                             <div class="doc-party__row">
-                                <div class="doc-party__key">KRS / NIP</div>
+                                <div class="doc-party__key">{{ __('father.document_view.executor_ids') }}</div>
                                 <div class="doc-party__val">0001055763 / 5252970924</div>
                             </div>
                         </div>
                         <div class="doc-party">
-                            <div class="doc-party__label">Клиент (Rodzic)</div>
+                            <div class="doc-party__label">{{ __('father.document_view.client') }}</div>
                             <div class="doc-party__row">
-                                <div class="doc-party__key">Имя и фамилия</div>
+                                <div class="doc-party__key">{{ __('father.document_view.client_name') }}</div>
                                 <div class="doc-party__val doc-party__val--filled">{{ $parent->full_name ?? '—' }}</div>
                             </div>
                             <div class="doc-party__row">
-                                <div class="doc-party__key">Email</div>
+                                <div class="doc-party__key">{{ __('father.document_view.client_email') }}</div>
                                 <div class="doc-party__val doc-party__val--filled">{{ $parent->email ?? '—' }}</div>
                             </div>
                             <div class="doc-party__row">
-                                <div class="doc-party__key">Ученик (Kursant)</div>
+                                <div class="doc-party__key">{{ __('father.document_view.student_name') }}</div>
                                 <div class="doc-party__val doc-party__val--filled">{{ $student->full_name ?: '—' }}</div>
                             </div>
                             <div class="doc-party__row">
-                                <div class="doc-party__key">Группа</div>
+                                <div class="doc-party__key">{{ __('father.document_view.group') }}</div>
                                 <div class="doc-party__val doc-party__val--filled">{{ $student->group?->name ?? '—' }}</div>
                             </div>
                             <div class="doc-party__row">
-                                <div class="doc-party__key">Абонемент / мес.</div>
+                                <div class="doc-party__key">{{ __('father.document_view.subscription') }}</div>
                                 <div class="doc-party__val doc-party__val--filled">{{ number_format($contract->subscription_amount ?? 0, 2) }} zł</div>
                             </div>
                         </div>
@@ -517,7 +517,7 @@ header.d-lg-none { background: var(--bg) !important; border-bottom: 1px solid va
             <div class="dv-sign-card">
                 <div class="dv-sign-card__title">
                     <i class="fas fa-pen-nib" style="color:var(--teal);margin-right:6px"></i>
-                    Подписание документа
+                    {{ __('father.document_view.signing_title') }}
                 </div>
 
                 {{-- Checkbox — скрыт если документ уже подписан --}}
@@ -525,7 +525,7 @@ header.d-lg-none { background: var(--bg) !important; border-bottom: 1px solid va
                 <div class="dv-consent" id="consentBlock">
                     <input type="checkbox" class="dv-cb" id="cbRead">
                     <label class="dv-consent-label" for="cbRead">
-                        Я ознакомился(-ась) с документом и принимаю все его условия
+                        {{ __('father.document_view.consent_label') }}
                     </label>
                 </div>
                 @endif
@@ -534,7 +534,7 @@ header.d-lg-none { background: var(--bg) !important; border-bottom: 1px solid va
                 <div class="dv-signed {{ $isSigned ? 'show' : '' }}" id="signedBanner">
                     <i class="fas fa-check-circle"></i>
                     <div>
-                        <div class="dv-signed__text">Документ подписан!</div>
+                        <div class="dv-signed__text">{{ __('father.document_view.signed_at') }}</div>
                         <div class="dv-signed__sub" id="signedDate">{{ optional($document->sign_date)->format('d.m.Y H:i') }}</div>
                     </div>
                 </div>
@@ -543,14 +543,14 @@ header.d-lg-none { background: var(--bg) !important; border-bottom: 1px solid va
                 <div id="signBlock" style="{{ $isSigned ? 'display:none;' : '' }}">
                     <button class="dv-btn-sign" id="btnSign" disabled>
                         <i class="fas fa-pen-nib"></i>
-                        Подписать документ
+                        {{ __('father.document_view.sign_btn') }}
                     </button>
                 </div>
             </div>
 
             <div class="dv-info-pill">
                 <i class="fas fa-shield-alt"></i>
-                Факт ознакомления и принятия документа фиксируется в системе с привязкой к вашему аккаунту и времени подписания.
+                {{ __('father.document_view.sign_logic_hint') }}
             </div>
 
         </div>
@@ -598,7 +598,7 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(async (r) => {
             if (!r.ok) {
                 const text = await r.text().catch(() => '');
-                throw new Error(text || 'Ошибка формирования PDF');
+                throw new Error(text || '{{ __('father.document_view.error_pdf') }}');
             }
             return r.blob();
         })
@@ -613,7 +613,7 @@ document.addEventListener('DOMContentLoaded', function () {
             URL.revokeObjectURL(url);
         })
         .catch((err) => {
-            alert(err.message || 'Не удалось скачать документ');
+            alert(err.message || '{{ __('father.document_view.error_pdf') }}');
         })
         .finally(() => {
             btn.disabled = false;
@@ -632,7 +632,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (!isSigned && btnSign) {
         btnSign.addEventListener('click', function () {
             btnSign.disabled = true;
-            btnSign.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Сохраняем…';
+            btnSign.innerHTML = '<i class="fas fa-spinner fa-spin"></i> {{ __('father.document_view.saving') }}';
 
             fetch('{{ route("father.documents.sign") }}', {
                 method: 'POST',
@@ -648,14 +648,14 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(async (r) => {
                 const data = await r.json();
                 if (!r.ok || !data.success) {
-                    throw new Error(data.message || 'Ошибка подписи');
+                    throw new Error(data.message || '{{ __('father.document_view.error_signing') }}');
                 }
                 onSigned(data.signed_at);
             })
             .catch((error) => {
                 btnSign.disabled = false;
-                btnSign.innerHTML = '<i class="fas fa-pen-nib"></i> Подписать документ';
-                alert(error.message || 'Не удалось подписать документ');
+                btnSign.innerHTML = '<i class="fas fa-pen-nib"></i> {{ __('father.document_view.sign_btn') }}';
+                alert(error.message || '{{ __('father.document_view.error_signing') }}');
             });
         });
     }

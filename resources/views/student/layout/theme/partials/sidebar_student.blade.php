@@ -67,6 +67,8 @@
         </a>
     </nav>
 
+
+
     <div class="mt-4">
         @if(Auth::guard('recruting_student')->check())
             <a href="{{ route('father.logout') }}" class="nav-link btn btn-outline-secondary btn-block">

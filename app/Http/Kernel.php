@@ -42,6 +42,7 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\EnsureSingleSession::class,
          //   \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            \App\Http\Middleware\SetSessionLocale::class,
         ],
 
     // Check that user login active and if no then use logout

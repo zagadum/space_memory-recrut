@@ -267,16 +267,16 @@ header.d-lg-none { background: var(--bg) !important; border-bottom: 1px solid va
 
     {{-- HEADER --}}
     <div class="dp-head">
-        <a href="{{ route('father.portal') }}" class="dp-back" title="Назад в портал">
+        <a href="{{ route('father.portal') }}" class="dp-back" title="{{ __('father.documents_list.back_to_portal') }}">
             <i class="fas fa-arrow-left"></i>
         </a>
         <div class="dp-head__icon">
             <i class="fas fa-file-contract"></i>
         </div>
         <div>
-            <h1>Документы</h1>
+            <h1>{{ __('father.documents_list.title') }}</h1>
             <p>
-                Ваши договоры и соглашения
+                {{ __('father.documents_list.subtitle') }}
                 @if(!empty($student))
                     · {{ trim(($student->name ?? '') . ' ' . ($student->surname ?? '')) ?: ($student->email ?? '') }}
                 @endif
@@ -297,36 +297,36 @@ header.d-lg-none { background: var(--bg) !important; border-bottom: 1px solid va
             </div>
             <div class="dp-card__info">
                 <p class="dp-card__name">
-                    {{ $doc->title ?: ($doc->doc_no ? ('Документ № ' . $doc->doc_no) : ('Документ #' . $doc->id)) }}
+                    {{ $doc->title ?: ($doc->doc_no ? (__('father.documents_list.doc_no') . $doc->doc_no) : (__('father.documents_list.doc_id') . $doc->id)) }}
                 </p>
                 <div class="dp-card__meta">
                     <span class="dp-card__date">
                         <i class="fas fa-clock" style="margin-right:4px;opacity:.5;"></i>
-                        Создан: {{ optional($doc->created_at)->format('d.m.Y H:i') ?? '—' }}
+                        {{ __('father.documents_list.created_at') }} {{ optional($doc->created_at)->format('d.m.Y H:i') ?? '—' }}
                     </span>
                     <span class="dp-card__date">
                         <i class="fas {{ $isSigned ? 'fa-calendar-check' : 'fa-calendar-alt' }}" style="margin-right:4px;opacity:.5;"></i>
-                        {{ $isSigned ? 'Документ подписан! ' . optional($doc->sign_date)->format('d.m.Y H:i') : 'Ожидает подписи' }}
+                        {{ $isSigned ? (__('father.documents_list.signed_at') . ' ' . optional($doc->sign_date)->format('d.m.Y H:i')) : __('father.documents_list.waiting_sign') }}
                     </span>
                     <span class="dp-badge {{ $isSigned ? 'dp-badge--signed' : 'dp-badge--unsigned' }}">
                         <span class="dp-badge__dot"></span>
-                        {{ $isSigned ? 'Подписан' : 'Ожидает подписи' }}
+                        {{ $isSigned ? __('father.documents_list.status_signed') : __('father.documents_list.waiting_sign') }}
                     </span>
                 </div>
             </div>
             <div class="dp-card__actions">
-                <a href="{{ route('father.document.view', $doc->id) }}" class="dp-btn-view" title="Просмотреть">
+                <a href="{{ route('father.document.view', $doc->id) }}" class="dp-btn-view" title="{{ __('father.documents_list.view_btn') }}">
                     <i class="fas fa-eye"></i>
                 </a>
                 @if(!$isSigned)
                     <a href="{{ route('father.document.view', $doc->id) }}" class="dp-btn-sign">
                         <i class="fas fa-pen-nib"></i>
-                        Подписать
+                        {{ __('father.documents_list.sign_btn') }}
                     </a>
                 @else
                     <a href="{{ route('father.document.view', $doc->id) }}" class="dp-btn-download">
                         <i class="fas fa-download"></i>
-                        Открыть
+                        {{ __('father.documents_list.open_btn') }}
                     </a>
                 @endif
             </div>
@@ -334,7 +334,7 @@ header.d-lg-none { background: var(--bg) !important; border-bottom: 1px solid va
         @empty
         <div class="dp-empty" style="text-align: center; padding: 40px; color: var(--muted);">
             <i class="fas fa-folder-open" style="font-size: 40px; margin-bottom: 15px; display: block;"></i>
-            У вас пока нет доступных документов
+            {{ __('father.documents_list.empty') }}
         </div>
         @endforelse
     </div>

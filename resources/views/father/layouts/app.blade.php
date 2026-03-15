@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'GLS — Portal Rodzica')</title>
     <link rel="stylesheet" href="{{ asset('css/father.css') }}">
+    @yield('styles')
 </head>
 <body class="father-portal">
     <nav class="father-nav">
@@ -27,12 +28,13 @@
                 <button type="submit" class="father-nav__link" style="background:none; border:none; cursor:pointer;">
                     {{ __('father.nav.logout') }}
                 </button>
-            </form>
         </div>
     </nav>
 
     <main class="father-main">
         @yield('content')
     </main>
+
+    @yield('scripts')
 </body>
 </html>
