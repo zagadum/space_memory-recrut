@@ -280,6 +280,10 @@ header.d-lg-none { background: var(--bg) !important; border-bottom: 1px solid va
                 </p>
                 <div class="dp-card__meta">
                     <span class="dp-card__date">
+                        <i class="fas fa-clock" style="margin-right:4px;opacity:.5;"></i>
+                        Создан: {{ optional($doc->created_at)->format('d.m.Y H:i') ?? '—' }}
+                    </span>
+                    <span class="dp-card__date">
                         <i class="fas {{ $isSigned ? 'fa-calendar-check' : 'fa-calendar-alt' }}" style="margin-right:4px;opacity:.5;"></i>
                         {{ $isSigned ? 'Документ подписан! ' . optional($doc->sign_date)->format('d.m.Y H:i') : 'Ожидает подписи' }}
                     </span>

@@ -42,7 +42,8 @@ class FatherDocumentController extends Controller
         ];
 
         $contract = (object)[
-            'signed' => $document->doc_status === 'sign',
+            'signed' => in_array(strtolower(trim((string) $document->doc_status)), ['sign', 'signed'], true)
+                || !is_null($document->sign_date),
             'subscription_amount' => 0,
         ];
 
@@ -71,11 +72,15 @@ class FatherDocumentController extends Controller
             return response()->json(['success' => false, 'message' => 'Document not found'], 404);
         }
 
-        if ($document->doc_status !== 'sign') {
+        $normalizedStatus = strtolower(trim((string) $document->doc_status));
+        if (!in_array($normalizedStatus, ['sign', 'signed'], true)) {
             $document->update([
                 'doc_status' => 'sign',
                 'sign_date' => now(),
             ]);
+            $document->refresh();
+        } elseif (is_null($document->sign_date)) {
+            $document->update(['sign_date' => now()]);
             $document->refresh();
         }
 

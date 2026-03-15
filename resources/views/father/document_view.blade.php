@@ -304,7 +304,8 @@ header.d-lg-none { background: var(--bg) !important; border-bottom: 1px solid va
 
 @section('content')
 @php
-    $isSigned = ($document->doc_status ?? null) === 'sign';
+    $normalizedDocStatus = strtolower(trim((string) ($document->doc_status ?? '')));
+    $isSigned = in_array($normalizedDocStatus, ['sign', 'signed'], true) || !empty($document->sign_date);
 @endphp
 <div class="dv-wrap">
 
