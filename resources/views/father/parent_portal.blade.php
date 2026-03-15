@@ -572,6 +572,24 @@ header.d-lg-none {
 
     .pp-action-card__title { font-size: 16px; }
 }
+
+/* Locked state for cards */
+.pp-action-card--locked {
+    opacity: 0.6 !important;
+    cursor: not-allowed !important;
+    pointer-events: none !important;
+    filter: grayscale(1) !important;
+}
+.pp-action-card--locked::after {
+    content: '🔒';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 42px;
+    opacity: 0.4;
+    z-index: 5;
+}
 </style>
 @endsection
 
@@ -676,7 +694,13 @@ header.d-lg-none {
             </div>
         </a>
 
-        <a href="/father/learn" class="pp-action-card">
+        @php
+            $isPaid = false;
+            if($student instanceof \App\Models\RecrutingStudent) {
+                $isPaid = $student->hasPaid();
+            }
+        @endphp
+        <a href="/father/learn" class="pp-action-card {{ !$isPaid ? 'pp-action-card--locked' : '' }}">
             <div class="pp-action-card__icon" style="font-size: 48px; display: flex; align-items: center; justify-content: center; background: none !important; border: none !important;">
                 🎓
             </div>

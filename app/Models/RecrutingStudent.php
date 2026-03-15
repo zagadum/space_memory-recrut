@@ -107,5 +107,21 @@ class RecrutingStudent extends Authenticatable
         return $this->belongsTo(\App\Models\NewGroup::class, 'group_id');
     }
 
-}
+    /**
+     * Транзакции оплат студента.
+     */
+    public function paymentTransactions(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(\App\Models\GlsPaymentTransaction::class, 'student_id');
+    }
 
+    /**
+     * Проверка: оплатил ли студент обучение (хотя бы один успешно завершенный платеж).
+     */
+    public function hasPaid(): bool
+    {
+        return $this->paymentTransactions()
+            ->where('status', 'completed')
+            ->exists();
+    }
+}

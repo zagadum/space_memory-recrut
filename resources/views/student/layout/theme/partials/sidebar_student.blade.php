@@ -1,4 +1,22 @@
 {{-- Desktop Sidebar --}}
+<style>
+    .nav-link--locked {
+        opacity: 0.6;
+        cursor: not-allowed !important;
+        pointer-events: none;
+        filter: grayscale(1);
+        position: relative;
+    }
+    .nav-link--locked::after {
+        content: '🔒';
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 14px;
+        opacity: 0.8;
+    }
+</style>
 <aside class="sidebar-desktop d-none d-lg-flex flex-column">
     <div class="logo-area mb-5">
         <div class="logo-box text-center">
@@ -14,22 +32,29 @@
     </div>
 
     <nav class="nav flex-column mb-auto">
-        <a class="nav-link btn btn-outline-primary mb-3" href="/father">
+        @php
+            $isPaid = false;
+            if(Auth::guard('recruting_student')->check()) {
+                $isPaid = Auth::guard('recruting_student')->user()->hasPaid();
+            }
+        @endphp
+
+        <a class="nav-link btn btn-outline-primary mb-3 {{ !$isPaid ? 'nav-link--locked' : '' }}" href="/father">
            <div class="nav-icon icon-home"></div>
             <span>{{ trans('student.main_menu.main') }}</span>
         </a>
 
-        <a class="nav-link btn btn-outline-primary mb-3 {{ Request::is('student/hometask*') ? 'active' : '' }}" href="#">
+        <a class="nav-link btn btn-outline-primary mb-3 {{ Request::is('student/hometask*') ? 'active' : '' }} {{ !$isPaid ? 'nav-link--locked' : '' }}" href="#">
            <div class="nav-icon icon-homework"></div>
             <span>{{ trans('student.main_menu.hometask') }}</span>
         </a>
 
-        <a class="nav-link btn btn-outline-primary mb-3 {{ Request::is('student/traning*') ? 'active' : '' }}" href="#">
+        <a class="nav-link btn btn-outline-primary mb-3 {{ Request::is('student/traning*') ? 'active' : '' }} {{ !$isPaid ? 'nav-link--locked' : '' }}" href="#">
            <div class="nav-icon icon-training"></div>
             <span>{{ trans('student.main_menu.traning') }}</span>
         </a>
 
-        <a class="nav-link btn btn-outline-primary mb-3 {{ Request::is('student/olympiad*') ? 'active' : '' }}" href="#">
+        <a class="nav-link btn btn-outline-primary mb-3 {{ Request::is('student/olympiad*') ? 'active' : '' }} {{ !$isPaid ? 'nav-link--locked' : '' }}" href="#">
            <div class="nav-icon icon-olympiad"></div>
             <span>{{ trans('student.main_menu.olympiad') }}</span>
         </a>
@@ -42,7 +67,7 @@
 
 
 
-        <a href="#" class="sidebar-myspace-btn">
+        <a href="#" class="sidebar-myspace-btn {{ !$isPaid ? 'nav-link--locked' : '' }}">
             <span class="fold"></span>
 
             <div class="points_wrapper">

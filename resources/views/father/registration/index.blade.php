@@ -192,9 +192,32 @@
         }
 
         /* Стили для даты */
-        input[type="date"]::-webkit-calendar-picker-indicator {
-            filter: invert(1);
+        input[type="date"] {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            min-height: 45px;
             cursor: pointer;
+            position: relative;
+        }
+
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            filter: invert(1) brightness(0.8) sepia(100%) saturate(1000%) hue-rotate(140deg);
+            cursor: pointer;
+            opacity: 0.6;
+            transition: opacity 0.3s;
+        }
+
+        input[type="date"]::-webkit-calendar-picker-indicator:hover {
+            opacity: 1;
+        }
+
+        .dob-label {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.5);
+            display: block;
+            margin-bottom: 5px;
+            padding-left: 5px;
         }
 
         textarea.input-field {
@@ -593,7 +616,6 @@
 
         <div class="glass-card">
             <h2 class="form-title" id="formTitle">Rejestracja Space Memory</h2>
-            <div class="promo-text" id="promoText">-</div>
 
             <!-- Error Message Block -->
             <div id="error-block" style="display: none; background: rgba(255, 75, 75, 0.1); border: 1px solid #ff4b4b; color: #ff4b4b; padding: 15px; border-radius: 12px; margin-bottom: 20px; font-size: 14px; text-align: center;">
@@ -650,9 +672,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label
-                            style="font-size:12px; color:rgba(255,255,255,0.5); display:block; margin-bottom:5px; padding-left:5px;"
-                            id="dobLabel">Data urodzenia</label>
+                        <label class="dob-label" id="dobLabel">Data urodzenia</label>
                         <input type="date" id="cDob" class="input-field">
                     </div>
                 </div>
@@ -753,7 +773,6 @@
         const translations = {
             ru: {
                 title: "Регистрация Space Memory",
-                promo: "Скидка 5% на групповые занятия!",
 
                 secAccount: "Аккаунт",
                 email: "Email (для входа)",
@@ -792,7 +811,6 @@
             },
             en: {
                 title: "Space Memory Registration",
-                promo: "5% Discount for Group Classes!",
 
                 secAccount: "Account Details",
                 email: "Email (for login)",
@@ -831,7 +849,6 @@
             },
             pl: {
                 title: "Rejestracja Space Memory",
-                promo: "Zniżka 5% na zajęcia grupowe!",
 
                 secAccount: "Konto",
                 email: "Email (do logowania)",
@@ -870,7 +887,6 @@
             },
             ua: {
                 title: "Реєстрація Space Memory",
-                promo: "Знижка 5% на групові заняття!",
 
                 secAccount: "Акаунт",
                 email: "Email (для входу)",
@@ -1057,7 +1073,6 @@
 
                 // Обновление текстов (TextContent)
                 document.getElementById('formTitle').textContent = t.title;
-                document.getElementById('promoText').textContent = t.promo;
                 document.getElementById('secAccount').textContent = t.secAccount;
                 document.getElementById('secParent').textContent = t.secParent;
                 document.getElementById('secChild').textContent = t.secChild;
