@@ -2,10 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Father\Invite;
 
-use App\Models\RecruitingStudentImport;
+use App\Http\Controllers\Controller;
 use App\Models\RecruitingCampaign;
+use App\Models\RecruitingStudentImport;
 use Illuminate\Http\RedirectResponse;
 
 class RecruitingInviteController extends Controller

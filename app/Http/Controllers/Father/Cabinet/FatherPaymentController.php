@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Father;
+namespace App\Http\Controllers\Father\Cabinet;
 
 use App\Http\Controllers\Controller;
 use App\Models\GlsPaymentTransaction;
 use App\Models\GlsProject;
 use App\Services\ImojePaymentService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class FatherPaymentController extends Controller
 {

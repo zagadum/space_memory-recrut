@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers\Father;
+namespace App\Http\Controllers\Father\Cabinet;
 
 use App\Http\Controllers\Controller;
 use App\Models\GlsInvoiceDocument;

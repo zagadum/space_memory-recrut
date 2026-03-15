@@ -85,7 +85,7 @@ class LoginController extends Controller
     public function showLoginForm(Request $request){
         $role = session('role');
 
-        die('aaa');
+
         if (isset($role) && !$this->ChekRule($role)) {
             return $this->logout(request());
         }

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers\Father;
+namespace App\Http\Controllers\Father\Cabinet;
 
 use App\Http\Controllers\Controller;
 use App\Models\GlsInvoiceDocument;
@@ -18,7 +18,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
-use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class PaymentController extends Controller
 {

@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
-use App\Models\Student;
+use App\Models\RecrutingStudent;
 use App\Jobs\SendVerificationCodeJob;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
@@ -61,7 +61,7 @@ class StudentCabinetController extends Controller
         RateLimiter::clear($throttleKey);
 
         // Standardize login for SPA/Portal
-        $studentModel = Student::find($student->id);
+        $studentModel = RecrutingStudent::find($student->id);
         if ($studentModel) {
             Auth::guard('recruting_student')->login($studentModel);
         }
@@ -97,7 +97,9 @@ class StudentCabinetController extends Controller
             ->first();
 
         if ($student) {
-            $code = str_pad((string)random_int(0, 999999), 6, '0', STR_PAD_LEFT);
+            do {
+                $code = str_pad((string)random_int(0, 999999), 6, '0', STR_PAD_LEFT);
+            } while ($code === (string) $student->verification_code);
 
             DB::table('recruting_student')
                 ->where('id', $student->id)
@@ -115,10 +117,15 @@ class StudentCabinetController extends Controller
         ]);
     }
 
-    // Страница   ввод кода
+    // Страница ввод кода
     public function showVerifyPage()
     {
-        return view('registration.verify');
+        $verifyFormToken = \Illuminate\Support\Str::random(64);
+        session(['verify_form_token' => $verifyFormToken]);
+
+        return view('registration.verify', [
+            'verifyFormToken' => $verifyFormToken,
+        ]);
     }
 
     public function showCabinetPage()

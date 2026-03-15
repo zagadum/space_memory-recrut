@@ -16,6 +16,8 @@ return Application::configure(basePath: dirname(__DIR__))
             'guest.admin' => \App\AdminModule\AdminAuth\Http\Middleware\RedirectIfAuthenticated::class,
             'verify.jwt'  => \App\Http\Middleware\VerifyJwtToken::class,
             'api.locale'  => \App\Http\Middleware\ApiLocaleMiddleware::class,
+            'register.form' => \App\Http\Middleware\EnsureRegisterFormRequest::class,
+            'verify.form'   => \App\Http\Middleware\EnsureRegisterFormRequest::class,
         ]);
 
         $middleware->group('is_student', [

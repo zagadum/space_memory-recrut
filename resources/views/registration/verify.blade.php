@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="verify-form-token" content="{{ $verifyFormToken }}">
     <title>Space Memory - Подтверждение регистрации</title>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
@@ -512,14 +514,20 @@
             confirmBtn.disabled = true;
             confirmBtn.textContent = "...";
             errorMsg.style.display = 'none';
-            
+
+            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+            const formToken = document.querySelector('meta[name="verify-form-token"]').getAttribute('content');
+
             try {
                 const response = await fetch('/recruitment/verify-code', {
                     method: 'POST',
+                    credentials: 'same-origin',
                     headers: {
                         'Content-Type': 'application/json',
                         'Accept': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        'X-CSRF-TOKEN': csrfToken,
+                        'X-Form-Token': formToken,
+                        'X-Requested-With': 'XMLHttpRequest'
                     },
                     body: JSON.stringify({
                         email: email,
@@ -591,12 +599,18 @@
             }
             
             try {
+                const resendCsrf = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+                const resendFormToken = document.querySelector('meta[name="verify-form-token"]').getAttribute('content');
+
                 const response = await fetch('/recruitment/resend-code', {
                     method: 'POST',
+                    credentials: 'same-origin',
                     headers: {
                         'Content-Type': 'application/json',
                         'Accept': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        'X-CSRF-TOKEN': resendCsrf,
+                        'X-Form-Token': resendFormToken,
+                        'X-Requested-With': 'XMLHttpRequest'
                     },
                     body: JSON.stringify({ 
                         email: email,

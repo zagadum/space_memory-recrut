@@ -37,20 +37,14 @@ return [
 
     'guards' => [
 
-
-
-        'student' => [
-            'driver' => 'session',
-            'provider' => 'student',
-        ],
         'recruting_student' => [
             'driver' => 'session',
-            'provider' => 'student',
+            'provider' => 'recruting_student',
         ],
 //------убрать
         'web' => [
             'driver' => 'session',
-            'provider' => 'users',
+            'provider' => 'recruting_student',
         ],
 
         'api' => [
@@ -78,23 +72,11 @@ return [
     */
 
     'providers' => [
-
-
-
-        'student' => [
+        'recruting_student' => [
             'driver' => 'eloquent',
             'model' => App\Models\RecrutingStudent::class,
         ],
 
-//        'users' => [
-//            'driver' => 'eloquent',
-//            'model' => App\Models\User::class,
-//        ],
-//
-//         'users' => [
-//             'driver' => 'database',
-//             'table' => 'users',
-//         ],
     ],
 
     /*
@@ -113,30 +95,7 @@ return [
     */
 
     'passwords' => [
-        'admin_users' => [
-            'provider' => 'admin_users',
-            'table' => 'admin_password_resets',
-            'expire' => 60,
-        ],
-        'student' => [
-            'provider' => 'student',
-            'table' => 'admin_password_resets',
-            'expire' => 60,
-        ],
-        'franchisee' => [
-            'provider' => 'franchisee',
-            'table' => 'franchisee',
-            'expire' => 60,
-        ],
-        'managers' => [
-            'table' => 'franchisee_managers',
-            'expire' => 60,
-        ],
-        'teacher' => [
-            'table' => 'teacher',
-            'expire' => 60,
-        ],
-        'student' => [
+        'recruting_student' => [
             'table' => 'recruting_student',
             'expire' => 60,
         ],

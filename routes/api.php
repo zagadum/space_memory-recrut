@@ -22,9 +22,9 @@ use App\Http\Controllers\Api\StudentCabinetController;
 // ─── Public ───────────────────────────────────────────────────────────────────
 // Ученик регистрируется и верифицирует email без токена
 
-//Route::middleware('api.locale')->group(function () {
-//    Route::post('/v1/register', [NewStudentsController::class, 'register']);
-//});
+Route::middleware(['web', 'api.locale', 'register.form'])->group(function () {
+    Route::post('/v1/register', [NewStudentsController::class, 'register']);
+});
 
 
 // ─── Protected (JWT) ──────────────────────────────────────────────────────────

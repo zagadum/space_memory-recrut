@@ -1,8 +1,8 @@
 <?php
-use App\Http\Controllers\Student\IndexController as StudentIndexController;
+
 use App\Http\Controllers\Api\StudentCabinetController;
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Str;
 
 
 /*
@@ -30,7 +30,12 @@ Route::get('/login', function () {
 });
 
 Route::get('/register', function () {
-    return view('registration.index');
+    $registerFormToken = Str::random(64);
+    session(['register_form_token' => $registerFormToken]);
+
+    return view('registration.index', [
+        'registerFormToken' => $registerFormToken,
+    ]);
 });
 
 
@@ -86,14 +91,18 @@ Route::middleware(['is_auth'])->group(static function () {
 
 
 
-Route::get('/verify', [StudentCabinetController::class , 'showVerifyPage'])->name('verification.show');
-Route::post('/recruitment/verify-code', [StudentCabinetController::class, 'verifyCode'])->middleware('api.locale')->name('verification.verify');
-Route::post('/recruitment/resend-code', [StudentCabinetController::class, 'resendCode'])->name('verification.resend');
+Route::get('/verify', [StudentCabinetController::class, 'showVerifyPage'])->name('verification.show');
+Route::post('/recruitment/verify-code', [StudentCabinetController::class, 'verifyCode'])
+    ->middleware(['api.locale', 'verify.form:verify_form_token,/verify'])
+    ->name('verification.verify');
+Route::post('/recruitment/resend-code', [StudentCabinetController::class, 'resendCode'])
+    ->middleware('verify.form:verify_form_token,/verify')
+    ->name('verification.resend');
 Route::get('/cabinet', [StudentCabinetController::class , 'showCabinetPage']);
 // Recruiting
-Route::get('/register/invite/{token}', [\App\Http\Controllers\RecruitingInviteController::class , 'accept'])->name('recruiting.invite');
-Route::get('/register/complete/{token}', [\App\Http\Controllers\RegistrationCompletionController::class , 'index'])->name('registration.complete');
-Route::post('/register/complete/{token}', [\App\Http\Controllers\RegistrationCompletionController::class , 'store'])->name('registration.complete.store');
+Route::get('/register/invite/{token}', [\App\Http\Controllers\Father\Invite\RecruitingInviteController::class , 'accept'])->name('recruiting.invite');
+Route::get('/register/complete/{token}', [\App\Http\Controllers\Father\Invite\RegistrationCompletionController::class , 'index'])->name('registration.complete');
+Route::post('/register/complete/{token}', [\App\Http\Controllers\Father\Invite\RegistrationCompletionController::class , 'store'])->name('registration.complete.store');
 
 /*
  |--------------------------------------------------------------------------
@@ -110,27 +119,27 @@ Route::get('/father/logout', [\App\Http\Controllers\Father\AuthController::class
 Route::prefix('father')
     ->middleware('is_student')
     ->group(function () {
-        Route::get('/parent-portal', [\App\Http\Controllers\Father\FatherPortalController::class, 'index'])
+        Route::get('/parent-portal', [\App\Http\Controllers\Father\Cabinet\FatherPortalController::class, 'index'])
             ->name('father.portal');
 
-        Route::get('/documents', [\App\Http\Controllers\Father\FatherDocumentController::class, 'index'])
+        Route::get('/documents', [\App\Http\Controllers\Father\Cabinet\FatherDocumentController::class, 'index'])
             ->name('father.documents');
         Route::get('/document', fn() => redirect()->route('father.documents'));
         Route::get('/document-view', fn() => redirect()->route('father.documents'));
-        Route::get('/document-view/{document}', [\App\Http\Controllers\Father\FatherDocumentController::class, 'show'])
+        Route::get('/document-view/{document}', [\App\Http\Controllers\Father\Cabinet\FatherDocumentController::class, 'show'])
             ->name('father.document.view');
-        Route::post('/documents/sign', [\App\Http\Controllers\Father\FatherDocumentController::class, 'sign'])
+        Route::post('/documents/sign', [\App\Http\Controllers\Father\Cabinet\FatherDocumentController::class, 'sign'])
             ->name('father.documents.sign');
 
-        Route::get('/payment', [\App\Http\Controllers\Father\FatherPaymentController::class, 'index'])
+        Route::get('/payment', [\App\Http\Controllers\Father\Cabinet\FatherPaymentController::class, 'index'])
             ->name('father.payment');
-        Route::post('/payment/create', [\App\Http\Controllers\Father\FatherPaymentController::class, 'create'])
+        Route::post('/payment/create', [\App\Http\Controllers\Father\Cabinet\FatherPaymentController::class, 'create'])
             ->name('father.payment.create');
-        Route::get('/payment-success', [\App\Http\Controllers\Father\FatherPaymentController::class, 'success'])
+        Route::get('/payment-success', [\App\Http\Controllers\Father\Cabinet\FatherPaymentController::class, 'success'])
             ->name('father.payment.success');
 
         // Legacy / Common
-        Route::get('/payment/download-invoice/{id}', [\App\Http\Controllers\Father\PaymentController::class, 'downloadInvoice'])
+        Route::get('/payment/download-invoice/{id}', [\App\Http\Controllers\Father\Cabinet\PaymentController::class, 'downloadInvoice'])
             ->name('father.download-invoice');
         Route::get('/learn', [\App\Http\Controllers\Father\LearnController::class, 'index'])
             ->name('father.learn');
