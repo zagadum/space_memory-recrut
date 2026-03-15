@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Auth;
 
-use App\Mail\VerificationCodeMailable;
+use App\Mail\VerificationCodeMail;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -46,7 +46,7 @@ class RegisterFormProtectionTest extends TestCase
             'doc_status' => 'new',
         ]);
 
-        Mail::assertSent(VerificationCodeMailable::class, 1);
+        Mail::assertSent(VerificationCodeMail::class, 1);
     }
 
     public function test_register_endpoint_rejects_request_without_form_token(): void

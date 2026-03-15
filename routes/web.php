@@ -37,6 +37,7 @@ Route::get('/register', function () {
 });
 
 Route::any('/test/mail', '\App\Http\Controllers\TestController@SentMail');
+Route::any('/test/mail/debug', [\App\Http\Controllers\TestController::class, 'debugMail'])->name('test.mail.debug');
 
 Route::any('/payments/imoje/test', [\App\Http\Controllers\ImojeController::class, 'payTest'])->name('imoje.pay-test');
 Route::any('/payments/imoje/failure', [\App\Http\Controllers\ImojeController::class, 'payFailure'])->name('imoje.failure');

@@ -10,22 +10,30 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class VerificationCodeMailable extends Mailable
+class VerificationCodeMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public function __construct(
-        public string $code
-    ) {}
+    public function __construct(public string $code) {}
 
     /**
      * Get the message envelope.
      */
     public function envelope(): Envelope
     {
-        return new Envelope(
-            subject: 'Kod weryfikacyjny - Space Memory',
-        );
+        return new Envelope(subject: 'Kod weryfikacyjny - Space Memory',);
+    }
+
+
+    /**
+     * Build the message.
+     *
+     * @return $this
+     */
+    public function build(){
+        return $this->view('emails.verification_code')
+            ->with(['code' => $this->code])
+            ->subject('Kod weryfikacyjny - Space Memory');
     }
 
     /**
@@ -50,4 +58,5 @@ class VerificationCodeMailable extends Mailable
     {
         return [];
     }
+
 }
