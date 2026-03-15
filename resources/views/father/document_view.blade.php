@@ -303,6 +303,9 @@ header.d-lg-none { background: var(--bg) !important; border-bottom: 1px solid va
 @endsection
 
 @section('content')
+@php
+    $isSigned = ($document->doc_status ?? null) === 'sign';
+@endphp
 <div class="dv-wrap">
 
     {{-- TOP BAR --}}
@@ -311,7 +314,7 @@ header.d-lg-none { background: var(--bg) !important; border-bottom: 1px solid va
             <i class="fas fa-arrow-left"></i>
         </a>
         <div class="dv-topbar__title">
-            <h1>{{ $document->name ?? 'Договор 2026 Групповые занятия' }}</h1>
+            <h1>{{ $document->title ?? ($document->doc_no ? ('Документ № ' . $document->doc_no) : 'Договор 2026 Групповые занятия') }}</h1>
             <p>Ознакомьтесь с документом и подпишите его</p>
         </div>
     </div>
@@ -518,24 +521,24 @@ header.d-lg-none { background: var(--bg) !important; border-bottom: 1px solid va
 
                 {{-- Single checkbox --}}
                 <div class="dv-consent">
-                    <input type="checkbox" class="dv-cb" id="cbRead">
+                    <input type="checkbox" class="dv-cb" id="cbRead" {{ $isSigned ? 'disabled' : '' }}>
                     <label class="dv-consent-label" for="cbRead">
                         Я ознакомился(-ась) с документом и принимаю все его условия
                     </label>
                 </div>
 
                 {{-- Signed banner (hidden) --}}
-                <div class="dv-signed" id="signedBanner">
+                <div class="dv-signed {{ $isSigned ? 'show' : '' }}" id="signedBanner">
                     <i class="fas fa-check-circle"></i>
                     <div>
                         <div class="dv-signed__text">Документ подписан!</div>
-                        <div class="dv-signed__sub" id="signedDate"></div>
+                        <div class="dv-signed__sub" id="signedDate">{{ optional($document->sign_date)->format('d.m.Y H:i') }}</div>
                     </div>
                 </div>
 
                 {{-- Sign button --}}
-                <div id="signBlock">
-                    <button class="dv-btn-sign" id="btnSign">
+                <div id="signBlock" style="{{ $isSigned ? 'display:none;' : '' }}">
+                    <button class="dv-btn-sign" id="btnSign" disabled>
                         <i class="fas fa-pen-nib"></i>
                         Подписать документ
                     </button>
@@ -561,6 +564,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const progressFill = document.getElementById('progressFill');
     const cbRead       = document.getElementById('cbRead');
     const btnSign      = document.getElementById('btnSign');
+    const isSigned     = {{ $isSigned ? 'true' : 'false' }};
 
     /* Update progress bar on scroll */
     function updateProgress() {
@@ -581,12 +585,18 @@ document.addEventListener('DOMContentLoaded', function () {
         docScroll.scrollTo({ top: 0, behavior: 'smooth' }));
 
     /* Enable sign button when checkbox checked */
-    cbRead.addEventListener('change', function () {
-        btnSign.disabled = !this.checked;
-    });
+    if (!isSigned) {
+        cbRead.addEventListener('change', function () {
+            btnSign.disabled = !this.checked;
+        });
+    }
 
     /* Sign — POST to API, record in DB */
     btnSign.addEventListener('click', function () {
+        if (isSigned) {
+            return;
+        }
+
         btnSign.disabled = true;
         btnSign.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Сохраняем…';
 
@@ -598,22 +608,32 @@ document.addEventListener('DOMContentLoaded', function () {
             },
             body: JSON.stringify({
                 document_id: {{ $document->id ?? 'null' }},
-                student_id:  {{ $student->id  ?? 'null' }},
-                signed_at:   new Date().toISOString()
+                student_id:  {{ $student->id  ?? 'null' }}
             })
         })
-        .then(r => r.json())
-        .then(() => onSigned())
-        .catch(() => onSigned()); // show success even if network error
+        .then(async (r) => {
+            const data = await r.json();
+            if (!r.ok || !data.success) {
+                throw new Error(data.message || 'Ошибка подписи');
+            }
+            onSigned(data.signed_at);
+        })
+        .catch((error) => {
+            btnSign.disabled = false;
+            btnSign.innerHTML = '<i class="fas fa-pen-nib"></i> Подписать документ';
+            alert(error.message || 'Не удалось подписать документ');
+        });
     });
 
-    function onSigned() {
+    function onSigned(signedAt) {
         document.getElementById('signBlock').style.display = 'none';
         cbRead.disabled = true;
-        const now = new Date();
-        document.getElementById('signedDate').textContent =
-            now.toLocaleDateString('ru-RU') + ' · ' +
-            now.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
+        if (signedAt) {
+            const signedDate = new Date(String(signedAt).replace(' ', 'T'));
+            document.getElementById('signedDate').textContent =
+                signedDate.toLocaleDateString('ru-RU') + ' · ' +
+                signedDate.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
+        }
         document.getElementById('signedBanner').classList.add('show');
     }
 

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('doc_no', 100)->nullable();
             $table->enum('doc_status', ['new', 'pedding', 'sign'])->default('new');
             $table->string('pdf_path', 500)->nullable();
-            $table->date('sign_date')->nullable();
+            $table->dateTime('sign_date')->nullable();
 
             $table->timestamps();
 

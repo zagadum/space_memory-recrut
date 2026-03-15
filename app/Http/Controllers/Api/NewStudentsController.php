@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\RegisterStudentRequest;
 use App\Http\Requests\StoreStudentRequest;
 use App\Http\Requests\UpdateStudentRequest;
+use App\Models\GlsDocument;
+use App\Models\GlsProject;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
@@ -234,7 +236,30 @@ class NewStudentsController extends Controller
                 'updated_at' => now(),
             ];
 
-            $studentId = DB::table('recruting_student')->insertGetId($data);
+            $studentId = DB::transaction(function () use ($data) {
+                $createdStudentId = DB::table('recruting_student')->insertGetId($data);
+
+                $project = GlsProject::query()
+                    ->where('is_active', true)
+                    ->orderBy('id')
+                    ->first();
+
+                if (!$project) {
+                    $project = GlsProject::query()->firstOrCreate(
+                        ['code' => 'space_memory'],
+                        ['name' => 'Space Memory', 'is_active' => true]
+                    );
+                }
+
+                GlsDocument::query()->create([
+                    'student_id' => $createdStudentId,
+                    'project_id' => $project->id,
+                    'title' => 'Regulamin swiadczenia uslug',
+                    'doc_status' => 'new',
+                ]);
+
+                return $createdStudentId;
+            });
 
             SendVerificationCodeJob::dispatch($validated['email'], $code);
 

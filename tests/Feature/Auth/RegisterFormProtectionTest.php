@@ -4,6 +4,7 @@ namespace Tests\Feature\Auth;
 
 use App\Mail\VerificationCodeMailable;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Tests\TestCase;
 
@@ -34,6 +35,15 @@ class RegisterFormProtectionTest extends TestCase
             'email' => 'protected-success@example.com',
             'status' => 'registered',
             'enabled' => 0,
+        ]);
+
+        $studentId = DB::table('recruting_student')
+            ->where('email', 'protected-success@example.com')
+            ->value('id');
+
+        $this->assertDatabaseHas('gls_documents', [
+            'student_id' => $studentId,
+            'doc_status' => 'new',
         ]);
 
         Mail::assertSent(VerificationCodeMailable::class, 1);

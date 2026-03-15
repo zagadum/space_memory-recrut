@@ -11,22 +11,22 @@
         <table class="father-table">
             <thead>
                 <tr>
+                    <th>{{ __('father.documents.title') }}</th>
                     <th>{{ __('father.documents.number') }}</th>
                     <th>{{ __('father.documents.date') }}</th>
-                    <th>{{ __('father.documents.amount') }}</th>
+                    <th>Статус</th>
                     <th>{{ __('father.documents.download') }}</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach($documents as $doc)
                 <tr>
-                    <td>{{ $doc->number ?? '—' }}</td>
-                    <td>{{ $doc->issue_date?->format('d.m.Y') ?? '—' }}</td>
-                    <td>{{ number_format((float)$doc->amount_gross, 2, ',', ' ') }} {{ $doc->currency ?? 'PLN' }}</td>
+                    <td>{{ $doc->title ?? '—' }}</td>
+                    <td>{{ $doc->doc_no ?? '—' }}</td>
+                    <td>{{ $doc->sign_date?->format('d.m.Y H:i') ?? '—' }}</td>
+                    <td>{{ ($doc->doc_status ?? '') === 'sign' ? 'Подписан' : 'Ожидает подписи' }}</td>
                     <td>
-                        <a href="{{ route('father.download-invoice', $doc->id) }}" class="father-btn father-btn--sm">
-                            {{ __('father.documents.download') }}
-                        </a>
+                        <a href="{{ route('father.document.view', $doc->id) }}" class="father-btn father-btn--sm">Открыть</a>
                     </td>
                 </tr>
                 @endforeach

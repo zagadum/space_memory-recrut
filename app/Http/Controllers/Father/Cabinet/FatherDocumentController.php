@@ -3,7 +3,8 @@
 namespace App\Http\Controllers\Father\Cabinet;
 
 use App\Http\Controllers\Controller;
-use App\Models\GlsInvoiceDocument;
+use App\Models\GlsDocument;
+use App\Models\RecrutingStudent;
 use Illuminate\Http\Request;
 
 class FatherDocumentController extends Controller
@@ -11,33 +12,40 @@ class FatherDocumentController extends Controller
     public function index(Request $request)
     {
         $student = auth()->guard('recruting_student')->user();
-        $documents=[];
-        if (isset($student) && $student->id>0){
-            $documents = GlsInvoiceDocument::where('student_id', $student->id)->get();
+        $documents = [];
+
+        if ($student instanceof RecrutingStudent && $student->id > 0) {
+            $documents = GlsDocument::query()
+                ->where('student_id', $student->id)
+                ->orderByDesc('created_at')
+                ->get();
         }
 
-        
         return view('father.documents', compact('student', 'documents'));
     }
 
     public function show(Request $request, int $document)
     {
         $student = auth()->guard('recruting_student')->user();
-        if  (empty($student->id)){
+
+        if (!$student instanceof RecrutingStudent || empty($student->id)) {
             abort(403, 'Unauthorized');
         }
-        $document = GlsInvoiceDocument::where('student_id', $student->id)->findOrFail($document);
-        
+
+        $document = GlsDocument::query()
+            ->where('student_id', $student->id)
+            ->findOrFail($document);
+
         $parent = (object)[
             'full_name' => ($student->parent_name ?? $student->name ?? '') . ' ' . ($student->parent_surname ?? $student->surname ?? ''),
             'email' => $student->email,
         ];
-        
+
         $contract = (object)[
-            'signed' => !is_null($document->paid_at), // Example logic
-            'subscription_amount' => $document->amount_gross,
+            'signed' => $document->doc_status === 'sign',
+            'subscription_amount' => 0,
         ];
-        
+
         return view('father.document_view', compact('student', 'document', 'parent', 'contract'));
     }
 
@@ -49,18 +57,32 @@ class FatherDocumentController extends Controller
         ]);
 
         $student = auth()->guard('recruting_student')->user();
-        
-        if ($student->id != $request->student_id) {
+
+        if (!$student instanceof RecrutingStudent || $student->id != $request->student_id) {
             return response()->json(['success' => false, 'message' => 'Unauthorized'], 403);
         }
 
-        // TODO: В реальном проекте здесь должна быть таблица подписей или поле в акте
-        // Для примера обновим дату оплаты или создадим лог
-        
+        $document = GlsDocument::query()
+            ->where('id', $request->integer('document_id'))
+            ->where('student_id', $student->id)
+            ->first();
+
+        if (!$document) {
+            return response()->json(['success' => false, 'message' => 'Document not found'], 404);
+        }
+
+        if ($document->doc_status !== 'sign') {
+            $document->update([
+                'doc_status' => 'sign',
+                'sign_date' => now(),
+            ]);
+            $document->refresh();
+        }
+
         return response()->json([
             'success' => true,
-            'signed_at' => now()->toDateTimeString(),
-            'ip' => $request->ip()
+            'signed_at' => optional($document->sign_date)->format('Y-m-d H:i:s'),
+            'doc_status' => $document->doc_status,
         ]);
     }
 }

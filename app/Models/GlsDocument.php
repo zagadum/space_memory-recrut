@@ -15,6 +15,7 @@ class GlsDocument extends Model
         'student_id',
         'project_id',
         'doc_no',
+        'title',
         'doc_status',
         'pdf_path',
         'sign_date',
@@ -23,7 +24,7 @@ class GlsDocument extends Model
     protected function casts(): array
     {
         return [
-            'sign_date' => 'date:Y-m-d',
+            'sign_date' => 'datetime',
         ];
     }
 

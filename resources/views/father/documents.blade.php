@@ -255,27 +255,37 @@ header.d-lg-none { background: var(--bg) !important; border-bottom: 1px solid va
         </div>
         <div>
             <h1>Документы</h1>
-            <p>Ваши договоры и соглашения</p>
+            <p>
+                Ваши договоры и соглашения
+                @if(!empty($student))
+                    · {{ trim(($student->name ?? '') . ' ' . ($student->surname ?? '')) ?: ($student->email ?? '') }}
+                @endif
+            </p>
         </div>
     </div>
 
     {{-- СПИСОК --}}
     <div class="dp-list">
         @forelse ($documents as $doc)
-        <div class="dp-card {{ is_null($doc->paid_at) ? 'dp-card--unsigned' : 'dp-card--signed' }}">
-            <div class="dp-card__file-icon" {!! !is_null($doc->paid_at) ? 'style="color: var(--green);"' : '' !!}>
+        @php
+            $isSigned = ($doc->doc_status ?? null) === 'sign';
+        @endphp
+        <div class="dp-card {{ $isSigned ? 'dp-card--signed' : 'dp-card--unsigned' }}">
+            <div class="dp-card__file-icon" {!! $isSigned ? 'style="color: var(--green);"' : '' !!}>
                 <i class="fas fa-file-alt"></i>
             </div>
             <div class="dp-card__info">
-                <p class="dp-card__name">{{ $doc->display_name ?? 'Договор ' . ($doc->issue_date ? $doc->issue_date->format('Y') : '') }}</p>
+                <p class="dp-card__name">
+                    {{ $doc->title ?: ($doc->doc_no ? ('Документ № ' . $doc->doc_no) : ('Документ #' . $doc->id)) }}
+                </p>
                 <div class="dp-card__meta">
                     <span class="dp-card__date">
-                        <i class="fas {{ is_null($doc->paid_at) ? 'fa-calendar-alt' : 'fa-calendar-check' }}" style="margin-right:4px;opacity:.5;"></i>
-                        {{ is_null($doc->paid_at) ? ($doc->issue_date ? $doc->issue_date->format('d.m.Y') : '—') : 'Подписан ' . ($doc->paid_at->format('d.m.Y')) }}
+                        <i class="fas {{ $isSigned ? 'fa-calendar-check' : 'fa-calendar-alt' }}" style="margin-right:4px;opacity:.5;"></i>
+                        {{ $isSigned ? 'Документ подписан! ' . optional($doc->sign_date)->format('d.m.Y H:i') : 'Ожидает подписи' }}
                     </span>
-                    <span class="dp-badge {{ is_null($doc->paid_at) ? 'dp-badge--unsigned' : 'dp-badge--signed' }}">
+                    <span class="dp-badge {{ $isSigned ? 'dp-badge--signed' : 'dp-badge--unsigned' }}">
                         <span class="dp-badge__dot"></span>
-                        {{ is_null($doc->paid_at) ? 'Ожидает подписи' : 'Подписан' }}
+                        {{ $isSigned ? 'Подписан' : 'Ожидает подписи' }}
                     </span>
                 </div>
             </div>
@@ -283,15 +293,15 @@ header.d-lg-none { background: var(--bg) !important; border-bottom: 1px solid va
                 <a href="{{ route('father.document.view', $doc->id) }}" class="dp-btn-view" title="Просмотреть">
                     <i class="fas fa-eye"></i>
                 </a>
-                @if(is_null($doc->paid_at))
+                @if(!$isSigned)
                     <a href="{{ route('father.document.view', $doc->id) }}" class="dp-btn-sign">
                         <i class="fas fa-pen-nib"></i>
                         Подписать
                     </a>
                 @else
-                    <a href="{{ route('father.download-invoice', $doc->id) }}" class="dp-btn-download">
+                    <a href="{{ route('father.document.view', $doc->id) }}" class="dp-btn-download">
                         <i class="fas fa-download"></i>
-                        Скачать фактуру
+                        Открыть
                     </a>
                 @endif
             </div>
