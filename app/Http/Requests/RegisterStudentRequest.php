@@ -29,34 +29,39 @@ class RegisterStudentRequest extends FormRequest
     public function rules(): array
     {
         return [
+            // Обязательные
             'email'    => 'required|email|unique:recruting_student,email',
             'password' => 'required|min:6',
 
-            // Личные данные теперь обязательны
-            'name'             => 'required|string|max:100',
-            'surname'          => 'required|string|max:100',
-            'lastname'         => 'nullable|string|max:100',
-            'parent_name'      => 'required|string|max:100',
-            'parent_surname'   => 'required|string|max:100',
-            'parent_phone'     => 'required|string|max:20',
-            'parent_passport'  => 'required|string|max:50',
-            'dob'              => 'required|date',
-            'country'          => 'required|string|max:100',
-            'city'             => 'required|string|max:100',
-            'address'          => 'required|string|max:200',
-            'zip'              => 'required|string|max:20',
-            'apartment'        => 'nullable|string|max:20',
+            // Ребёнок
+            'name'     => 'nullable|string|max:255',
+            'surname'  => 'nullable|string|max:255',
+            'dob'      => 'nullable|date',
+
+            // Родитель (маппится в parent1_*)
+            'parent_name'    => 'nullable|string|max:255',
+            'parent_surname' => 'nullable|string|max:255',
+            'parent_phone'   => 'nullable|string|max:50',
+
+            // Адрес
+            'country'   => 'nullable|string|max:100',
+            'city'      => 'nullable|string|max:255',
+            'address'   => 'nullable|string|max:255',
+            'zip'       => 'nullable|string|max:20',
+            'apartment' => 'nullable|string|max:50',
 
             // Согласия
-            'photo_consent'     => 'nullable|boolean',
-            'terms_accepted'    => 'required|accepted',
-            'privacy_accepted'  => 'required|accepted',
-            'data_processing'   => 'required|accepted',
-            'urgent_start'      => 'required|accepted',
-            'recording_consent' => 'nullable|boolean',
-            'marketing_consent' => 'nullable|boolean',
-            'reg_comment'       => 'nullable|string|max:1000',
-            'locale'            => 'nullable|string|max:10',
+            'photo_consent'       => 'nullable|boolean',
+            'terms_accepted'      => 'required|boolean',
+            'privacy_accepted'    => 'required|boolean',
+            'data_processing'     => 'required|boolean',
+            'urgent_start'        => 'nullable|boolean',
+            'recording_consent'   => 'nullable|boolean',
+            'marketing_consent'   => 'nullable|boolean',
+
+            // Опционально
+            'reg_comment' => 'nullable|string|max:1000',
+            'language'    => 'nullable|string|max:5',
         ];
     }
 }

@@ -27,9 +27,14 @@ class NewStudentsController extends Controller
                 ->select(
                     'id', 'name', 'surname', 'lastname', 'email', 'status',
                     'group_id', 'teacher_id', 'created_at',
+                    // parent1_* — основные поля (формат student.sql)
+                    'parent1_surname', 'parent1_lastname', 'parent1_phone', 'parent1_phone_country',
+                    // parent_* — расширения (обратная совместимость)
                     'parent_name', 'parent_surname', 'parent_phone', 'parent_passport',
                     'dob', 'country', 'city', 'address', 'zip', 'apartment',
-                    'photo_consent', 'terms_accepted', 'privacy_accepted', 'reg_comment'
+                    'photo_consent', 'terms_accepted', 'privacy_accepted', 'reg_comment',
+                    'data_processing_accepted', 'urgent_start_accepted',
+                    'recording_consent_accepted', 'marketing_consent_accepted'
                 )
                 ->paginate(20);
 
@@ -51,11 +56,16 @@ class NewStudentsController extends Controller
             ->where('id', $id)
             ->where('deleted', 0)
             ->select(
-                'id', 'name', 'surname', 'lastname', 'email',
+                'id', 'name', 'surname', 'lastname', 'email', 'status',
                 'group_id', 'teacher_id', 'created_at',
+                // parent1_* — основные поля (формат student.sql)
+                'parent1_surname', 'parent1_lastname', 'parent1_phone', 'parent1_phone_country',
+                // parent_* — расширения (обратная совместимость)
                 'parent_name', 'parent_surname', 'parent_phone', 'parent_passport',
                 'dob', 'country', 'city', 'address', 'zip', 'apartment',
-                'photo_consent', 'terms_accepted', 'privacy_accepted', 'reg_comment'
+                'photo_consent', 'terms_accepted', 'privacy_accepted', 'reg_comment',
+                'data_processing_accepted', 'urgent_start_accepted',
+                'recording_consent_accepted', 'marketing_consent_accepted'
             )
             ->first();
 
@@ -166,65 +176,81 @@ class NewStudentsController extends Controller
     public function register(RegisterStudentRequest $request)
     {
         try {
-            $data = $request->all();
-            
-            // Map empty strings to null for consistent DB storage and validation
-            foreach ($data as $key => $value) {
-                if ($value === '') {
-                    $data[$key] = null;
-                }
-            }
-
             $validated = $request->validated();
-            
             $code      = str_pad((string)random_int(0, 999999), 6, '0', STR_PAD_LEFT);
 
-            $dataToInsert = [
-                'email'                        => $validated['email'],
-                'password'                     => bcrypt($validated['password']),
-                'status'                       => 'registered',
-                'name'                         => $validated['name']             ?? '',
-                'surname'                      => $validated['surname']          ?? '',
-                'lastname'                     => $validated['lastname']         ?? '',
-                'parent_name'                  => $validated['parent_name']      ?? '',
-                'parent_surname'               => $validated['parent_surname']   ?? '',
-                'parent_phone'                 => $validated['parent_phone']     ?? '',
-                'parent_passport'              => $validated['parent_passport']  ?? '',
-                'dob'                          => $validated['dob'] && $validated['dob'] !== '' ? $validated['dob'] : null,
-                'country'                      => $validated['country']          ?? '',
-                'city'                         => $validated['city']             ?? '',
-                'address'                      => $validated['address']          ?? '',
-                'zip'                          => $validated['zip']              ?? '',
-                'apartment'                    => $validated['apartment']        ?? '',
-                'photo_consent'                => $validated['photo_consent']    ?? 0,
-                'terms_accepted'               => $validated['terms_accepted']   ?? 0,
-                'privacy_accepted'             => $validated['privacy_accepted'] ?? 0,
-                'data_processing_accepted'     => $validated['data_processing'] ?? 0,
-                'urgent_start_accepted'        => $validated['urgent_start'] ?? 0,
-                'recording_consent_accepted'   => $validated['recording_consent'] ?? 0,
-                'marketing_consent_accepted'   => $validated['marketing_consent'] ?? 0,
-                'reg_comment'                  => $validated['reg_comment']      ?? '',
-                'verification_code'            => $code,
-                'enabled'                      => 0,
-                'blocked'                      => 0,
-                'deleted'                      => 0,
-                'created_at'                   => now(),
-                'updated_at'                   => now(),
+            $data = [
+                // Аккаунт
+                'email'    => $validated['email'],
+                'password' => bcrypt($validated['password']),
+                'status'   => 'registered',
+                'enabled'  => 0,
+                'deleted'  => 0,
+                'blocked'  => 0,
+
+                // Ребёнок (поля как в student.sql)
+                // ВНИМАНИЕ: lastname = имя, surname = фамилия (legacy!)
+                'surname'  => $validated['surname'] ?? '',
+                'lastname' => $validated['name'] ?? '',
+                'name'     => $validated['name'] ?? '',
+                'dob'      => $validated['dob'] ?? null,
+                'language' => $validated['language'] ?? 'pl',
+
+                // ⚠️ КРИТИЧНО: маппинг form parent → parent1_* (формат student.sql)
+                'parent1_surname'       => $validated['parent_surname'] ?? '',   // Фамилия родителя
+                'parent1_lastname'      => $validated['parent_name'] ?? '',      // Имя родителя (legacy naming!)
+                'parent1_phone'         => $validated['parent_phone'] ?? '',
+                'parent1_phone_country' => $validated['country'] ?? 'PL',
+
+                // Дубль в расширения recruting_student (обратная совместимость)
+                'parent_name'    => $validated['parent_name'] ?? '',
+                'parent_surname' => $validated['parent_surname'] ?? '',
+                'parent_phone'   => $validated['parent_phone'] ?? '',
+
+                // Адрес (расширения recruting_student)
+                'country'   => $validated['country'] ?? '',
+                'city'      => $validated['city'] ?? '',
+                'address'   => $validated['address'] ?? '',
+                'zip'       => $validated['zip'] ?? '',
+                'apartment' => $validated['apartment'] ?? '',
+
+                // Согласия
+                'photo_consent'               => $validated['photo_consent'] ?? 0,
+                'terms_accepted'              => $validated['terms_accepted'] ?? 0,
+                'privacy_accepted'            => $validated['privacy_accepted'] ?? 0,
+                'data_processing_accepted'    => $validated['data_processing'] ?? 0,
+                'urgent_start_accepted'       => $validated['urgent_start'] ?? 0,
+                'recording_consent_accepted'  => $validated['recording_consent'] ?? 0,
+                'marketing_consent_accepted'  => $validated['marketing_consent'] ?? 0,
+
+                // Комментарий
+                'reg_comment' => $validated['reg_comment'] ?? '',
+
+                // Верификация
+                'verification_code' => $code,
+
+                // Timestamps
+                'created_at' => now(),
+                'updated_at' => now(),
             ];
 
-            $id = DB::table('recruting_student')->insertGetId($dataToInsert);
-
-            Log::info("Student registered: {$validated['email']}, ID: {$id}");
+            $studentId = DB::table('recruting_student')->insertGetId($data);
 
             SendVerificationCodeJob::dispatch($validated['email'], $code);
 
             event(new StudentCreatedEvent(
-                studentId: $id,
-                detail:    'Зарегистрирован через форму',
-                changedBy: 'System'
+                studentId: $studentId,
+                detail: 'Регистрация через форму',
+                changedBy: 'Registration Form'
             ));
 
-            return response()->json(['success' => true, 'message' => __('api.registration_success')], 201);
+            return response()->json([
+                'success' => true,
+                'data' => [
+                    'id' => $studentId,
+                    'email' => $validated['email'],
+                ],
+            ], 201);
 
         } catch (\Illuminate\Validation\ValidationException $e) {
             Log::error("Validation error for registration: ", $e->errors());
