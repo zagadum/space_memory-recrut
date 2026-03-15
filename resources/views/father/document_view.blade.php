@@ -331,16 +331,9 @@ header.d-lg-none { background: var(--bg) !important; border-bottom: 1px solid va
                     Regulamin GLS · вступил в силу 03.03.2026
                 </div>
                 <div class="dv-paper-toolbar__right">
-                    @if(!empty($document->pdf_path))
-                        <a href="{{ route('father.document.download', $document->id) }}"
-                           class="dv-tool-btn" title="Скачать PDF">
-                            <i class="fas fa-download"></i>
-                        </a>
-                    @else
-                        <button class="dv-tool-btn" disabled title="PDF ещё не сформирован" style="opacity:.35;cursor:not-allowed;">
-                            <i class="fas fa-download"></i>
-                        </button>
-                    @endif
+                    <button class="dv-tool-btn" id="btnDownload" title="Скачать PDF">
+                        <i class="fas fa-download" id="btnDownloadIcon"></i>
+                    </button>
                     <button class="dv-tool-btn" id="btnTop" title="Наверх">
                         <i class="fas fa-angle-up"></i>
                     </button>
@@ -589,6 +582,44 @@ document.addEventListener('DOMContentLoaded', function () {
     /* ── Scroll to top ── */
     document.getElementById('btnTop').addEventListener('click', () =>
         docScroll.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    /* ── Скачать PDF ── */
+    document.getElementById('btnDownload').addEventListener('click', function () {
+        const btn  = this;
+        const icon = document.getElementById('btnDownloadIcon');
+
+        btn.disabled = true;
+        icon.className = 'fas fa-spinner fa-spin';
+
+        fetch('{{ route("father.document.download", $document->id) }}', {
+            method: 'GET',
+            headers: { 'X-Requested-With': 'XMLHttpRequest' }
+        })
+        .then(async (r) => {
+            if (!r.ok) {
+                const text = await r.text().catch(() => '');
+                throw new Error(text || 'Ошибка формирования PDF');
+            }
+            return r.blob();
+        })
+        .then((blob) => {
+            const url  = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href  = url;
+            link.download = 'Document-{{ $document->doc_no ?? $document->id }}.pdf';
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+            URL.revokeObjectURL(url);
+        })
+        .catch((err) => {
+            alert(err.message || 'Не удалось скачать документ');
+        })
+        .finally(() => {
+            btn.disabled = false;
+            icon.className = 'fas fa-download';
+        });
+    });
 
     /* ── Checkbox → кнопка подписи ── */
     if (!isSigned && cbRead && btnSign) {

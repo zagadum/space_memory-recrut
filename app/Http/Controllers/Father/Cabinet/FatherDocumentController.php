@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Father\Cabinet;
 use App\Http\Controllers\Controller;
 use App\Models\GlsDocument;
 use App\Models\RecrutingStudent;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
 
 class FatherDocumentController extends Controller
@@ -100,18 +102,48 @@ class FatherDocumentController extends Controller
             abort(403, 'Unauthorized');
         }
 
+        /** @var GlsDocument $document */
         $document = GlsDocument::query()
             ->where('student_id', $student->id)
             ->findOrFail($document);
 
-        if (!$document->pdf_path || !Storage::disk('private')->exists($document->pdf_path)) {
-            abort(404, 'PDF недоступен');
+        $isSigned = in_array(strtolower(trim((string) $document->doc_status)), ['sign', 'signed'], true)
+            || !is_null($document->sign_date);
+
+        $parentName = trim(
+            ($student->parent_name ?? $student->name ?? '') . ' ' .
+            ($student->parent_surname ?? $student->surname ?? '')
+        ) ?: ($student->email ?? '—');
+
+        // Если PDF уже сохранён — отдаём из storage
+        if ($document->pdf_path && Storage::disk('private')->exists($document->pdf_path)) {
+            $filename = 'Document-' . ($document->doc_no ?? $document->id) . '.pdf';
+            return Storage::disk('private')->download($document->pdf_path, $filename, [
+                'Content-Type' => 'application/pdf',
+            ]);
         }
 
-        $filename = 'Document-' . ($document->doc_no ?? $document->id) . '.pdf';
+        // Генерируем PDF на лету из Blade-шаблона
+        $pdf = Pdf::loadView('father.document.pdf.regulamin', [
+            'document'   => $document,
+            'student'    => $student,
+            'parentName' => $parentName,
+            'isSigned'   => $isSigned,
+        ])
+            ->setPaper('a4')
+            ->setOption('defaultFont', 'DejaVu Sans');
 
-        return Storage::disk('private')->download($document->pdf_path, $filename, [
-            'Content-Type' => 'application/pdf',
+        $pdfContent = $pdf->output();
+
+        // Сохраняем в storage и обновляем pdf_path
+        $filename = 'Document-' . ($document->doc_no ?? $document->id) . '.pdf';
+        $path = 'documents/' . now()->format('Y/m') . '/' . $filename;
+        Storage::disk('private')->put($path, $pdfContent);
+        $document->update(['pdf_path' => $path]);
+
+        return new Response($pdfContent, 200, [
+            'Content-Type'        => 'application/pdf',
+            'Content-Disposition' => 'attachment; filename="' . $filename . '"',
         ]);
     }
 }
