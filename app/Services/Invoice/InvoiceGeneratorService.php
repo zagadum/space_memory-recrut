@@ -17,11 +17,15 @@ final class InvoiceGeneratorService
     {
         $project = $transaction->project;
         $student = $transaction->student;
+        $serviceFrom = $transaction->paid_at?->copy()->startOfDay() ?? now()->startOfDay();
+        $serviceTo = $serviceFrom->copy()->addMonths(max((int) ($transaction->months ?? 1), 1))->subDay();
+        $documentTitle = $transaction->title ?: 'Usługa edukacyjna - pakiet zajęć';
 
-        return DB::transaction(function () use ($transaction, $project, $student) {
+        return DB::transaction(function () use ($transaction, $project, $student, $serviceFrom, $serviceTo, $documentTitle) {
             /** @var \App\Models\GlsInvoiceDocument \$document */
             $document = \App\Models\GlsInvoiceDocument::firstOrNew([
                 'transaction_id' => $transaction->id,
+                'document_type' => 'invoice',
             ]);
 
             if (!$document->exists) {
@@ -31,9 +35,17 @@ final class InvoiceGeneratorService
                     'document_type' => 'invoice',
                     'issue_date'    => now()->format('Y-m-d'),
                     'sale_date'     => $transaction->paid_at?->format('Y-m-d') ?? now()->format('Y-m-d'),
+                    'service_date_from' => $serviceFrom->format('Y-m-d'),
+                    'service_date_to'   => $serviceTo->format('Y-m-d'),
+                    'title'         => $documentTitle,
                     'currency'      => $transaction->currency,
                     'amount_gross'  => $transaction->amount,
                     'amount_net'    => round((float) $transaction->amount / 1.23, 2), // Example: assume 23% VAT
+                    'meta'          => [
+                        'payment_plan_id' => $transaction->payment_plan_id,
+                        'months' => $transaction->months,
+                        'lessons' => $transaction->lessons,
+                    ],
                 ]);
             }
 
@@ -47,7 +59,7 @@ final class InvoiceGeneratorService
             $items = [
                 new InvoiceLineItem(
                     lp: 1,
-                    nazwa: 'Usługa edukacyjna - pakiet zajęć',
+                    nazwa: $documentTitle,
                     quantity: 1,
                     unit: 'szt.',
                     unitPrice: (float) $document->amount_net,
@@ -62,8 +74,8 @@ final class InvoiceGeneratorService
                 documentNumber: $document->number,
                 issueDate: (string) $document->issue_date,
                 saleDate: (string) $document->sale_date,
-                buyerName: trim($student->lastname . ' ' . $student->surname),
-                buyerAddress: $student->city ?? 'Warszawa', // Fallback if missing
+                buyerName: trim(($student->parent_full_name ?? '') ?: ($student->full_name ?? 'Klient')),
+                buyerAddress: trim(($student->address ?? '') . ', ' . ($student->zip ?? '') . ' ' . ($student->city ?? '')) ?: ($student->city ?? 'Warszawa'),
                 buyerNip: null,
                 items: $items,
                 currency: $document->currency

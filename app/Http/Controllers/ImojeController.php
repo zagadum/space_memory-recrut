@@ -256,6 +256,8 @@ class ImojeController extends Controller
 
             if ($glsTransaction !== null) {
                 $glsTransaction->update([
+                    'provider_transaction_id' => $transaction_id ?: $glsTransaction->provider_transaction_id,
+                    'provider_payload' => $request->all(),
                     'status'  => 'completed',
                     'paid_at' => now(),
                 ]);

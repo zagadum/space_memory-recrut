@@ -403,7 +403,16 @@ header.d-lg-none { background: var(--bg) !important; border-bottom: 1px solid va
 @endsection
 
 @section('content')
+@php
+    $firstPlan = $paymentPlans->first();
+@endphp
 <div class="pay-wrap">
+
+    @if($errors->any())
+        <div style="margin-bottom:20px;padding:14px 18px;border-radius:12px;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.25);color:#fecaca;">
+            {{ $errors->first() }}
+        </div>
+    @endif
 
     {{-- PAGE HEADER --}}
     <div class="pay-head">
@@ -429,50 +438,39 @@ header.d-lg-none { background: var(--bg) !important; border-bottom: 1px solid va
                     Ученик: <strong style="color:#fff">{{ ($student->name ?? '') . ' ' . ($student->surname ?? '') ?: 'Не указано' }}</strong>
                     &nbsp;·&nbsp;
                     Группа: <strong style="color:var(--teal)">{{ $student->group?->name ?? 'Не назначена' }}</strong>
+                    &nbsp;·&nbsp;
+                    Проект: <strong style="color:#fff">{{ $project->name ?? '—' }}</strong>
                 </div>
             </div>
 
             <div class="period-list">
 
-                {{-- 1 месяц --}}
-                <div class="period-item selected" data-months="1" data-lessons="4" data-price="440" data-old="489">
-                    <div class="period-item__radio"></div>
-                    <div class="period-item__body">
-                        <div class="period-item__name">1 месяц</div>
-                        <div class="period-item__lessons">4 занятия</div>
+                @forelse($paymentPlans as $plan)
+                    <div class="period-item {{ $loop->first ? 'selected' : '' }}"
+                         data-plan-id="{{ $plan->id }}"
+                         data-months="{{ $plan->months }}"
+                         data-lessons="{{ $plan->lessons }}"
+                         data-price="{{ number_format((float) $plan->price, 2, '.', '') }}"
+                         data-old="{{ number_format((float) ($plan->old_price ?? $plan->price), 2, '.', '') }}"
+                         data-currency="{{ $plan->currency }}">
+                        @if($plan->is_featured)
+                            <div class="period-item__popular">Популярный</div>
+                        @endif
+                        <div class="period-item__radio"></div>
+                        <div class="period-item__body">
+                            <div class="period-item__name">{{ $plan->period_label }}</div>
+                            <div class="period-item__lessons">{{ $plan->lessons }} занятий</div>
+                        </div>
+                        @if(($plan->save_amount ?? 0) > 0)
+                            <div class="period-item__save"><i class="fas fa-tag"></i> Экономия {{ number_format((float) $plan->save_amount, 0) }} {{ $plan->currency }}</div>
+                        @endif
                     </div>
-                </div>
-
-                {{-- 3 месяца --}}
-                <div class="period-item" data-months="3" data-lessons="12" data-price="1200" data-old="1467">
-                    <div class="period-item__radio"></div>
-                    <div class="period-item__body">
-                        <div class="period-item__name">3 месяца</div>
-                        <div class="period-item__lessons">12 занятий</div>
+                @empty
+                    <div class="hist-empty">
+                        <i class="fas fa-tags"></i>
+                        Для проекта пока не настроены тарифы.
                     </div>
-                    <div class="period-item__save"><i class="fas fa-tag"></i> Экономия 120 zł</div>
-                </div>
-
-                {{-- 6 месяцев --}}
-                <div class="period-item" data-months="6" data-lessons="24" data-price="2356" data-old="2934">
-                    <div class="period-item__popular">Популярный</div>
-                    <div class="period-item__radio"></div>
-                    <div class="period-item__body">
-                        <div class="period-item__name">6 месяцев</div>
-                        <div class="period-item__lessons">24 занятия</div>
-                    </div>
-                    <div class="period-item__save"><i class="fas fa-tag"></i> Экономия 284 zł</div>
-                </div>
-
-                {{-- 12 месяцев --}}
-                <div class="period-item" data-months="12" data-lessons="48" data-price="4390" data-old="5868">
-                    <div class="period-item__radio"></div>
-                    <div class="period-item__body">
-                        <div class="period-item__name">12 месяцев</div>
-                        <div class="period-item__lessons">48 занятий</div>
-                    </div>
-                    <div class="period-item__save"><i class="fas fa-tag"></i> Экономия 878 zł</div>
-                </div>
+                @endforelse
 
             </div>
 
@@ -482,13 +480,17 @@ header.d-lg-none { background: var(--bg) !important; border-bottom: 1px solid va
                 <div class="pay-price">
                     <div class="pay-price__label">К оплате</div>
                     <div class="pay-price__row">
-                        <span class="pay-price__old" id="priceOld">489 zł</span>
-                        <span class="pay-price__new" id="priceNew">440 zł</span>
+                        <span class="pay-price__old" id="priceOld">
+                            {{ $firstPlan ? number_format((float) ($firstPlan->old_price ?? $firstPlan->price), 0) . ' ' . $firstPlan->currency : '—' }}
+                        </span>
+                        <span class="pay-price__new" id="priceNew">
+                            {{ $firstPlan ? number_format((float) $firstPlan->price, 0) . ' ' . $firstPlan->currency : '—' }}
+                        </span>
                     </div>
                 </div>
                 <div class="pay-btn-wrap">
-                    <button class="pay-btn {{ ($contract->signed ?? false) ? '' : 'locked' }}" id="btnPay">
-                        <i class="fas {{ ($contract->signed ?? false) ? 'fa-credit-card' : 'fa-lock' }}"></i>
+                    <button class="pay-btn {{ ($contract->signed ?? false) && $paymentPlans->isNotEmpty() ? '' : 'locked' }}" id="btnPay">
+                        <i class="fas {{ ($contract->signed ?? false) && $paymentPlans->isNotEmpty() ? 'fa-credit-card' : 'fa-lock' }}"></i>
                         Оплатить
                     </button>
                     @if(!($contract->signed ?? false))
@@ -496,14 +498,18 @@ header.d-lg-none { background: var(--bg) !important; border-bottom: 1px solid va
                         <i class="fas fa-exclamation-triangle"></i>
                         Сначала необходимо <strong>подписать договор</strong> — тогда оплата станет доступна.
                     </div>
+                    @elseif($paymentPlans->isEmpty())
+                    <div class="pay-btn-tooltip">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        Для проекта пока <strong>не настроены тарифы</strong>.
+                    </div>
                     @endif
                 </div>
 
                 <form id="paymentForm" action="{{ route('father.payment.create') }}" method="POST" style="display: none;">
                     @csrf
-                    <input type="hidden" name="months" id="formMonths">
-                    <input type="hidden" name="lessons" id="formLessons">
-                    <input type="hidden" name="amount" id="formAmount">
+                    <input type="hidden" name="student_id" value="{{ $student->id }}">
+                    <input type="hidden" name="payment_plan_id" id="formPaymentPlanId">
                 </form>
             </div>
         </div>
@@ -517,15 +523,15 @@ header.d-lg-none { background: var(--bg) !important; border-bottom: 1px solid va
 
             @forelse($payments as $p)
             <div class="hist-row">
-                <div class="hist-row__icon {{ $p->status === 'paid' ? '' : 'hist-row__icon--pending' }}">
-                    <i class="fas {{ $p->status === 'paid' ? 'fa-check' : 'fa-clock' }}"></i>
+                <div class="hist-row__icon {{ $p->status === 'completed' ? '' : 'hist-row__icon--pending' }}">
+                    <i class="fas {{ $p->status === 'completed' ? 'fa-check' : 'fa-clock' }}"></i>
                 </div>
                 <div class="hist-row__info">
-                    <div class="hist-row__period">{{ $p->period_name ?? 'Оплата обучения' }}</div>
+                    <div class="hist-row__period">{{ $p->title ?? $p->period_label }}</div>
                     <div class="hist-row__date">{{ $p->created_at->format('d.m.Y H:i') }}</div>
                 </div>
-                <div class="hist-row__amount {{ $p->status === 'paid' ? '' : 'hist-row__amount--pending' }}">
-                    {{ number_format($p->amount, 2) }} zł
+                <div class="hist-row__amount {{ $p->status === 'completed' ? '' : 'hist-row__amount--pending' }}">
+                    {{ number_format($p->amount, 2) }} {{ $p->currency ?? 'PLN' }}
                 </div>
             </div>
             @empty
@@ -578,17 +584,23 @@ $(document).ready(function() {
     const $priceNew = $('#priceNew');
     let $selectedItem = $('.period-item.selected');
 
+    function formatMoney(value, currency) {
+        const number = parseFloat(value || 0);
+        return (Math.round(number * 100) % 100 === 0 ? number.toFixed(0) : number.toFixed(2)) + ' ' + (currency || 'PLN');
+    }
+
     function selectPeriod($item) {
-        console.log('Selecting period:', $item.data('months'));
+        console.log('Selecting period:', $item.data('planId'));
         $('.period-item').removeClass('selected');
         $item.addClass('selected');
         $selectedItem = $item;
-        
+        const currency = $item.data('currency') || 'PLN';
+
         if ($priceOld.length && $item.data('old')) {
-            $priceOld.text($item.data('old') + ' zł');
+            $priceOld.text(formatMoney($item.data('old'), currency));
         }
         if ($priceNew.length && $item.data('price')) {
-            $priceNew.text($item.data('price') + ' zł');
+            $priceNew.text(formatMoney($item.data('price'), currency));
         }
     }
 
@@ -632,21 +644,15 @@ $(document).ready(function() {
         $btn.html('<i class="fas fa-spinner fa-spin" style="margin-right:7px"></i>Перенаправляем…');
         $btn.prop('disabled', true);
 
-        const months  = $selectedItem.length ? $selectedItem.data('months')  : 1;
-        const price   = $selectedItem.length ? $selectedItem.data('price')   : 440;
-        const lessons = $selectedItem.length ? $selectedItem.data('lessons') : 4;
+        const paymentPlanId = $selectedItem.length ? $selectedItem.data('planId') : null;
 
-        console.log('Submitting form with:', {months, price, lessons});
+        console.log('Submitting form with:', {paymentPlanId});
 
-        const $monthsInp  = $('#formMonths');
-        const $lessonsInp = $('#formLessons');
-        const $amountInp  = $('#formAmount');
+        const $paymentPlanInp = $('#formPaymentPlanId');
         const $form       = $('#paymentForm');
 
-        if ($form.length && $monthsInp.length && $lessonsInp.length && $amountInp.length) {
-            $monthsInp.val(months);
-            $lessonsInp.val(lessons);
-            $amountInp.val(price);
+        if ($form.length && $paymentPlanInp.length && paymentPlanId) {
+            $paymentPlanInp.val(paymentPlanId);
             $form.submit();
         } else {
             console.error('Payment form or inputs not found');

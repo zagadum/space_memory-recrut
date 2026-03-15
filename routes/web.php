@@ -37,12 +37,10 @@ Route::get('/register', function () {
 });
 
 
-//Route::any('/payments/imoje/test', 'App\Http\Controllers\ImojeController@payTest')->name('imoje.pay-test');
-//
-//Route::any('/payments/imoje/failure', 'App\Http\Controllers\ImojeController@payFailure')->name('imoje.failure');
-//Route::any('/payments/imoje/success', 'App\Http\Controllers\ImojeController@paySuccess')->name('imoje.success');
-//Route::any('/payments/imoje/webhook', 'App\Http\Controllers\ImojeController@webhook')->name('imoje.webhook');
-//Route::post('/payments/imoje/return', 'App\Http\Controllers\ImojeController@return')->name('imoje.return');
+Route::any('/payments/imoje/test', [\App\Http\Controllers\ImojeController::class, 'payTest'])->name('imoje.pay-test');
+Route::any('/payments/imoje/failure', [\App\Http\Controllers\ImojeController::class, 'payFailure'])->name('imoje.failure');
+Route::any('/payments/imoje/success', [\App\Http\Controllers\ImojeController::class, 'paySuccess'])->name('imoje.success');
+Route::any('/payments/imoje/webhook', [\App\Http\Controllers\ImojeController::class, 'webhook'])->name('imoje.webhook');
 
 //-------------- Admin part end ----
 Route::middleware(['web'])->group(static function () {
@@ -93,6 +91,7 @@ Route::prefix('father')
         Route::get('/payment', [\App\Http\Controllers\Father\Cabinet\FatherPaymentController::class, 'index'])->name('father.payment');
         Route::post('/payment/create', [\App\Http\Controllers\Father\Cabinet\FatherPaymentController::class, 'create'])->name('father.payment.create');
         Route::get('/payment-success', [\App\Http\Controllers\Father\Cabinet\FatherPaymentController::class, 'success'])->name('father.payment.success');
+        Route::get('/payment-fail', [\App\Http\Controllers\Father\Cabinet\FatherPaymentController::class, 'fail'])->name('father.payment.fail');
 
         // Legacy / Common
         Route::get('/payment/download-invoice/{id}', [\App\Http\Controllers\Father\Cabinet\PaymentController::class, 'downloadInvoice'])->name('father.download-invoice');

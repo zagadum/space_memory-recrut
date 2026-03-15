@@ -4,11 +4,14 @@ namespace App\Http\Controllers\Father\Cabinet;
 
 use App\Http\Controllers\Controller;
 use App\Models\GlsDocument;
+use App\Models\GlsInvoiceDocument;
+use App\Models\GlsPaymentPlan;
 use App\Models\GlsPaymentTransaction;
 use App\Models\GlsProject;
 use App\Models\RecrutingStudent;
 use App\Services\ImojePaymentService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class FatherPaymentController extends Controller
 {
@@ -34,18 +37,37 @@ class FatherPaymentController extends Controller
             'document' => $contractDoc,
         ];
 
+        $project = GlsProject::query()
+            ->when($student->project_id, fn ($query) => $query->where('id', $student->project_id))
+            ->first()
+            ?: GlsProject::query()->where('code', 'space_memory')->firstOrFail();
+
+        $plans = GlsPaymentPlan::query()
+            ->where('project_id', $project->id)
+            ->where('is_active', true)
+            ->orderBy('sort_order')
+            ->orderBy('months')
+            ->get();
+
+        $basePlan = $plans->firstWhere('months', 1) ?: $plans->sortBy('months')->first();
+
+        $paymentPlans = $plans->map(function (GlsPaymentPlan $plan) use ($basePlan) {
+            $basePrice = (float) ($basePlan?->price ?? $plan->price);
+            $oldPrice = round($basePrice * max((int) $plan->months, 1), 2);
+            $save = max($oldPrice - (float) $plan->price, 0);
+
+            $plan->setAttribute('old_price', $oldPrice);
+            $plan->setAttribute('save_amount', $save);
+
+            return $plan;
+        });
+
         $payments = GlsPaymentTransaction::where('student_id', $student->id)
             ->orderBy('created_at', 'desc')
             ->get();
 
-        $periods = [
-            ['months' => 1, 'lessons' => 4, 'price' => 440, 'old' => 490, 'popular' => false, 'save' => 0],
-            ['months' => 3, 'lessons' => 12, 'price' => 1180, 'old' => 1470, 'popular' => true, 'save' => 290],
-            ['months' => 9, 'lessons' => 36, 'price' => 3160, 'old' => 4410, 'popular' => false, 'save' => 1250],
-        ];
-
         return view('father.payment_process', compact(
-            'student', 'contract', 'payments', 'periods'
+            'student', 'contract', 'payments', 'project', 'paymentPlans', 'basePlan'
         ));
     }
 
@@ -53,9 +75,7 @@ class FatherPaymentController extends Controller
     {
         $validated = $request->validate([
             'student_id' => 'required|integer',
-            'months'     => 'required|in:1,3,9', // Adjusted to match periods
-            'amount'     => 'required|numeric|min:1',
-            'lessons'    => 'required|integer',
+            'payment_plan_id' => 'required|integer|exists:gls_payment_plans,id',
         ]);
 
         /** @var RecrutingStudent $student */
@@ -69,50 +89,121 @@ class FatherPaymentController extends Controller
             abort(403);
         }
 
-        $project = GlsProject::where('code', 'space_memory')->firstOrFail();
+        $contractDoc = GlsDocument::query()
+            ->where('student_id', $student->id)
+            ->where('doc_type', 'contract')
+            ->orderByDesc('id')
+            ->first();
 
-        // 1. Создать запись платежа в БД (status = 'pending')
-        $transaction = GlsPaymentTransaction::create([
-            'student_id'  => $student->id,
-            'project_id'  => $project->id,
-            'provider'    => 'imoje',
-            'direction'   => 'in',
-            'amount'      => (float)$validated['amount'],
-            'currency'    => 'PLN',
-            'status'      => 'pending',
-        ]);
+        $contractSigned = $contractDoc
+            && in_array(strtolower(trim((string) $contractDoc->doc_status)), ['sign', 'signed'], true);
 
-        // 2. Сформировать Imoje payload
+        if (!$contractSigned) {
+            return back()->withErrors([
+                'payment_plan_id' => 'Сначала необходимо подписать договор.',
+            ]);
+        }
+
+        $project = GlsProject::query()
+            ->when($student->project_id, fn ($query) => $query->where('id', $student->project_id))
+            ->first()
+            ?: GlsProject::query()->where('code', 'space_memory')->firstOrFail();
+
+        $plan = GlsPaymentPlan::query()
+            ->where('id', $validated['payment_plan_id'])
+            ->where('project_id', $project->id)
+            ->where('is_active', true)
+            ->firstOrFail();
+
+        $transactionTitle = sprintf(
+            '%s — %s (%d занятий)',
+            $project->name,
+            $plan->period_label,
+            $plan->lessons
+        );
+
+        [$transaction, $proforma] = DB::transaction(function () use ($student, $project, $plan, $transactionTitle) {
+            $transaction = GlsPaymentTransaction::query()->create([
+                'student_id'  => $student->id,
+                'project_id'  => $project->id,
+                'payment_plan_id' => $plan->id,
+                'provider'    => 'imoje',
+                'direction'   => 'in',
+                'amount'      => (float) $plan->price,
+                'currency'    => $plan->currency,
+                'months'      => $plan->months,
+                'lessons'     => $plan->lessons,
+                'title'       => $transactionTitle,
+                'status'      => 'pending',
+            ]);
+
+            $issueDate = now();
+
+            $proforma = GlsInvoiceDocument::query()->create([
+                'student_id' => $student->id,
+                'project_id' => $project->id,
+                'transaction_id' => $transaction->id,
+                'document_type' => 'proforma',
+                'number' => sprintf('PRO/%s/%s/%04d', strtoupper($project->code), $issueDate->format('Ym'), $transaction->id),
+                'issue_date' => $issueDate->format('Y-m-d'),
+                'sale_date' => $issueDate->format('Y-m-d'),
+                'service_date_from' => $issueDate->copy()->startOfDay()->format('Y-m-d'),
+                'service_date_to' => $issueDate->copy()->addMonths(max((int) $plan->months, 1))->subDay()->format('Y-m-d'),
+                'title' => $transactionTitle,
+                'amount_net' => round((float) $plan->price / 1.23, 2),
+                'amount_gross' => (float) $plan->price,
+                'currency' => $plan->currency,
+                'meta' => [
+                    'payment_plan_id' => $plan->id,
+                    'months' => $plan->months,
+                    'lessons' => $plan->lessons,
+                ],
+            ]);
+
+            return [$transaction, $proforma];
+        });
+
         $hashMethod = 'sha256';
-        $serviceKey = (string)env('IMOJE_SERVICE_KEY');
+        $serviceKey = (string) env('IMOJE_SERVICE_KEY');
 
         $fields = [
-            'merchantId'          => (string)env('IMOJE_MERCHANT_ID'),
-            'serviceId'           => (string)env('IMOJE_SERVICE_ID'),
-            'amount'              => (int) ($validated['amount'] * 100), // grosze
-            'currency'            => 'PLN',
+            'merchantId'          => (string) env('IMOJE_MERCHANT_ID'),
+            'serviceId'           => (string) env('IMOJE_SERVICE_ID'),
+            'amount'              => (int) round(((float) $plan->price) * 100),
+            'currency'            => $plan->currency,
             'customerFirstName'   => $student->name ?? '',
             'customerLastName'    => $student->surname ?? '',
             'customerEmail'       => $student->email ?? '',
             'customerPhone'       => $student->parent_phone ?? '',
             'orderId'             => (string) $transaction->id,
             'customerId'          => (string) $student->id,
-            'orderDescription'    => $project->name . ' — ' . $validated['months'] . ' msc',
+            'orderDescription'    => $transactionTitle,
             'locale'              => 'pl',
-            'urlSuccess'          => url('/father/payment-success'),
-            'urlFailure'          => url('/father/payment-fail'),
-            'urlNotification'     => url('/payments/imoje/webhook'),
+            'urlSuccess'          => route('father.payment.success'),
+            'urlFailure'          => route('father.payment.fail'),
+            'urlNotification'     => route('imoje.webhook'),
         ];
 
         $imojeService = app(ImojePaymentService::class);
         $signature    = $imojeService->createSignature($fields, $serviceKey, $hashMethod) . ';' . $hashMethod;
         $fields['signature'] = $signature;
 
+        $transaction->update([
+            'provider_payload' => [
+                'plan' => [
+                    'id' => $plan->id,
+                    'months' => $plan->months,
+                    'lessons' => $plan->lessons,
+                    'price' => (float) $plan->price,
+                    'currency' => $plan->currency,
+                ],
+                'proforma_invoice_id' => $proforma->id,
+                'imoje_fields' => $fields,
+            ],
+        ]);
+
         $payUrl = env('IMOJE_PAY_URL', 'https://sandbox.paywall.imoje.pl/payment');
 
-        // 3. Redirect на Imoje payment URL (via hidden form in payment_redirect pattern or direct away)
-        // Here we can use a helper view that auto-submits like the previous pattern but as a production controller we can also redirect if it was a direct form post.
-        
         return view('father.payment_redirect', [
             'fields' => $fields,
             'payUrl' => $payUrl,
@@ -134,5 +225,17 @@ class FatherPaymentController extends Controller
             ->first();
         
         return view('father.payment_success', compact('student', 'payment'));
+    }
+
+    public function fail(Request $request)
+    {
+        /** @var RecrutingStudent $student */
+        $student = auth()->guard('recruting_student')->user();
+
+        if (!$student instanceof RecrutingStudent) {
+            abort(403);
+        }
+
+        return view('father.payment_fail', compact('student'));
     }
 }

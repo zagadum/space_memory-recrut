@@ -226,11 +226,11 @@ header.d-lg-none { background: var(--bg) !important; border-bottom: 1px solid va
         <div class="sc-summary">
             <div class="sc-summary__left">
                 <div class="sc-summary__label">Оплачено</div>
-                <div class="sc-summary__val">{{ $payment->period_label ?? '1 месяц' }}</div>
+                <div class="sc-summary__val">{{ $payment->title ?? $payment->period_label ?? 'Оплата обучения' }}</div>
                 <div class="sc-summary__sub">{{ $payment->lessons ?? '4' }} занятия · {{ $student->group?->name ?? 'Группа A' }}</div>
             </div>
             <div class="sc-summary__price">
-                {{ number_format($payment->amount ?? 440, 0) }}&nbsp;<small>zł</small>
+                {{ number_format($payment->amount ?? 440, 0) }}&nbsp;<small>{{ $payment->currency ?? 'PLN' }}</small>
             </div>
         </div>
 

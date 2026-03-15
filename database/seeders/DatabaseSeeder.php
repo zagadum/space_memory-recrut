@@ -15,6 +15,8 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
+            GlsProjectsSeeder::class,
+            GlsPaymentPlansSeeder::class,
             RecrutingStudentSeeder::class,
         ]);
     }

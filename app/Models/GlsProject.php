@@ -29,6 +29,11 @@ class GlsProject extends Model
         return $this->hasMany(GlsPaymentTransaction::class, 'project_id');
     }
 
+    public function paymentPlans(): HasMany
+    {
+        return $this->hasMany(GlsPaymentPlan::class, 'project_id');
+    }
+
     public function invoiceDocuments(): HasMany
     {
         return $this->hasMany(GlsInvoiceDocument::class, 'project_id');
