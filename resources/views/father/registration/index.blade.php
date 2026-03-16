@@ -749,9 +749,10 @@
                 </div>
 
                 <!-- КОММЕНТАРИЙ -->
-                <div class="form-group">
-                    <textarea id="comment" class="input-field"
-                        placeholder="Komentarz dla nauczyciela (zainteresowania)..."></textarea>
+                <div class="form-group" style="margin-top: 10px;">
+                    <label class="dob-label" id="commentLabel">Co chcesz rozwinąć u swojego dziecka?</label>
+                    <textarea id="comment" class="input-field" style="min-height: 120px;"
+                        placeholder="Powiedz nam, co jest dla Ciebie ważne. Trener zapozna się z Twoją odpowiedzią przed pierwszą lekcją i od razu dostosuje podejście indywidualnie do Twojego dziecka — nawet w grupie. 🌟&#10;Np.: koncentracja · pamięć · pewność siebie · szybkie liczenie · olimpiady · nieśmiałość · tempo pracy · podejście do matematyki · stres przed egzaminem"></textarea>
                 </div>
 
                 <button type="submit" class="submit-btn" id="regBtn">ZAREJESTRUJ SIĘ</button>
@@ -803,7 +804,8 @@
                 lblRecord: "Согласен на запись занятий",
                 lblMarketing: "Хочу получать маркетинговые сообщения на email",
 
-                comment: "Комментарий для учителя (интересы, нюансы)...",
+                commentLabel: "Что вы хотите развить в своем ребенке?",
+                comment: "Расскажите нам, что важно для вас. Тренер ознакомится с вашим ответом перед первым уроком и сразу адаптирует подход индивидуально к вашему ребенку — даже в группе. 🌟\nНапр.: концентрация · память · уверенность в себе · быстрый счет · олимпиады · застенчивость · темп работы · отношение к математике · стресс перед экзаменом",
                 btn: "ЗАРЕГИСТРИРОВАТЬСЯ",
                 haveAcc: "Уже есть аккаунт? Войти",
 
@@ -841,7 +843,8 @@
                 lblRecord: "I consent to recording of classes",
                 lblMarketing: "I want to receive marketing emails",
 
-                comment: "Comment for the teacher (interests, notes)...",
+                commentLabel: "What do you want to develop in your child?",
+                comment: "Tell us what is important to you. The coach will read your response before the first lesson and immediately adapt the approach individually to your child — even in a group. 🌟\nE.g.: concentration · memory · self-confidence · mental math · olympiads · shyness · work pace · attitude towards math · exam stress",
                 btn: "REGISTER NOW",
                 haveAcc: "Already have an account? Login",
 
@@ -879,7 +882,8 @@
                 lblRecord: "Zgadzam się na nagrywanie zajęć",
                 lblMarketing: "Chcę otrzymywać informacje marketingowe e-mailem",
 
-                comment: "Komentarz dla nauczyciela (zainteresowania)...",
+                commentLabel: "Co chcesz rozwinąć u swojego dziecka?",
+                comment: "Powiedz nam, co jest dla Ciebie ważne. Trener zapozna się z Twoją odpowiedzią przed pierwszą lekcją i od razu dostosuje podejście indywidualnie do Twojego dziecka — nawet w grupie. 🌟\nNp.: koncentracja · pamięć · pewność siebie · szybkie liczenie · olimpiady · nieśmiałość · tempo pracy · podejście do matematyki · stres перед egzaminem",
                 btn: "ZAREJESTRUJ SIĘ",
                 haveAcc: "Masz już konto? Zaloguj się",
 
@@ -917,7 +921,8 @@
                 lblRecord: "Згоден на запис занять",
                 lblMarketing: "Хочу отримувати маркетингові повідомлення на email",
 
-                comment: "Коментар для вчителя (інтереси, нюанси)...",
+                commentLabel: "Що ви хочете розвинути у своїй дитині?",
+                comment: "Розкажіть нам, що для вас важливо. Тренер ознайомиться з вашою відповіддю перед першим уроком і відразу адаптує підхід індивідуально до вашої дитини — навіть у групі. 🌟\nНапр.: концентрація · пам'ять · впевненість у собі · швидка лічба · олімпіади · сором'язливість · темп роботи · ставлення до математики · стрес перед іспитом",
                 btn: "ЗАРЕЄСТРУВАТИСЯ",
                 haveAcc: "Вже є акаунт? Увійти",
 
@@ -1085,6 +1090,7 @@
                 document.getElementById('lblImage1').textContent = t.lblImage;
                 document.getElementById('lblRecord').textContent = t.lblRecord;
                 document.getElementById('lblMarketing').textContent = t.lblMarketing;
+                document.getElementById('commentLabel').textContent = t.commentLabel;
                 document.getElementById('regBtn').textContent = t.btn;
                 document.getElementById('haveAccLink').textContent = t.haveAcc;
                 document.getElementById('footerCompany').textContent = t.footerCompany;
