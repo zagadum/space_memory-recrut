@@ -306,6 +306,7 @@ header.d-lg-none { background: var(--bg) !important; border-bottom: 1px solid va
     z-index: 1000;
     display: none; align-items: center; justify-content: center;
     padding: 20px;
+    overflow-y: auto; /* Allow backdrop to scroll if modal is too tall */
 }
 .pay-modal-backdrop.active { display: flex; }
 
@@ -316,8 +317,9 @@ header.d-lg-none { background: var(--bg) !important; border-bottom: 1px solid va
     padding: 36px 32px;
     width: 500px; max-width: 100%;
     position: relative;
-    box-shadow: 0 24px 80px rgba(0,0,0,0.5);
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.5);
     animation: modalIn .25s ease;
+    margin: auto; /* Centers modal but allows it to stay within scrollable area */
 }
 @keyframes modalIn {
     from { opacity: 0; transform: translateY(16px) scale(.97); }
@@ -398,6 +400,39 @@ header.d-lg-none { background: var(--bg) !important; border-bottom: 1px solid va
     .pay-head h1 { font-size: 21px; }
     .pay-card__footer { flex-direction: column; align-items: stretch; }
     .pay-btn { justify-content: center; }
+
+    /* Mobile Modal Tweaks */
+    .pay-modal-backdrop {
+        align-items: flex-start; /* Start from top on mobile */
+        padding: 10px;
+    }
+    .pay-modal {
+        padding: 24px 20px;
+        margin: 10px auto;
+        border-radius: 20px;
+    }
+    .pay-modal__icon {
+        width: 44px; height: 44px;
+        font-size: 20px;
+        margin-bottom: 16px;
+    }
+    .pay-modal h2 {
+        font-size: 17px;
+        margin-bottom: 12px;
+    }
+    .pay-modal__body {
+        font-size: 13px;
+        line-height: 1.6;
+    }
+    .pay-modal__actions {
+        flex-direction: column-reverse; /* Put cancel below confirm on mobile */
+        gap: 8px;
+        margin-top: 24px;
+    }
+    .pay-modal__btn-confirm, .pay-modal__btn-cancel {
+        width: 100%;
+        padding: 14px;
+    }
 }
 
 /* ── PAYMENT SCHEDULE ── */
