@@ -18,30 +18,36 @@
 
         {{-- Menu Items --}}
         <nav class="nav flex-column mb-auto px-4">
-            <a class="nav-link btn btn-outline-primary mb-3" href="#">
+            @php
+                $isPaid = false;
+                if(Auth::guard('recruting_student')->check()) {
+                    $isPaid = Auth::guard('recruting_student')->user()->hasPaid();
+                }
+            @endphp
+            <a class="nav-link btn btn-outline-primary mb-3 {{ !$isPaid ? 'nav-link--locked' : '' }}" href="#">
                 <div class="nav-icon icon-home"></div>
                 {{ trans('student.main_menu.main') }}
             </a>
             
-            <a class="nav-link btn btn-outline-primary mb-3 {{ Request::is('student/hometask*') ? 'active' : '' }}" 
+            <a class="nav-link btn btn-outline-primary mb-3 {{ Request::is('student/hometask*') ? 'active' : '' }} {{ !$isPaid ? 'nav-link--locked' : '' }}" 
                href="{{ url('student/hometask') }}">
                 <div class="nav-icon icon-homework"></div>
                 {{ trans('student.main_menu.hometask') }}
             </a>
             
-            <a class="nav-link btn btn-outline-primary mb-3 {{ Request::is('student/traning*') ? 'active' : '' }}" 
+            <a class="nav-link btn btn-outline-primary mb-3 {{ Request::is('student/traning*') ? 'active' : '' }} {{ !$isPaid ? 'nav-link--locked' : '' }}" 
                href="{{ url('student/traning/create') }}">
                 <div class="nav-icon icon-training"></div>
                 {{ trans('student.main_menu.traning') }}
             </a>
             
-            <a class="nav-link btn btn-outline-primary mb-3 {{ Request::is('student/olympiad*') && !Request::is('student/olympiad-portal*') ? 'active' : '' }}"
+            <a class="nav-link btn btn-outline-primary mb-3 {{ Request::is('student/olympiad*') && !Request::is('student/olympiad-portal*') ? 'active' : '' }} {{ !$isPaid ? 'nav-link--locked' : '' }}"
                href="{{ url('student/olympiad/create') }}">
                 <div class="nav-icon icon-olympiad"></div>
                 {{ trans('student.main_menu.olympiad') }}
             </a>
 
-            <a class="nav-link btn btn-outline-primary mb-3 {{ Request::is('student/olympiad-portal*') ? 'active' : '' }}"
+            <a class="nav-link btn btn-outline-primary mb-3 {{ Request::is('student/olympiad-portal*') ? 'active' : '' }} {{ !$isPaid ? 'nav-link--locked' : '' }}"
                href="{{ url('student/olympiad-portal') }}">
                 <div class="nav-icon icon-olympiad"></div>
                 {{ trans('student.main_menu.olympiad-main') }}
@@ -60,7 +66,7 @@
             </a>
 
 
-            <a href="{{ url('/games/platform') }}" class="btn btn-primary btn-block mb-4">
+            <a href="{{ url('/games/platform') }}" class="btn btn-primary btn-block mb-4 {{ !$isPaid ? 'nav-link--locked' : '' }}">
                 {{ trans('student.main_menu.games') }}
             </a>
         </nav>

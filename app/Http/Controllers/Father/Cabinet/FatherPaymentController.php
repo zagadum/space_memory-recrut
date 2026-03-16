@@ -67,8 +67,30 @@ class FatherPaymentController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
 
+        // Calculate 2-year payment schedule
+        $firstSuccessfulPayment = $payments->where('status', 'completed')
+            ->sortBy(fn($p) => $p->paid_at ?? $p->created_at)
+            ->first();
+
+        $totalMonthsPaid = (int)$payments->where('status', 'completed')->sum('months');
+        $paymentSchedule = [];
+
+        if ($firstSuccessfulPayment) {
+            $startDate = ($firstSuccessfulPayment->paid_at ?? $firstSuccessfulPayment->created_at)->copy()->startOfMonth();
+
+            for ($i = 0; $i < 24; $i++) {
+                $monthDate = $startDate->copy()->addMonths($i);
+                $paymentSchedule[] = [
+                    'date'    => $monthDate,
+                    'is_paid' => ($i < $totalMonthsPaid),
+                    'label'   => $monthDate->translatedFormat('F Y'),
+                ];
+            }
+        }
+
         return view('father.payment_process', compact(
-            'student', 'contract', 'payments', 'project', 'paymentPlans', 'basePlan'
+            'student', 'contract', 'payments', 'project', 'paymentPlans', 'basePlan',
+            'paymentSchedule', 'totalMonthsPaid'
         ));
     }
 

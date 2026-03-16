@@ -143,6 +143,10 @@ return [
         'go_to_payment_btn' => 'Przejdź do płatności',
         'redirecting' => 'Przekierowujemy…',
         'form_error' => 'Błąd formularza',
+        'schedule_title' => 'Harmonogram płatności (2 lata)',
+        'total_months_label' => 'Opłacono',
+        'status_paid' => 'Opłacone',
+        'status_pending' => 'Oczekuje',
     ],
     'documents_list' => [
         'back_to_portal' => 'Wróć do portalu',

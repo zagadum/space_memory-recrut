@@ -143,6 +143,10 @@ return [
         'go_to_payment_btn' => 'Go to payment',
         'redirecting' => 'Redirecting…',
         'form_error' => 'Form error',
+        'schedule_title' => 'Payment Schedule (2 years)',
+        'total_months_label' => 'Paid',
+        'status_paid' => 'Paid',
+        'status_pending' => 'Pending',
     ],
     'documents_list' => [
         'back_to_portal' => 'Back to portal',

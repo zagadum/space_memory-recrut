@@ -40,6 +40,31 @@
         .hidden {
             display: none;
         }
+        /* Restricted Access Styles */
+        .nav-link--locked {
+            opacity: 0.6 !important;
+            cursor: not-allowed !important;
+            pointer-events: none !important;
+            filter: grayscale(1) !important;
+            position: relative;
+        }
+        .nav-link--locked::after {
+            content: '🔒';
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 14px;
+            opacity: 0.8;
+            z-index: 5;
+        }
+        /* Mobile specific lock tweak */
+        .fixed-bottom-menu .nav-link--locked::after {
+            right: 50%;
+            top: -5px;
+            transform: translateX(50%);
+            font-size: 12px;
+        }
     </style>
 </head>
 

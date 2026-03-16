@@ -1,22 +1,4 @@
 {{-- Desktop Sidebar --}}
-<style>
-    .nav-link--locked {
-        opacity: 0.6;
-        cursor: not-allowed !important;
-        pointer-events: none;
-        filter: grayscale(1);
-        position: relative;
-    }
-    .nav-link--locked::after {
-        content: '🔒';
-        position: absolute;
-        right: 15px;
-        top: 50%;
-        transform: translateY(-50%);
-        font-size: 14px;
-        opacity: 0.8;
-    }
-</style>
 <aside class="sidebar-desktop d-none d-lg-flex flex-column">
     <div class="logo-area mb-5">
         <div class="logo-box text-center">

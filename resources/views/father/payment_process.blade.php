@@ -399,6 +399,127 @@ header.d-lg-none { background: var(--bg) !important; border-bottom: 1px solid va
     .pay-card__footer { flex-direction: column; align-items: stretch; }
     .pay-btn { justify-content: center; }
 }
+
+/* ── PAYMENT SCHEDULE ── */
+.schedule-card {
+    background: var(--surface-1);
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+    margin-top: 24px;
+    overflow: hidden;
+}
+.schedule-header {
+    padding: 24px 28px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+.schedule-header__title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.schedule-header__title i {
+    color: var(--teal);
+    font-size: 18px;
+}
+.schedule-header__title h3 {
+    font-size: 16px;
+    font-weight: 700;
+    margin: 0;
+    color: #fff;
+}
+.schedule-stats {
+    display: flex;
+    gap: 20px;
+}
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+.stat-item__label {
+    font-size: 10px;
+    text-transform: uppercase;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+}
+.stat-item__value {
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+}
+.stat-item__value span {
+    color: var(--teal);
+}
+
+.schedule-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 12px;
+    padding: 24px 28px;
+}
+.schedule-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--r-md);
+    transition: transform 0.2s, border-color 0.2s;
+}
+.schedule-item:hover {
+    transform: translateY(-2px);
+    border-color: rgba(38, 249, 255, 0.2);
+}
+.schedule-item--paid {
+    background: rgba(74, 222, 128, 0.05);
+    border-color: rgba(74, 222, 128, 0.2);
+}
+.schedule-item__icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    flex-shrink: 0;
+}
+.schedule-item--paid .schedule-item__icon {
+    background: var(--green-dim);
+    color: var(--green);
+    border: 1px solid rgba(74, 222, 128, 0.3);
+}
+.schedule-item--pending .schedule-item__icon {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--muted);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+.schedule-item__info {
+    min-width: 0;
+}
+.schedule-item__month {
+    font-size: 12px;
+    font-weight: 600;
+    color: #fff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+}
+.schedule-item__status {
+    font-size: 10px;
+    color: var(--muted);
+    display: block;
+}
+.schedule-item--paid .schedule-item__status {
+    color: var(--green);
+    font-weight: 500;
+}
 </style>
 @endsection
 
@@ -542,6 +663,39 @@ header.d-lg-none { background: var(--bg) !important; border-bottom: 1px solid va
             @endforelse
 
         </div>
+
+        {{-- ══════════════════════ SCHEDULE (FULL WIDTH) ══════════════════════ --}}
+        @if(!empty($paymentSchedule))
+        <div class="schedule-card">
+            <div class="schedule-header">
+                <div class="schedule-header__title">
+                    <i class="fas fa-calendar-alt"></i>
+                    <h3>{{ __('father.payment_process.schedule_title', ['default' => 'График оплат на 2 года']) }}</h3>
+                </div>
+                <div class="schedule-stats">
+                    <div class="stat-item">
+                        <span class="stat-item__label">{{ __('father.payment_process.total_months_label', ['default' => 'Оплачено']) }}</span>
+                        <span class="stat-item__value"><span>{{ $totalMonthsPaid }}</span> / 24</span>
+                    </div>
+                </div>
+            </div>
+            <div class="schedule-grid">
+                @foreach($paymentSchedule as $month)
+                <div class="schedule-item {{ $month['is_paid'] ? 'schedule-item--paid' : 'schedule-item--pending' }}">
+                    <div class="schedule-item__icon">
+                        <i class="fas {{ $month['is_paid'] ? 'fa-check' : 'fa-clock' }}"></i>
+                    </div>
+                    <div class="schedule-item__info">
+                        <span class="schedule-item__month">{{ $month['label'] }}</span>
+                        <span class="schedule-item__status">
+                            {{ $month['is_paid'] ? __('father.payment_process.status_paid', ['default' => 'Оплачено']) : __('father.payment_process.status_pending', ['default' => 'Ожидает']) }}
+                        </span>
+                    </div>
+                </div>
+                @endforeach
+            </div>
+        </div>
+        @endif
 
     </div>
 </div>

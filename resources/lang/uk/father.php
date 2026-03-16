@@ -143,6 +143,10 @@ return [
         'go_to_payment_btn' => 'Перейти до оплати',
         'redirecting' => 'Перенаправляємось…',
         'form_error' => 'Помилка форми',
+        'schedule_title' => 'Графік оплат (2 роки)',
+        'total_months_label' => 'Оплачено',
+        'status_paid' => 'Оплачено',
+        'status_pending' => 'Очікує',
     ],
     'documents_list' => [
         'back_to_portal' => 'Назад у портал',
