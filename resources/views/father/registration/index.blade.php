@@ -703,51 +703,6 @@
                     </div>
                 </div>
 
-                <!-- СОГЛАСИЯ -->
-                <div class="form-section">
-                    <div class="checkbox-group">
-                        <input type="checkbox" id="checkTermsPriv" required >
-                        <label for="checkTermsPriv" id="lblTermsPriv">
-                            <span id="txtTerms1">Akceptuję </span><button type="button" class="doc-link"
-                                onclick="openModal('modalTerms')">Regulamin</button><span id="txtTerms2"> i
-                            </span><button type="button" class="doc-link" onclick="openModal('modalPriv')">Politykę
-                                Prywatności</button><span class="required-star">*</span>
-                        </label>
-                    </div>
-                    <div class="checkbox-group">
-                        <input type="checkbox" id="checkDataProcess" required >
-                        <label for="checkDataProcess">
-                            <span id="lblDataProcess">Zgadzam się na przetwarzanie danych w celu realizacji
-                                usług</span><span class="required-star">*</span>
-                        </label>
-                    </div>
-                    <div class="checkbox-group">
-                        <input type="checkbox" id="checkUrgent" required >
-                        <label for="checkUrgent">
-                            <span id="lblUrgent">Żądam rozpoczęcia usług przed upływem 14 dni</span><span
-                                class="required-star">*</span>
-                        </label>
-                    </div>
-                    <div class="checkbox-group" style="margin-top: 8px;">
-                        <input type="checkbox" id="checkImage" >
-                        <label for="checkImage">
-                            <span id="lblImage1">Zgadzam się na publikację wizerunku dziecka</span>
-                        </label>
-                    </div>
-                    <div class="checkbox-group">
-                        <input type="checkbox" id="checkRecord" >
-                        <label for="checkRecord">
-                            <span id="lblRecord">Zgadzam się na nagrywanie zajęć</span>
-                        </label>
-                    </div>
-                    <div class="checkbox-group">
-                        <input type="checkbox" id="checkMarketing" >
-                        <label for="checkMarketing">
-                            <span id="lblMarketing">Chcę otrzymywać informacje marketingowe e-mailem</span>
-                        </label>
-                    </div>
-                </div>
-
                 <!-- ИНТЕРЕСЫ (НОВОЕ ПОЛЕ) -->
                 <div class="form-section">
                     <div class="section-label" id="hobbiesLabel">Zainteresowania i pasje Twojego dziecka</div>
@@ -763,6 +718,50 @@
                     <div class="form-group">
                         <textarea id="comment" class="input-field" style="min-height: 140px;"
                             placeholder="Powiedz nam, co jest dla Ciebie ważne. Trener zapozna się z Twoją odpowiedzią przed pierwszą lekcją i od razu dostosuje podejście indywidualnie do Twojego dziecka — nawet w grupie. 🌟&#10;Np.: koncentracja · pamięć · pewność siebie · szybkie liczenie · olimpiady · nieśmiałość · tempo pracy · podejście do matematyki · stres przed egzaminem"></textarea>
+                    </div>
+                </div>
+
+                <!-- СОГЛАСИЯ -->
+                <div class="form-section">
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="checkTermsPriv" required checked>
+                        <label for="checkTermsPriv" id="lblTermsPriv">
+                            <span id="txtTerms1">Akceptuję </span><button type="button" class="doc-link"
+                                onclick="openModal('modalTerms')">Regulamin</button><span id="txtTerms2"> i
+                            </span><button type="button" class="doc-link" onclick="openModal('modalPriv')">Politykę
+                                Prywatności</button><span class="required-star">*</span>
+                        </label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="checkDataProcess" required checked>
+                        <label for="checkDataProcess">
+                            <span id="lblDataProcess">Wyrażam zgodę na przetwarzanie danych osobowych moich i mojego dziecka/ podopiecznego w zakresie rejestrowania, wykorzystywania i udostępniania wizerunku oraz nagrań i zdjęć lub ich fragmentów dla celów upubliczniania wizerunku kursantów na portalach Facebook, Youtube, Instagram oraz na stronie internetowej, w celu dzielenia się sukcesami naszych uczniów oraz informowania o wydarzeniach organizowanych przez Global Leaders Skills Sp. z o.o. w tym o olimpiadach, projektach, konkursach, piknikach i innych podobnych wydarzeniach.</span><span class="required-star">*</span>
+                        </label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="checkUrgent" required checked>
+                        <label for="checkUrgent">
+                            <span id="lblUrgent">Oświadczam, że żądam rozpoczęcia świadczenia usług przez Global Leaders Skills sp. z o.o. przed upływem terminu na wykonanie przysługującego mi prawa do odstąpienia od umowy, a także że przyjąłem do wiadomości, że utracę prawo do odstąpienia od umowy z chwilą jej pełnego wykonania przez Global Leaders Skills sp. z o.o.</span><span
+                                class="required-star">*</span>
+                        </label>
+                    </div>
+                    <div class="checkbox-group" style="margin-top: 8px;">
+                        <input type="checkbox" id="checkImage" checked>
+                        <label for="checkImage">
+                            <span id="lblImage1">Wyrażam zgodę na przetwarzanie danych osobowych moich i mojego dziecka/ podopiecznego w zakresie rejestrowania, wykorzystywania i udostępniania wizerunku oraz nagrań i zdjęć lub ich fragmentów w celu wewnętrznej kontroli jakości przeprowadzanych zajęć oraz udostępniania ich Kursantom, Rodzicom lub Opiekunom prawnym w zakresie postępów, realizacji zadań i programów, zaliczeń, wykonywania prac i poleceń, to jest na potrzeby prawidłowego wykonywania umowy.</span>
+                        </label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="checkRecord" checked>
+                        <label for="checkRecord">
+                            <span id="lblRecord">Wyrażam zgodę na przetwarzanie danych osobowych moich i mojego dziecka (podopiecznego) podanych w zgłoszeniu w zakresie niezbędnym do prawidłowej realizacji usług Global Leaders Skills Sp. z o.o.</span>
+                        </label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="checkMarketing" checked>
+                        <label for="checkMarketing">
+                            <span id="lblMarketing">Wyrażam zgodę na przetwarzanie danych osobowych moich i mojego dziecka (podopiecznego) przez Global Leaders Skills w celu otrzymywania informacji handlowych i marketingowych. Wyrażam zgodę na wysłanie informacji handlowej drogą elektroniczną na podany przeze mnie adres e-mail przez Global Leaders Skills Sp. z o.o.</span>
+                        </label>
                     </div>
                 </div>
 
@@ -809,11 +808,11 @@
                 zip: "Почтовый код *",
 
                 lblTermsPriv: "Принимаю| и ",
-                lblDataProcess: "Согласен на обработку данных для оказания услуг",
-                lblUrgent: "Требую начать услуги до истечения 14 дней",
-                lblImage: "Согласен на публикацию ",
-                lblRecord: "Согласен на запись занятий",
-                lblMarketing: "Хочу получать маркетинговые сообщения на email",
+                lblDataProcess: "Выражаю согласие на обработку персональных данных моих и моего ребенка/подопечного в объеме регистрации, использования и предоставления изображения, а также записей и фотографий или их фрагментов для целей публикации изображения учащихся на порталах Facebook, Youtube, Instagram и на сайте, с целью обмена успехами наших учеников и информирования о мероприятиях, организованных Global Leaders Skills Sp. z o.o., включая олимпиады, проекты, конкурсы, пикники и другие подобные мероприятия.",
+                lblUrgent: "Заявляю, что требую начала оказания услуг компанией Global Leaders Skills sp. z o.o. до истечения срока на реализацию предоставленного мне права на отказ от договора, а также что принял к сведению, что утрачу право на отказ от договора с момента его полного исполнения компанией Global Leaders Skills sp. z o.o.",
+                lblImage: "Выражаю согласие на обработку персональных данных моих и моего ребенка/подопечного в объеме регистрации, использования и предоставления изображения, а также записей и фотографий или их фрагментов в целях внутреннего контроля качества проводимых занятий, а также предоставления их Учащимся, Родителям или Законным опекунам в объеме прогресса, выполнения заданий и программ, зачетов, выполнения работ и заданий, то есть для целей надлежащего выполнения договора.",
+                lblRecord: "Выражаю согласие на обработку персональных данных моих и моего ребенка (подопечного), указанных в заявлении, в объеме, необходимом для надлежащего оказания услуг Global Leaders Skills Sp. z o.o.",
+                lblMarketing: "Выражаю согласие на обработку персональных данных моих и моего ребенка (подопечного) компанией Global Leaders Skills с целью получения торговой и маркетинговой информации. Выражаю согласие на отправку торговой информации в электронном виде на указанный мной адрес электронной почты компанией Global Leaders Skills Sp. z o.o.",
 
                 hobbiesLabel: "Интересы и увлечения вашего ребенка",
                 hobbies: "Интересы и увлечения вашего ребенка",
@@ -850,11 +849,11 @@
                 zip: "Zip Code *",
 
                 lblTermsPriv: "I accept the| and ",
-                lblDataProcess: "I consent to processing of data for service delivery",
-                lblUrgent: "I request services to begin before 14 days have passed",
-                lblImage: "I consent to publication of ",
-                lblRecord: "I consent to recording of classes",
-                lblMarketing: "I want to receive marketing emails",
+                lblDataProcess: "I consent to the processing of my and my child's/ward's personal data in the scope of recording, using and sharing the image as well as recordings and photos or their fragments for the purposes of publishing the image of students on Facebook, Youtube, Instagram and on the website, in order to share the successes of our students and inform about events organized by Global Leaders Skills Sp. z o.o., including olympiads, projects, contests, picnics and other similar events.",
+                lblUrgent: "I declare that I request the commencement of services by Global Leaders Skills sp. z o.o. before the expiry of the deadline for exercising my right to withdraw from the agreement, and that I have acknowledged that I will lose the right to withdraw from the agreement once it has been fully performed by Global Leaders Skills sp. z o.o.",
+                lblImage: "I consent to the processing of my and my child's/ward's personal data in the scope of recording, using and sharing the image as well as recordings and photos or their fragments for the purpose of internal quality control of the classes and sharing them with Students, Parents or Legal Guardians in the scope of progress, task and program completion, assessments, work and assignments, i.e. for the purposes of proper performance of the agreement.",
+                lblRecord: "I consent to the processing of my and my child's (ward's) personal data provided in the application to the extent necessary for the proper provision of services by Global Leaders Skills Sp. z o.o.",
+                lblMarketing: "I consent to the processing of my and my child's (ward's) personal data by Global Leaders Skills for the purpose of receiving commercial and marketing information. I consent to the sending of commercial information electronically to the e-mail address provided by me by Global Leaders Skills Sp. z o.o.",
 
                 hobbiesLabel: "Interests and Passions of your child",
                 hobbies: "Interests and Passions of your child",
@@ -891,11 +890,11 @@
                 zip: "Kod pocztowy",
 
                 lblTermsPriv: "Akceptuję| i ",
-                lblDataProcess: "Zgadzam się na przetwarzanie danych w celu realizacji usług",
-                lblUrgent: "Żądam rozpoczęcia usług przed upływem 14 dni",
-                lblImage: "Zgadzam się na ",
-                lblRecord: "Zgadzam się na nagrywanie zajęć",
-                lblMarketing: "Chcę otrzymywać informacje marketingowe e-mailem",
+                lblDataProcess: "Wyrażam zgodę na przetwarzanie danych osobowych moich i mojego dziecka/ podopiecznego w zakresie rejestrowania, wykorzystywania i udostępniania wizerunku oraz nagrań i zdjęć lub ich fragmentów dla celów upubliczniania wizerunku kursantów na portalach Facebook, Youtube, Instagram oraz na stronie internetowej, w celu dzielenia się sukcesami naszych uczniów oraz informowania o wydarzeniach organizowanych przez Global Leaders Skills Sp. z o.o. w tym o olimpiadach, projektach, konkursach, piknikach i innych podobnych wydarzeniach.",
+                lblUrgent: "Oświadczam, że żądam rozpoczęcia świadczenia usług przez Global Leaders Skills sp. z o.o. przed upływem terminu na wykonanie przysługującego mi prawa do odstąpienia od umowy, a także że przyjąłem do wiadomości, że utracę prawo do odstąpienia od umowy z chwilą jej pełnego wykonania przez Global Leaders Skills sp. z o.o.",
+                lblImage: "Wyrażam zgodę na przetwarzanie danych osobowych moich i mojego dziecka/ podopiecznego w zakresie rejestrowania, wykorzystywania i udostępniania wizerunku oraz nagrań i zdjęć lub ich fragmentów w celu wewnętrznej kontroli jakości przeprowadzanych zajęć oraz udostępniania ich Kursantom, Rodzicom lub Opiekunom prawnym w zakresie postępów, realizacji zadań i programów, zaliczeń, wykonywania prac i poleceń, to jest na potrzeby prawidłowego wykonywania umowy.",
+                lblRecord: "Wyrażam zgodę na przetwarzanie danych osobowych moich i mojego dziecka (podopiecznego) podanych w zgłoszeniu w zakresie niezbędnym do prawidłowej realizacji usług Global Leaders Skills Sp. z o.o.",
+                lblMarketing: "Wyrażam zgodę na przetwarzanie danych osobowych moich i mojego dziecka (podopiecznego) przez Global Leaders Skills w celu otrzymywania informacji handlowych i marketingowych. Wyrażam zgodę na wysłanie informacji handlowej drogą elektroniczną na podany przeze mnie adres e-mail przez Global Leaders Skills Sp. z o.o.",
 
                 commentLabel: "Co chcesz rozwinąć u swojego dziecka?",
                 comment: "Powiedz nam, co jest dla Ciebie ważne. Trener zapozna się z Twoją odpowiedzią przed pierwszą lekcją i od razu dostosuje podejście indywidualnie do Twojego dziecka — nawet w grupie. 🌟\nNp.: koncentracja · pamięć · pewność siebie · szybkie liczenie · olimpiady · nieśmiałość · tempo pracy · podejście do matematyki · stres перед egzaminem",
@@ -930,11 +929,11 @@
                 zip: "Поштовий код *",
 
                 lblTermsPriv: "Приймаю| і ",
-                lblDataProcess: "Згоден на обробку даних для надання послуг",
-                lblUrgent: "Вимагаю розпочати послуги до закінчення 14 днів",
-                lblImage: "Згоден на публікацію ",
-                lblRecord: "Згоден на запис занять",
-                lblMarketing: "Хочу отримувати маркетингові повідомлення на email",
+                lblDataProcess: "Висловлюю згоду на обробку персональних даних моїх і моєї дитини/підопічного в обсязі реєстрації, використання і надання зображення, а також записів і фотографій або їх фрагментів з метою оприлюднення зображення курсантів на порталах Facebook, Youtube, Instagram та на веб-сайті, з метою обміну успіхами наших учнів та інформування про заходи, організовані Global Leaders Skills Sp. z o.o., включаючи олімпіади, проекти, конкурси, пікніки та інші подібні заходи.",
+                lblUrgent: "Заявляю, що вимагаю початку надання послуг компанією Global Leaders Skills sp. z o.o. до закінчення терміну на реалізацію наданого мені права на відмову від договору, а також що прийняв до відома, що втрачу право на відмову від договору з моменту його повного виконання компанією Global Leaders Skills sp. z o.o.",
+                lblImage: "Висловлюю згоду на обробку персональних даних моїх і моєї дитини/підопічного в обсязі реєстрації, використання і надання зображення, а також записів і фотографій або їх фрагментів з метою внутрішнього контролю якості проведених занять, а також надання їх Курсантам, Батькам або Законним опікунам в обсязі прогресу, виконання завдань і програм, заліків, виконання робіт і завдань, тобто для цілей належного виконання договору.",
+                lblRecord: "Висловлюю згоду на обробку персональних даних моїх і моєї дитини (підопічного), зазначених у заяві, в обсязі, необхідному для належного надання послуг Global Leaders Skills Sp. z o.o.",
+                lblMarketing: "Висловлюю згоду на обробку персональних даних моїх і моєї дитини (підопічного) компанією Global Leaders Skills з метою отримання торговельної та маркетингової інформації. Висловлюю згоду на відправку торговельної інформації в електронному вигляді на зазначену мною адресу електронної пошти компанією Global Leaders Skills Sp. z o.o.",
 
                 hobbiesLabel: "Інтереси та захоплення вашої дитини",
                 hobbies: "Інтереси та захоплення вашої дитини",
