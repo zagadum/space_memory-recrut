@@ -34,28 +34,29 @@ class RegisterStudentRequest extends FormRequest
             'password' => 'required|min:6',
 
             // Ребёнок
-            'name'     => 'nullable|string|max:255',
-            'surname'  => 'nullable|string|max:255',
-            'dob'      => 'nullable|date',
+            'name'     => 'required|string|max:255',
+            'surname'  => 'required|string|max:255',
+            'dob'      => 'required|date',
 
             // Родитель (маппится в parent1_*)
-            'parent_name'    => 'nullable|string|max:255',
-            'parent_surname' => 'nullable|string|max:255',
-            'parent_phone'   => 'nullable|string|max:50',
+            'parent_name'    => 'required|string|max:255',
+            'parent_surname' => 'required|string|max:255',
+            'parent_phone'   => 'required|string|max:50',
+            'parent_passport' => 'required|string|max:50',
 
             // Адрес
-            'country'   => 'nullable|string|max:100',
-            'city'      => 'nullable|string|max:255',
-            'address'   => 'nullable|string|max:255',
-            'zip'       => 'nullable|string|max:20',
+            'country'   => 'required|string|max:100',
+            'city'      => 'required|string|max:255',
+            'address'   => 'required|string|max:255',
+            'zip'       => 'required|string|max:20',
             'apartment' => 'nullable|string|max:50',
 
             // Согласия
             'photo_consent'       => 'nullable|boolean',
-            'terms_accepted'      => 'required|boolean',
-            'privacy_accepted'    => 'required|boolean',
-            'data_processing'     => 'required|boolean',
-            'urgent_start'        => 'nullable|boolean',
+            'terms_accepted'      => 'accepted',
+            'privacy_accepted'    => 'accepted',
+            'data_processing'     => 'accepted',
+            'urgent_start'        => 'accepted',
             'recording_consent'   => 'nullable|boolean',
             'marketing_consent'   => 'nullable|boolean',
 

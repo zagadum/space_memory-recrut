@@ -625,14 +625,14 @@
                 <!-- СЕКЦИЯ: АККАУНТ -->
                 <div class="section-label" id="secAccount">Konto</div>
                 <div class="form-group">
-                    <input type="email" id="email" class="input-field" placeholder="Email (do logowania)">
+                    <input type="email" id="email" class="input-field" placeholder="Email (do logowania)" required>
                 </div>
                 <div class="form-row">
                     <div class="form-group">
-                        <input type="password" id="password" class="input-field" placeholder="Hasło (np. Space2026)">
+                        <input type="password" id="password" class="input-field" placeholder="Hasło (np. Space2026)" required>
                     </div>
                     <div class="form-group">
-                        <input type="password" id="passwordRep" class="input-field" placeholder="Powtórz hasło">
+                        <input type="password" id="passwordRep" class="input-field" placeholder="Powtórz hasło" required>
                     </div>
                 </div>
 
@@ -641,21 +641,21 @@
                     <div class="section-label" id="secParent">Rodzic / Opiekun</div>
                     <div class="form-row">
                         <div class="form-group">
-                            <input type="text" id="pName" class="input-field" placeholder="Imię (Rodzica)">
+                            <input type="text" id="pName" class="input-field" placeholder="Imię (Rodzica)" required>
                         </div>
                         <div class="form-group">
-                            <input type="text" id="pSurname" class="input-field" placeholder="Nazwisko (Rodzica)">
+                            <input type="text" id="pSurname" class="input-field" placeholder="Nazwisko (Rodzica)" required>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group">
                             <div class="phone-wrapper">
                                 <select id="dialCode" class="dial-select"></select>
-                                <input type="tel" id="phone" class="phone-input-field" placeholder="Numer telefonu">
+                                <input type="tel" id="phone" class="phone-input-field" placeholder="Numer telefonu" required>
                             </div>
                         </div>
                         <div class="form-group">
-                            <input type="text" id="passport" class="input-field" placeholder="PESEL / Numer dowodu">
+                            <input type="text" id="passport" class="input-field" placeholder="PESEL / Numer dowodu" required>
                         </div>
                     </div>
                 </div>
@@ -665,15 +665,15 @@
                     <div class="section-label" id="secChild">Dziecko (Uczeń)</div>
                     <div class="form-row">
                         <div class="form-group">
-                            <input type="text" id="cName" class="input-field" placeholder="Imię (Dziecka)">
+                            <input type="text" id="cName" class="input-field" placeholder="Imię (Dziecka)" required>
                         </div>
                         <div class="form-group">
-                            <input type="text" id="cSurname" class="input-field" placeholder="Nazwisko (Dziecka)">
+                            <input type="text" id="cSurname" class="input-field" placeholder="Nazwisko (Dziecka)" required>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="dob-label" id="dobLabel">Data urodzenia</label>
-                        <input type="date" id="cDob" class="input-field">
+                        <label class="dob-label" id="dobLabel">Data urodzenia<span class="required-star">*</span></label>
+                        <input type="date" id="cDob" class="input-field" required>
                     </div>
                 </div>
 
@@ -682,12 +682,12 @@
                     <div class="section-label" id="secAddr">Adres zamieszkania</div>
                     <div class="form-row">
                         <div class="form-group">
-                            <select id="country" class="input-field">
+                            <select id="country" class="input-field" required>
                                 <option value="">— Kraj —</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <select id="city" class="input-field" disabled>
+                            <select id="city" class="input-field" disabled required>
                                 <option value="">— najpierw wybierz kraj —</option>
                             </select>
                         </div>
@@ -695,10 +695,10 @@
                     <div class="form-row">
                         <div class="form-group" style="flex: 2;">
                             <input type="text" id="address" class="input-field"
-                                placeholder="Ulica, numer domu/mieszkania">
+                                placeholder="Ulica, numer дома/mieszkania" required>
                         </div>
                         <div class="form-group">
-                            <input type="text" id="zip" class="input-field" placeholder="Kod pocztowy">
+                            <input type="text" id="zip" class="input-field" placeholder="Kod pocztowy" required>
                         </div>
                     </div>
                 </div>
@@ -775,26 +775,26 @@
                 title: "Регистрация Space Memory",
 
                 secAccount: "Аккаунт",
-                email: "Email (для входа)",
-                pass: "Пароль (Space2026)",
-                passRep: "Повтори пароль",
+                email: "Email (для входа) *",
+                pass: "Пароль (Space2026) *",
+                passRep: "Повтори пароль *",
 
                 secParent: "Родитель",
-                pName: "Имя (Родителя)",
-                pSurname: "Фамилия (Родителя)",
-                phone: "Номер телефона",
-                passport: "Идентификационный номер / Паспорт",
+                pName: "Имя (Родителя) *",
+                pSurname: "Фамилия (Родителя) *",
+                phone: "Номер телефона *",
+                passport: "Идентификационный номер / Паспорт *",
 
                 secChild: "Ребёнок (Ученик)",
-                cName: "Имя (Ребёнка)",
-                cSurname: "Фамилия (Ребёнка)",
+                cName: "Имя (Ребёнка) *",
+                cSurname: "Фамилия (Ребёнка) *",
                 dobLabel: "Дата рождения",
 
                 secAddr: "Адрес проживания",
-                country: "Страна",
-                city: "Город",
-                address: "Улица, номер дома/квартиры",
-                zip: "Почтовый код",
+                country: "Страна *",
+                city: "Город *",
+                address: "Улица, номер дома/квартиры *",
+                zip: "Почтовый код *",
 
                 lblTermsPriv: "Принимаю| и ",
                 lblDataProcess: "Согласен на обработку данных для оказания услуг",
@@ -813,26 +813,26 @@
                 title: "Space Memory Registration",
 
                 secAccount: "Account Details",
-                email: "Email (for login)",
-                pass: "Password (e.g., Space2026)",
-                passRep: "Repeat Password",
+                email: "Email (for login) *",
+                pass: "Password (e.g., Space2026) *",
+                passRep: "Repeat Password *",
 
                 secParent: "Parent / Guardian",
-                pName: "First Name (Parent)",
-                pSurname: "Last Name (Parent)",
-                phone: "Phone Number",
-                passport: "ID Number / Passport",
+                pName: "First Name (Parent) *",
+                pSurname: "Last Name (Parent) *",
+                phone: "Phone Number *",
+                passport: "ID Number / Passport *",
 
                 secChild: "Child (Student)",
-                cName: "Child's First Name",
-                cSurname: "Child's Last Name",
+                cName: "Child's First Name *",
+                cSurname: "Child's Last Name *",
                 dobLabel: "Date of Birth",
 
                 secAddr: "Address",
-                country: "Country",
-                city: "City",
-                address: "Street, house/apartment number",
-                zip: "Zip Code",
+                country: "Country *",
+                city: "City *",
+                address: "Street, house/apartment number *",
+                zip: "Zip Code *",
 
                 lblTermsPriv: "I accept the| and ",
                 lblDataProcess: "I consent to processing of data for service delivery",
@@ -851,9 +851,9 @@
                 title: "Rejestracja Space Memory",
 
                 secAccount: "Konto",
-                email: "Email (do logowania)",
-                pass: "Hasło (np. Space2026)",
-                passRep: "Powtórz hasło",
+                email: "Email (do logowania) *",
+                pass: "Hasło (np. Space2026) *",
+                passRep: "Powtórz hasło *",
 
                 secParent: "Rodzic / Opiekun",
                 pName: "Imię (Rodzica)",
@@ -889,26 +889,26 @@
                 title: "Реєстрація Space Memory",
 
                 secAccount: "Акаунт",
-                email: "Email (для входу)",
-                pass: "Пароль (Space2026)",
-                passRep: "Повтори пароль",
+                email: "Email (для входу) *",
+                pass: "Пароль (Space2026) *",
+                passRep: "Повтори пароль *",
 
                 secParent: "Батьки",
-                pName: "Ім'я (Батьків)",
-                pSurname: "Прізвище (Батьків)",
-                phone: "Номер телефону",
-                passport: "Ідентифікаційний номер / Паспорт",
+                pName: "Ім'я (Батьків) *",
+                pSurname: "Прізвище (Батьків) *",
+                phone: "Номер телефону *",
+                passport: "Ідентифікаційний номер / Паспорт *",
 
                 secChild: "Дитина (Учень)",
-                cName: "Ім'я (Дитини)",
-                cSurname: "Прізвище (Дитини)",
+                cName: "Ім'я (Дитини) *",
+                cSurname: "Прізвище (Дитини) *",
                 dobLabel: "Дата народження",
 
                 secAddr: "Адреса",
-                country: "Країна",
-                city: "Місто",
-                address: "Вулиця, номер будинку/квартири",
-                zip: "Поштовий код",
+                country: "Країна *",
+                city: "Місто *",
+                address: "Вулиця, номер будинку/квартири *",
+                zip: "Поштовий код *",
 
                 lblTermsPriv: "Приймаю| і ",
                 lblDataProcess: "Згоден на обробку даних для надання послуг",
@@ -1193,7 +1193,8 @@
                             'address': 'address',
                             'zip': 'zip',
                             'terms_accepted': 'checkTermsPriv',
-                            'data_processing': 'checkDataProcess'
+                            'data_processing': 'checkDataProcess',
+                            'urgent_start': 'checkUrgent'
                         };
 
                         for (const key in data.errors) {
