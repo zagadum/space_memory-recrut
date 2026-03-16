@@ -749,10 +749,12 @@
                 </div>
 
                 <!-- КОММЕНТАРИЙ -->
-                <div class="form-group" style="margin-top: 10px;">
-                    <label class="dob-label" id="commentLabel">Co chcesz rozwinąć u swojego dziecka?</label>
-                    <textarea id="comment" class="input-field" style="min-height: 120px;"
-                        placeholder="Powiedz nam, co jest dla Ciebie ważne. Trener zapozna się z Twoją odpowiedzią przed pierwszą lekcją i od razu dostosuje podejście indywidualnie do Twojego dziecka — nawet w grupie. 🌟&#10;Np.: koncentracja · pamięć · pewność siebie · szybkie liczenie · olimpiady · nieśmiałość · tempo pracy · podejście do matematyki · stres przed egzaminem"></textarea>
+                <div class="form-section">
+                    <div class="section-label" id="commentLabel" style="font-size: 15px; color: var(--primary-accent); text-transform: none; margin-bottom: 15px; letter-spacing: 0.5px;">Co chcesz rozwinąć u swojego dziecka?</div>
+                    <div class="form-group">
+                        <textarea id="comment" class="input-field" style="min-height: 140px;"
+                            placeholder="Powiedz nam, co jest dla Ciebie ważne. Trener zapozna się z Twoją odpowiedzią przed pierwszą lekcją i od razu dostosuje podejście indywidualnie do Twojego dziecka — nawet w grupie. 🌟&#10;Np.: koncentracja · pamięć · pewność siebie · szybkie liczenie · olimpiady · nieśmiałość · tempo pracy · podejście do matematyki · stres przed egzaminem"></textarea>
+                    </div>
                 </div>
 
                 <button type="submit" class="submit-btn" id="regBtn">ZAREJESTRUJ SIĘ</button>
