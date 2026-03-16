@@ -227,6 +227,7 @@ class NewStudentsController extends Controller
 
                 // Комментарий
                 'reg_comment' => $validated['reg_comment'] ?? '',
+                'hobbies'     => $validated['hobbies'] ?? '',
 
                 // Верификация
                 'verification_code' => $code,

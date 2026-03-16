@@ -59,6 +59,7 @@ class RegisterStudentRequest extends FormRequest
             'urgent_start'        => 'accepted',
             'recording_consent'   => 'nullable|boolean',
             'marketing_consent'   => 'nullable|boolean',
+            'hobbies'             => 'nullable|string',
 
             // Опционально
             'reg_comment' => 'nullable|string|max:1000',

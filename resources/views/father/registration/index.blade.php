@@ -748,6 +748,15 @@
                     </div>
                 </div>
 
+                <!-- ИНТЕРЕСЫ (НОВОЕ ПОЛЕ) -->
+                <div class="form-section">
+                    <div class="section-label" id="hobbiesLabel">Zainteresowania i pasje Twojego dziecka</div>
+                    <div class="form-group">
+                        <textarea id="hobbies" class="input-field" style="min-height: 80px;"
+                            placeholder="Zainteresowania i pasje Twojego dziecka"></textarea>
+                    </div>
+                </div>
+
                 <!-- КОММЕНТАРИЙ -->
                 <div class="form-section">
                     <div class="section-label" id="commentLabel">Co chcesz rozwinąć u swojego dziecka?</div>
@@ -806,6 +815,8 @@
                 lblRecord: "Согласен на запись занятий",
                 lblMarketing: "Хочу получать маркетинговые сообщения на email",
 
+                hobbiesLabel: "Интересы и увлечения вашего ребенка",
+                hobbies: "Интересы и увлечения вашего ребенка",
                 commentLabel: "Что вы хотите развить в своем ребенке?",
                 comment: "Расскажите нам, что важно для вас. Тренер ознакомится с вашим ответом перед первым уроком и сразу адаптирует подход индивидуально к вашему ребенку — даже в группе. 🌟\nНапр.: концентрация · память · уверенность в себе · быстрый счет · олимпиады · застенчивость · темп работы · отношение к математике · стресс перед экзаменом",
                 btn: "ЗАРЕГИСТРИРОВАТЬСЯ",
@@ -845,6 +856,8 @@
                 lblRecord: "I consent to recording of classes",
                 lblMarketing: "I want to receive marketing emails",
 
+                hobbiesLabel: "Interests and Passions of your child",
+                hobbies: "Interests and Passions of your child",
                 commentLabel: "What do you want to develop in your child?",
                 comment: "Tell us what is important to you. The coach will read your response before the first lesson and immediately adapt the approach individually to your child — even in a group. 🌟\nE.g.: concentration · memory · self-confidence · mental math · olympiads · shyness · work pace · attitude towards math · exam stress",
                 btn: "REGISTER NOW",
@@ -923,6 +936,8 @@
                 lblRecord: "Згоден на запис занять",
                 lblMarketing: "Хочу отримувати маркетингові повідомлення на email",
 
+                hobbiesLabel: "Інтереси та захоплення вашої дитини",
+                hobbies: "Інтереси та захоплення вашої дитини",
                 commentLabel: "Що ви хочете розвинути у своїй дитині?",
                 comment: "Розкажіть нам, що для вас важливо. Тренер ознайомиться з вашою відповіддю перед першим уроком і відразу адаптує підхід індивідуально до вашої дитини — навіть у групі. 🌟\nНапр.: концентрація · пам'ять · впевненість у собі · швидка лічба · олімпіади · сором'язливість · темп роботи · ставлення до математики · стрес перед іспитом",
                 btn: "ЗАРЕЄСТРУВАТИСЯ",
@@ -1092,6 +1107,8 @@
                 document.getElementById('lblImage1').textContent = t.lblImage;
                 document.getElementById('lblRecord').textContent = t.lblRecord;
                 document.getElementById('lblMarketing').textContent = t.lblMarketing;
+                document.getElementById('hobbiesLabel').textContent = t.hobbiesLabel;
+                document.getElementById('hobbies').placeholder = t.hobbies;
                 document.getElementById('commentLabel').textContent = t.commentLabel;
                 document.getElementById('regBtn').textContent = t.btn;
                 document.getElementById('haveAccLink').textContent = t.haveAcc;
@@ -1150,6 +1167,7 @@
                 urgent_start: document.getElementById('checkUrgent').checked ? 1 : 0,
                 recording_consent: document.getElementById('checkRecord').checked ? 1 : 0,
                 marketing_consent: document.getElementById('checkMarketing').checked ? 1 : 0,
+                hobbies: document.getElementById('hobbies').value,
                 reg_comment: document.getElementById('comment').value,
                 locale: document.querySelector('.lang-btn.active').dataset.lang,
             };
@@ -1200,6 +1218,8 @@
                             'city': 'city',
                             'address': 'address',
                             'zip': 'zip',
+                            'hobbies': 'hobbies',
+                            'reg_comment': 'comment',
                             'terms_accepted': 'checkTermsPriv',
                             'data_processing': 'checkDataProcess',
                             'urgent_start': 'checkUrgent'

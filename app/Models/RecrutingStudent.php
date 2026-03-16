@@ -54,7 +54,7 @@ class RecrutingStudent extends Authenticatable
         'name', // Используется в форме, но не в эталоне
         'parent_name', 'parent_surname', 'parent_phone', 'parent_passport',
         'country', 'country_id', 'city', 'address', 'zip', 'apartment',
-        'photo_consent', 'reg_comment',
+        'photo_consent', 'reg_comment', 'hobbies',
         'terms_accepted', 'privacy_accepted',
         'data_processing_accepted', 'urgent_start_accepted',
         'recording_consent_accepted', 'marketing_consent_accepted',
